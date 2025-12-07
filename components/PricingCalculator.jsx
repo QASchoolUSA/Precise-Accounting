@@ -203,8 +203,8 @@ export default function PricingCalculator() {
                 // Removed hidden-input class to rely on styled-input css or just standard
                 style={{ flexShrink: 0, width: '1.25rem', height: '1.25rem', accentColor: 'var(--color-accent)' }}
             />
-            <span className="selection-card-label" style={{ lineHeight: 1.4 }}>{label}</span>
-            {selected && <span style={{ color: 'var(--color-accent)', fontWeight: 'bold' }}>✓</span>}
+            <span className="selection-card-label" style={{ lineHeight: 1.4, marginLeft: '0.75rem' }}>{label}</span>
+            {selected && <span style={{ color: 'var(--color-accent)', fontWeight: 'bold', marginLeft: 'auto' }}>✓</span>}
         </label>
     );
 
@@ -249,7 +249,7 @@ export default function PricingCalculator() {
                                 <h2 className="step-title">Where do you live?</h2>
                                 <div className="form-group">
                                     <label>State of Residence</label>
-                                    <select name="state" value={taxData.state} onChange={handleStateChange} style={{ padding: '1rem' }}>
+                                    <select name="state" value={taxData.state} onChange={handleStateChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="" disabled>Select your state...</option>
                                         <option value="custom">I do NOT reside in the USA</option>
                                         <optgroup label="Group 1 ($200)">
@@ -374,7 +374,7 @@ export default function PricingCalculator() {
                                 <h2 className="step-title">Volume</h2>
                                 <div className="form-group">
                                     <label>Monthly Transactions</label>
-                                    <select name="baseRate" value={bookkeepingData.baseRate} onChange={handleBookkeepingChange} style={{ padding: '1rem' }}>
+                                    <select name="baseRate" value={bookkeepingData.baseRate} onChange={handleBookkeepingChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="250">Up to 300 ($250)</option>
                                         <option value="300">301-600 ($300)</option>
                                         <option value="500">601-1000 ($500)</option>
@@ -384,7 +384,7 @@ export default function PricingCalculator() {
                                 </div>
                                 <div className="form-group">
                                     <label>Number of Accounts</label>
-                                    <select name="accounts" value={bookkeepingData.accounts} onChange={handleBookkeepingChange} style={{ padding: '1rem' }}>
+                                    <select name="accounts" value={bookkeepingData.accounts} onChange={handleBookkeepingChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="0">Up to 5</option>
                                         <option value="50">5-10 (+$50)</option>
                                         <option value="150">Over 10 (+$150)</option>
@@ -412,7 +412,7 @@ export default function PricingCalculator() {
                                 </div>
                                 <div className="form-group">
                                     <label>Depreciable Assets</label>
-                                    <select name="assets" value={bookkeepingData.assets} onChange={handleBookkeepingChange} style={{ padding: '1rem' }}>
+                                    <select name="assets" value={bookkeepingData.assets} onChange={handleBookkeepingChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="0">0</option>
                                         <option value="50">1-5 (+$50)</option>
                                         <option value="100">6-10 (+$100)</option>

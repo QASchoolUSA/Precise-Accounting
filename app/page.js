@@ -5,7 +5,7 @@ export default function Home() {
         <>
             <section id="home" className="hero">
                 <div className="container hero-content">
-                    <h1 className="hero-title">Accuracy. Integrity. Results.</h1>
+                    <h1 className="hero-title">Professional Accounting & Tax Services</h1>
                     <p className="hero-text">
                         Welcome to Precise Accounting, a place where numbers meet clarity and where the job is done with care, precision, and full transparency.
                     </p>
@@ -15,6 +15,31 @@ export default function Home() {
                     <div className="hero-actions">
                         <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
                         <a href="#about" className="btn btn-secondary">About Us</a>
+                    </div>
+                </div>
+            </section>
+
+            <section className="values-section">
+                <div className="container">
+                    <div className="values-grid">
+                        <div className="value-card">
+                            <div className="value-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="22" y1="12" x2="18" y2="12" /><line x1="6" y1="12" x2="2" y2="12" /><line x1="12" y1="6" x2="12" y2="2" /><line x1="12" y1="22" x2="12" y2="18" /></svg>
+                            </div>
+                            <h3>Accuracy</h3>
+                        </div>
+                        <div className="value-card">
+                            <div className="value-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                            </div>
+                            <h3>Integrity</h3>
+                        </div>
+                        <div className="value-card">
+                            <div className="value-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="20" x2="12" y2="10" /><line x1="18" y1="20" x2="18" y2="4" /><line x1="6" y1="20" x2="6" y2="16" /></svg>
+                            </div>
+                            <h3>Results</h3>
+                        </div>
                     </div>
                 </div>
             </section>
