@@ -305,13 +305,13 @@ export default function PricingCalculator() {
                                 <h2 className="step-title">The Basics</h2>
                                 <div className="form-group">
                                     <label>Filing Status</label>
-                                    <div className="selection-grid">
-                                        <SelectionCard name="filingStatus" value="single" label="Single" selected={taxData.filingStatus === 'single'} onChange={handleTaxChange} />
-                                        <SelectionCard name="filingStatus" value="joint" label="Married Filing Jointly" selected={taxData.filingStatus === 'joint'} onChange={handleTaxChange} />
-                                        <SelectionCard name="filingStatus" value="sep" label="Married Filing Separately" selected={taxData.filingStatus === 'sep'} onChange={handleTaxChange} />
-                                        <SelectionCard name="filingStatus" value="head" label="Head of Household" selected={taxData.filingStatus === 'head'} onChange={handleTaxChange} />
-                                        <SelectionCard name="filingStatus" value="widow" label="Qualifying Widow(er)" selected={taxData.filingStatus === 'widow'} onChange={handleTaxChange} />
-                                    </div>
+                                    <select name="filingStatus" value={taxData.filingStatus} onChange={handleTaxChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
+                                        <option value="single">Single</option>
+                                        <option value="joint">Married Filing Jointly</option>
+                                        <option value="sep">Married Filing Separately</option>
+                                        <option value="head">Head of Household</option>
+                                        <option value="widow">Qualifying Widow(er)</option>
+                                    </select>
                                 </div>
 
                                 <div className="form-group">
