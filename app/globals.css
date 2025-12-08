@@ -481,35 +481,27 @@ main {
 }
 
 /* Stepper Progress */
+/* Stepper Progress */
 .stepper-progress {
     padding: 1.5rem 2rem 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    /* Stack vertically */
+    gap: 1rem;
     margin-bottom: 2rem;
-}
-
-.step-indicator {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text-light);
-}
-
-.step-indicator.active {
-    color: var(--color-brand);
 }
 
 .step-bar {
     display: flex;
     gap: 0.5rem;
+    width: 100%;
 }
 
 .step-dot {
-    width: 2.5rem;
-    height: 4px;
+    flex: 1;
+    /* Stretch dots to form a bar segments */
+    height: 6px;
+    /* Slightly thicker */
     background-color: #e2e8f0;
     border-radius: 4px;
     transition: background-color 0.3s ease;
@@ -517,6 +509,26 @@ main {
 
 .step-dot.active {
     background-color: var(--color-accent);
+}
+
+.step-text-container {
+    text-align: left;
+    /* Changed to left align or center as preferred, usually left matches form */
+}
+
+.step-count {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-light);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.step-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-brand);
 }
 
 /* Calculator Content Area */

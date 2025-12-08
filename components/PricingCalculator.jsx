@@ -70,6 +70,15 @@ export default function PricingCalculator() {
 
     // Scroll to top on step change
     useEffect(() => {
+        const container = document.querySelector('.calculator-container');
+        if (container) {
+            // Scroll the container into view, aligning it to the top of the viewport + some offset if needed
+            // straightforward scrollIntoView is usually best
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // block: 'center' might be better so it doesn't get hidden behind a fixed header
+        }
+
+        // Also keep the internal content scroll reset
         const content = document.querySelector('.calculator-content');
         if (content) content.scrollTop = 0;
     }, [step]);
@@ -227,14 +236,16 @@ export default function PricingCalculator() {
             </div>
 
             {/* Progress Bar */}
+            {/* Progress Bar */}
             <div className="stepper-progress">
-                <div className="step-indicator">
-                    Step {step} of {totalSteps}: <span style={{ color: 'var(--color-brand)' }}>{currentSteps[step - 1].title}</span>
-                </div>
                 <div className="step-bar">
                     {currentSteps.map((s) => (
                         <div key={s.id} className={`step-dot ${s.id <= step ? 'active' : ''}`}></div>
                     ))}
+                </div>
+                <div className="step-text-container">
+                    <div className="step-count">Step {step} of {totalSteps}</div>
+                    <div className="step-name">{currentSteps[step - 1].title}</div>
                 </div>
             </div>
 
