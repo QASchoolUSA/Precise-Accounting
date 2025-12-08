@@ -53,19 +53,39 @@ export default function PricingCalculator() {
         'no': 0
     };
 
+    const STATE_PRICES = {
+        // Group 1 ($200)
+        'Alaska': 200, 'Florida': 200, 'Nevada': 200, 'South Dakota': 200,
+        'Tennessee': 200, 'Texas': 200, 'Washington': 200, 'Wyoming': 200, 'New Hampshire': 200,
+        // Group 2 ($300)
+        'Arizona': 300, 'Colorado': 300, 'Idaho': 300, 'Indiana': 300, 'Kansas': 300,
+        'Kentucky': 300, 'Maine': 300, 'Michigan': 300, 'Minnesota': 300, 'Mississippi': 300,
+        'Missouri': 300, 'Nebraska': 300, 'New Mexico': 300, 'North Dakota': 300,
+        'Oklahoma': 300, 'South Carolina': 300, 'Utah': 300, 'Wisconsin': 300,
+        // Group 3 ($400)
+        'Alabama': 400, 'Arkansas': 400, 'Georgia': 400, 'Iowa': 400, 'Louisiana': 400,
+        'Montana': 400, 'Rhode Island': 400, 'Vermont': 400, 'West Virginia': 400,
+        // Group 4 ($500)
+        'California': 500, 'New York': 500, 'New Jersey': 500, 'Pennsylvania': 500,
+        'Ohio': 500, 'Maryland': 500, 'Virginia': 500, 'Massachusetts': 500,
+        'Illinois': 500, 'Connecticut': 500, 'D.C.': 500
+    };
+
+    const SORTED_STATES = Object.keys(STATE_PRICES).sort();
+
     // Checkbox options for Tax
     const situationOptions = [
         { label: 'W-2 employment', value: 0 },
-        { label: 'Self-employment / contractor income (1099-NEC) (+$50)', value: 50 },
-        { label: 'Rental property income (+$50)', value: 50 },
-        { label: 'Investment income (stocks, dividends, etc.) (+$50)', value: 50 },
-        { label: 'Crypto transactions (+$50)', value: 50 },
-        { label: 'Interest income (+$30)', value: 30 },
-        { label: 'Retirement income (Social Security, pensions, 1099-R) (+$30)', value: 30 },
-        { label: 'Foreign source of income (+$100)', value: 100 },
-        { label: 'Itemized deduction (+$50)', value: 50 },
-        { label: 'Education credit (1098-T) (+$30)', value: 30 },
-        { label: 'Depreciation of vehicles/equipment (+$50)', value: 50 },
+        { label: 'Self-employment / contractor income (1099-NEC)', value: 50 },
+        { label: 'Rental property income', value: 50 },
+        { label: 'Investment income (stocks, dividends, etc.)', value: 50 },
+        { label: 'Crypto transactions', value: 50 },
+        { label: 'Interest income', value: 30 },
+        { label: 'Retirement income (Social Security, pensions, 1099-R)', value: 30 },
+        { label: 'Foreign source of income', value: 100 },
+        { label: 'Itemized deduction', value: 50 },
+        { label: 'Education credit (1098-T)', value: 30 },
+        { label: 'Depreciation of vehicles/equipment', value: 50 },
     ];
 
     // Scroll to top on step change
@@ -105,8 +125,8 @@ export default function PricingCalculator() {
                 setShowInternationalMsg(false);
             }
 
-            if (taxData.state) {
-                total += parseInt(taxData.state);
+            if (taxData.state && STATE_PRICES[taxData.state]) {
+                total += STATE_PRICES[taxData.state];
             }
 
             total += FILING_PRICES[taxData.filingStatus] || 0;
@@ -263,17 +283,12 @@ export default function PricingCalculator() {
                                     <select name="state" value={taxData.state} onChange={handleStateChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="" disabled>Select your state...</option>
                                         <option value="custom">I do NOT reside in the USA</option>
-                                        <optgroup label="Group 1 ($200)">
-                                            <option value="200">Alaska, Florida, Nevada, South Dakota, Tennessee, Texas, Washington, Wyoming, New Hampshire</option>
-                                        </optgroup>
-                                        <optgroup label="Group 2 ($300)">
-                                            <option value="300">Arizona, Colorado, Idaho, Indiana, Kansas, Kentucky, Maine, Michigan, Minnesota, Mississippi, Missouri, Nebraska, New Mexico, North Dakota, Oklahoma, South Carolina, Utah, Wisconsin</option>
-                                        </optgroup>
-                                        <optgroup label="Group 3 ($400)">
-                                            <option value="400">Alabama, Arkansas, Georgia, Iowa, Louisiana, Montana, Rhode Island, Vermont, West Virginia</option>
-                                        </optgroup>
-                                        <optgroup label="Group 4 ($500)">
-                                            <option value="500">California, New York, New Jersey, Pennsylvania, Ohio, Maryland, Virginia, Massachusetts, Illinois, Connecticut, D.C.</option>
+                                        <optgroup label="United States">
+                                            {SORTED_STATES.map(stateName => (
+                                                <option key={stateName} value={stateName}>
+                                                    {stateName}
+                                                </option>
+                                            ))}
                                         </optgroup>
                                     </select>
                                     {showInternationalMsg && (
@@ -292,10 +307,10 @@ export default function PricingCalculator() {
                                     <label>Filing Status</label>
                                     <div className="selection-grid">
                                         <SelectionCard name="filingStatus" value="single" label="Single" selected={taxData.filingStatus === 'single'} onChange={handleTaxChange} />
-                                        <SelectionCard name="filingStatus" value="joint" label="Married Filing Jointly (+$30)" selected={taxData.filingStatus === 'joint'} onChange={handleTaxChange} />
+                                        <SelectionCard name="filingStatus" value="joint" label="Married Filing Jointly" selected={taxData.filingStatus === 'joint'} onChange={handleTaxChange} />
                                         <SelectionCard name="filingStatus" value="sep" label="Married Filing Separately" selected={taxData.filingStatus === 'sep'} onChange={handleTaxChange} />
                                         <SelectionCard name="filingStatus" value="head" label="Head of Household" selected={taxData.filingStatus === 'head'} onChange={handleTaxChange} />
-                                        <SelectionCard name="filingStatus" value="widow" label="Qualifying Widow(er) (+$30)" selected={taxData.filingStatus === 'widow'} onChange={handleTaxChange} />
+                                        <SelectionCard name="filingStatus" value="widow" label="Qualifying Widow(er)" selected={taxData.filingStatus === 'widow'} onChange={handleTaxChange} />
                                     </div>
                                 </div>
 
@@ -312,7 +327,7 @@ export default function PricingCalculator() {
                                         <SelectionCard
                                             name="dependents"
                                             value="yes"
-                                            label="Yes (+$30)"
+                                            label="Yes"
                                             selected={taxData.dependents === 'yes'}
                                             onChange={handleTaxChange}
                                         />
@@ -386,19 +401,19 @@ export default function PricingCalculator() {
                                 <div className="form-group">
                                     <label>Monthly Transactions</label>
                                     <select name="baseRate" value={bookkeepingData.baseRate} onChange={handleBookkeepingChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
-                                        <option value="250">Up to 300 ($250)</option>
-                                        <option value="300">301-600 ($300)</option>
-                                        <option value="500">601-1000 ($500)</option>
-                                        <option value="1000">1001-2000 ($1000)</option>
-                                        <option value="1500">Over 2000 ($1500)</option>
+                                        <option value="250">Up to 300</option>
+                                        <option value="300">301-600</option>
+                                        <option value="500">601-1000</option>
+                                        <option value="1000">1001-2000</option>
+                                        <option value="1500">Over 2000</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Number of Accounts</label>
                                     <select name="accounts" value={bookkeepingData.accounts} onChange={handleBookkeepingChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="0">Up to 5</option>
-                                        <option value="50">5-10 (+$50)</option>
-                                        <option value="150">Over 10 (+$150)</option>
+                                        <option value="50">5-10</option>
+                                        <option value="150">Over 10</option>
                                     </select>
                                 </div>
                             </div>
@@ -411,23 +426,23 @@ export default function PricingCalculator() {
                                     <label>Merchant Processors?</label>
                                     <div className="selection-grid">
                                         <SelectionCard name="merchant" value="0" label="No" selected={bookkeepingData.merchant === '0'} onChange={handleBookkeepingChange} />
-                                        <SelectionCard name="merchant" value="100" label="Yes (+$100)" selected={bookkeepingData.merchant === '100'} onChange={handleBookkeepingChange} />
+                                        <SelectionCard name="merchant" value="100" label="Yes" selected={bookkeepingData.merchant === '100'} onChange={handleBookkeepingChange} />
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label>Loans/Leases?</label>
                                     <div className="selection-grid">
                                         <SelectionCard name="loans" value="0" label="No" selected={bookkeepingData.loans === '0'} onChange={handleBookkeepingChange} />
-                                        <SelectionCard name="loans" value="50" label="Yes (+$50)" selected={bookkeepingData.loans === '50'} onChange={handleBookkeepingChange} />
+                                        <SelectionCard name="loans" value="50" label="Yes" selected={bookkeepingData.loans === '50'} onChange={handleBookkeepingChange} />
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label>Depreciable Assets</label>
                                     <select name="assets" value={bookkeepingData.assets} onChange={handleBookkeepingChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
                                         <option value="0">0</option>
-                                        <option value="50">1-5 (+$50)</option>
-                                        <option value="100">6-10 (+$100)</option>
-                                        <option value="200">Over 10 (+$200)</option>
+                                        <option value="50">1-5</option>
+                                        <option value="100">6-10</option>
+                                        <option value="200">Over 10</option>
                                     </select>
                                 </div>
                             </div>
