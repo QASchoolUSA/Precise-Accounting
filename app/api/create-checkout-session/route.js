@@ -28,7 +28,7 @@ export async function POST(req) {
                 },
             ],
             mode: 'payment',
-            success_url: `${origin}/contact?success=true`,
+            success_url: `${origin}/success`,
             cancel_url: `${origin}/#calculator`,
         });
 

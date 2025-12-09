@@ -5,6 +5,11 @@ import Link from 'next/link';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isServicesOpen, setIsServicesOpen] = useState(false);
+
+    const toggleServices = () => {
+        setIsServicesOpen(!isServicesOpen);
+    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -36,7 +41,13 @@ export default function Header() {
                 <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
                     <ul>
                         <li><Link href="/" onClick={closeMenu}>Home</Link></li>
-                        <li><Link href="/services" onClick={closeMenu}>Services</Link></li>
+                        <li className={`dropdown ${isServicesOpen ? 'open' : ''}`}>
+                            <span className="dropdown-trigger" onClick={toggleServices}>Services ▾</span>
+                            <ul className="dropdown-menu">
+                                <li><Link href="/services/personal-tax" onClick={closeMenu}>Personal Tax Preparation</Link></li>
+                                <li><Link href="/services/business-tax" onClick={closeMenu}>Business Tax Preparation</Link></li>
+                            </ul>
+                        </li>
                         <li><Link href="/pricing" onClick={closeMenu}>Pricing</Link></li>
                         <li><Link href="/contact" className="btn btn-primary" onClick={closeMenu}>Contact Us</Link></li>
                     </ul>
