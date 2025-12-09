@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
-    trailingSlash: true, // Optional: helpful for static export
+    // output: 'export', // Disabled to support API routes (Stripe)
+    trailingSlash: true,
 };
 
 module.exports = nextConfig;

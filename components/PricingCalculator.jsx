@@ -212,6 +212,38 @@ export default function PricingCalculator() {
     const currentSteps = activeTab === 'tax' ? TAX_STEPS : BOOKKEEPING_STEPS;
     const totalSteps = currentSteps.length;
 
+    const handlePayment = async () => {
+        try {
+            const amount = parseFloat(totalAmount.replace('$', '').replace(',', ''));
+            if (!amount || amount <= 0) {
+                alert('Invalid amount for payment.');
+                return;
+            }
+
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    amount,
+                    serviceName: activeTab === 'tax' ? 'Tax Preparation' : 'Bookkeeping',
+                }),
+            });
+
+            const data = await response.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                console.error('No payment URL returned:', data);
+                alert('Failed to initiate payment. Please try again.');
+            }
+        } catch (error) {
+            console.error('Payment Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    };
+
     const nextStep = () => {
         if (step < totalSteps) setStep(step + 1);
     };
@@ -364,7 +396,7 @@ export default function PricingCalculator() {
                                 </p>
                                 <div className="result-actions">
                                     <Link href="/contact" className="btn btn-primary">Schedule Consultation</Link>
-                                    <Link href="/contact" className="btn btn-secondary-dark">Proceed Without Payment</Link>
+                                    <button onClick={handlePayment} className="btn btn-secondary-dark">Pay for Service</button>
                                 </div>
                             </div>
                         )}
@@ -491,7 +523,7 @@ export default function PricingCalculator() {
                                 </p>
                                 <div className="result-actions">
                                     <Link href="/contact" className="btn btn-primary">Schedule Consultation</Link>
-                                    <Link href="/contact" className="btn btn-secondary-dark">Proceed Without Payment</Link>
+                                    <button onClick={handlePayment} className="btn btn-secondary-dark">Pay for Service</button>
                                 </div>
                             </div>
                         )}
