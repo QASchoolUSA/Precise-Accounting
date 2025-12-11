@@ -55,7 +55,7 @@ export default function Home() {
                             <h3>Resources (Coming Soon)</h3>
                         </div> */}
                     </div>
-                    <div className="text-center" style={{ marginTop: '4rem' }}>
+                    <div className="text-center" style={{ marginTop: '1rem' }}>
                         <Link href="/services" className="btn btn-secondary-dark">View All Services</Link>
                     </div>
                 </div>
@@ -63,6 +63,7 @@ export default function Home() {
 
             <section className="values-section">
                 <div className="container">
+                    <h2 className="section-title text-center">Why Choose Us?</h2>
                     <div className="values-grid">
                         <div className="value-card">
                             <div className="value-icon">

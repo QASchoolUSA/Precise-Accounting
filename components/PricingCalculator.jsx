@@ -219,11 +219,8 @@ export default function PricingCalculator() {
 
     const handlePayment = async () => {
         try {
-            const amount = parseFloat(totalAmount.replace('$', '').replace(',', ''));
-            if (!amount || amount <= 0) {
-                alert('Invalid amount for payment.');
-                return;
-            }
+            const prepayAmount = 200;
+            const amount = prepayAmount;
 
             const response = await fetch('/api/create-checkout-session', {
                 method: 'POST',
@@ -412,8 +409,8 @@ export default function PricingCalculator() {
                                 </p>
                                 <div className="result-actions">
                                     <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>Submit a payment to reserve your place in our schedule and ensure your project is started promptly.</p>
-                                    <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                                     <button onClick={handlePayment} className="btn btn-primary">Reserve My Spot!</button>
+                                    <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                                 </div>
                             </div>
                         )}
@@ -532,7 +529,7 @@ export default function PricingCalculator() {
 
                         {step === 5 && (
                             <div className="step-slide result-section" style={{ padding: '0' }}>
-                                <h2 className="step-title">Your Bookkeeping Estimate</h2>
+                                <h2 className="step-title">Your Monthly Bookkeeping Estimate</h2>
                                 <div className="total-price">{totalAmount}</div>
                                 <p className="disclaimer">
                                     The amount above represents an approximate estimate only; final fees will be determined once we complete a comprehensive review.
