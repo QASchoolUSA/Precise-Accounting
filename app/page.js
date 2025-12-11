@@ -5,7 +5,7 @@ export default function Home() {
         <>
             <section id="home" className="hero">
                 <div className="container hero-content">
-                    <h1 className="hero-title">Professional Accounting & Tax Services</h1>
+                    <h1 className="hero-title">Precise Accounting</h1>
                     <p className="hero-text">
                         Welcome to Precise Accounting, a place where numbers meet clarity and where the job is done with care, precision, and full transparency.
                     </p>
@@ -15,6 +15,48 @@ export default function Home() {
                     <div className="hero-actions">
                         <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
                         <a href="#about" className="btn btn-secondary">About Us</a>
+                    </div>
+                </div>
+            </section>
+
+            <section className="section services-preview">
+                <div className="container">
+                    <h2 className="section-title text-center">Our Services</h2>
+                    <div className="services-grid-home">
+                        <div className="service-card-home" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.5rem' }}>
+                            <h3 style={{ marginBottom: '0.5rem' }}>Tax Preparation & Filing</h3>
+                            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                                <Link href="/services/personal-tax" className="btn btn-secondary-dark" style={{ fontSize: '0.85rem', padding: '0.5rem', width: '100%' }}>Personal</Link>
+                                <Link href="/services/business-tax" className="btn btn-secondary-dark" style={{ fontSize: '0.85rem', padding: '0.5rem', width: '100%' }}>Business</Link>
+                            </div>
+                        </div>
+                        <Link href="/services/estimated-tax" className="service-card-home">
+                            <h3>Estimated Tax</h3>
+                        </Link>
+                        <Link href="/services/tax-optimization" className="service-card-home">
+                            <h3>Tax Optimization & Planning</h3>
+                        </Link>
+                        <Link href="/services/books-reinstatement" className="service-card-home">
+                            <h3>Books & Financial Records Reinstatement</h3>
+                        </Link>
+                        <Link href="/services/payroll" className="service-card-home">
+                            <h3>Payroll Setup & Maintenance</h3>
+                        </Link>
+                        <Link href="/services/1099-filing" className="service-card-home">
+                            <h3>1099 Preparation & Filing</h3>
+                        </Link>
+                        <Link href="/services/sales-tax" className="service-card-home">
+                            <h3>Sales Tax</h3>
+                        </Link>
+                        <Link href="/services/new-business" className="service-card-home">
+                            <h3>New Business Entity Formation</h3>
+                        </Link>
+                        {/* <div className="service-card-home disabled">
+                            <h3>Resources (Coming Soon)</h3>
+                        </div> */}
+                    </div>
+                    <div className="text-center" style={{ marginTop: '4rem' }}>
+                        <Link href="/services" className="btn btn-secondary-dark">View All Services</Link>
                     </div>
                 </div>
             </section>
@@ -57,7 +99,7 @@ export default function Home() {
                     </div>
 
                     <div className="owner-profile">
-                        <h3 className="owner-title">Meet the Owner, Lana Korentsova</h3>
+                        <h3 className="owner-title">Meet the Owner, Iana Korentsova</h3>
                         <div className="owner-content">
                             <p>
                                 I bring over a decade of experience in finance and accounting, supported by a Master's degree in Mathematics and Statistics, giving me a strong analytical edge in everything I do.

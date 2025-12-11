@@ -24,7 +24,7 @@ export default function Contact() {
 
                             <div className="contact-item">
                                 <strong>Email:</strong>
-                                <a href="mailto:contact@gopreciseaccounting.com">contact@gopreciseaccounting.com</a>
+                                <a href="mailto:contact@proaccountingusa.com">contact@proaccountingusa.com</a>
                             </div>
                             <div className="contact-item">
                                 <strong>Call or Text:</strong>
@@ -50,12 +50,12 @@ export default function Contact() {
                             <div className="pricing-card">
                                 <h3>30 Minutes</h3>
                                 <p className="price">$150</p>
-                                <a href="#" className="btn btn-primary btn-full">Book Now</a>
+                                <Link href="/payment/consultation" className="btn btn-primary btn-full">Book Now</Link>
                             </div>
                             <div className="pricing-card mt-4">
                                 <h3>60 Minutes</h3>
                                 <p className="price">$250</p>
-                                <a href="#" className="btn btn-primary btn-full">Book Now</a>
+                                <Link href="/payment/consultation" className="btn btn-primary btn-full">Book Now</Link>
                             </div>
                         </div>
                     </div>

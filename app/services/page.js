@@ -42,7 +42,7 @@ export default function Services() {
                         <h3>Books & Financial Records Reinstatement</h3>
                         <p>Restore clarity and confidence in your financials. We clean up and reinstate neglected or outdated books, ensuring full readiness for tax season, lender evaluations, or audit requirements, so your business is always prepared and protected.</p>
                         <div className="service-actions">
-                            <Link href="/contact" className="btn btn-secondary-dark">Schedule a Consultation</Link>
+                            <Link href="/services/books-reinstatement" className="btn btn-secondary-dark">Learn More</Link>
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@ export default function Services() {
                         <h3>Estimated Tax</h3>
                         <p>The IRS requires self-employed taxpayers and business owners to pay taxes quarterly. Falling behind can result in penalties. We determine accurate quarterly amounts for you and guide you through the schedule.</p>
                         <div className="service-actions">
-                            <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
+                            <Link href="/services/estimated-tax" className="btn btn-secondary-dark">Learn More</Link>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ export default function Services() {
                     <h2 className="section-title">Tax Optimization & Financial Planning</h2>
                     <p>When tax season arrives, there are usually only a few limited things we can still do to legally reduce your tax liability. Effective tax strategy is built on proactive planning, not last-minute fixes. That applies to both personal and business taxes. Take action now, while the options are open and the impact is meaningful.</p>
                     <div className="service-actions mt-4">
-                        <Link href="/contact" className="btn btn-secondary-dark">Let's build a proactive strategy</Link>
+                        <Link href="/services/tax-optimization" className="btn btn-secondary-dark">Let's build a proactive strategy</Link>
                     </div>
                 </div>
             </section>
@@ -85,25 +85,25 @@ export default function Services() {
                         <div className="service-card-small">
                             <h3>Payroll Setup & Maintenance</h3>
                             <p>We take care of the entire process for you, from setup to ongoing maintenance, making sure everything is accurate, compliant, and reported correctly. Pricing varies based on employees, frequency, multi-state needs, benefits, and compliance requirements.</p>
-                            <Link href="/pricing" className="text-link">Get a Price Estimate →</Link>
+                            <Link href="/services/payroll" className="text-link">Get a Price Estimate →</Link>
                         </div>
 
                         <div className="service-card-small">
                             <h3>1099 Preparation & Filing</h3>
                             <p>Fast, accurate 1099 filing for your contractors, including preparation, IRS submission, and recipient copies.</p>
-                            <Link href="/contact" className="text-link">Contact Us →</Link>
+                            <Link href="/services/1099-filing" className="text-link">Learn More →</Link>
                         </div>
 
                         <div className="service-card-small">
                             <h3>Sales Tax</h3>
                             <p>Accurate multi-state sales tax calculation, filing, and compliance.</p>
-                            <Link href="/contact" className="text-link">Contact Us →</Link>
+                            <Link href="/services/sales-tax" className="text-link">Learn More →</Link>
                         </div>
 
                         <div className="service-card-small">
                             <h3>New Business Entity Formation</h3>
                             <p>We help you choose the right structure, file the required documents, and set up your business properly.</p>
-                            <Link href="/contact" className="text-link">Contact Us →</Link>
+                            <Link href="/services/new-business" className="text-link">Learn More →</Link>
                         </div>
                     </div>
                 </div>

@@ -121,6 +121,10 @@ export default function PricingCalculator() {
                 setTotalAmount("Custom Quote");
                 setShowInternationalMsg(true);
                 return;
+            } else if (['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(taxData.state)) {
+                setTotalAmount("Estimate Unavailable");
+                // Message handled in render
+                return;
             } else {
                 setShowInternationalMsg(false);
             }
@@ -165,7 +169,8 @@ export default function PricingCalculator() {
         setTaxData(prev => ({ ...prev, [name]: value }));
 
         // Auto-advance logic
-        if (value && value !== 'custom') {
+        const blockedStates = ['custom', 'California', 'Oregon', 'Pennsylvania', 'Maryland'];
+        if (value && !blockedStates.includes(value)) {
             setTimeout(() => {
                 nextStep();
             }, 500);
@@ -245,7 +250,13 @@ export default function PricingCalculator() {
     };
 
     const nextStep = () => {
-        if (step < totalSteps) setStep(step + 1);
+        if (step < totalSteps) {
+            if (activeTab === 'tax' && step === 1) {
+                const blockedStates = ['custom', 'California', 'Oregon', 'Pennsylvania', 'Maryland'];
+                if (blockedStates.includes(taxData.state)) return;
+            }
+            setStep(step + 1);
+        }
     };
 
     const prevStep = () => {
@@ -317,12 +328,17 @@ export default function PricingCalculator() {
                                         <option value="custom">I do NOT reside in the USA</option>
                                         <optgroup label="United States">
                                             {SORTED_STATES.map(stateName => (
-                                                <option key={stateName} value={stateName}>
-                                                    {stateName}
+                                                <option key={stateName} value={stateName} disabled={['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName)}>
+                                                    {stateName} {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName) ? '(Unavailable)' : ''}
                                                 </option>
                                             ))}
                                         </optgroup>
                                     </select>
+                                    {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(taxData.state) && (
+                                        <div className="info-box error" style={{ marginTop: '1rem', color: 'red', borderColor: 'red' }}>
+                                            Sorry - we can’t generate an estimate for this state at this time.
+                                        </div>
+                                    )}
                                     {showInternationalMsg && (
                                         <div className="info-box" style={{ marginTop: '1rem' }}>
                                             Because you are currently outside the USA, your pricing requires a more detailed review. Please reach out for a custom estimate.
@@ -395,8 +411,9 @@ export default function PricingCalculator() {
                                     The amount above represents an approximate estimate only; final fees will be determined once we complete a comprehensive review.
                                 </p>
                                 <div className="result-actions">
-                                    <Link href="/contact" className="btn btn-primary">Schedule Consultation</Link>
-                                    <button onClick={handlePayment} className="btn btn-secondary-dark">Pay for Service</button>
+                                    <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>Submit a payment to reserve your place in our schedule and ensure your project is started promptly.</p>
+                                    <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
+                                    <button onClick={handlePayment} className="btn btn-primary">Reserve My Spot!</button>
                                 </div>
                             </div>
                         )}
@@ -420,8 +437,7 @@ export default function PricingCalculator() {
                                 <div className="form-group">
                                     <label>Accounting Method</label>
                                     <div className="selection-grid">
-                                        <SelectionCard name="method" value="1" label="Cash / Not Sure" selected={bookkeepingData.method === '1'} onChange={handleBookkeepingChange} />
-                                        <SelectionCard name="method" value="2" label="Accrual (x2 Rate)" selected={bookkeepingData.method === '2'} onChange={handleBookkeepingChange} />
+                                        <SelectionCard name="method" value="1" label="Cash" selected={true} onChange={() => { }} />
                                     </div>
                                 </div>
                             </div>
@@ -523,7 +539,7 @@ export default function PricingCalculator() {
                                 </p>
                                 <div className="result-actions">
                                     <Link href="/contact" className="btn btn-primary">Schedule Consultation</Link>
-                                    <button onClick={handlePayment} className="btn btn-secondary-dark">Pay for Service</button>
+                                    <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                                 </div>
                             </div>
                         )}
