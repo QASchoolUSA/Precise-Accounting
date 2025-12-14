@@ -48,6 +48,15 @@ export default function BusinessTaxPage() {
                             Schedule a Consultation
                         </Link>
                     </div>
+
+                    <div className="cta mt-8">
+                        <h3 className="cta-title">Got a question?</h3>
+                        <p className="cta-subtitle">Speak with a specialist or book a consultation.</p>
+                        <div className="cta-actions">
+                            <Link href="https://cal.com/precise-accounting" className="btn btn-primary">Schedule Consultation</Link>
+                            <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

@@ -387,6 +387,63 @@ main {
     font-weight: 600;
 }
 
+/* How It Works */
+.hiw {
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.step-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+}
+
+/* CTA Section */
+.cta {
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    text-align: center;
+}
+
+.cta-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-brand);
+    font-weight: 700;
+}
+
+.cta-subtitle {
+    color: var(--color-text-light);
+    margin-bottom: 1.25rem;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 /* Contact */
 .contact-container {
     max-width: 1000px;

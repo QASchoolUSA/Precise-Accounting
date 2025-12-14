@@ -73,26 +73,13 @@ export default function PersonalTaxPage() {
                         </p>
                     </div>
 
-                    <div style={{
-                        backgroundColor: 'var(--color-bg-alt)',
-                        padding: '2.5rem',
-                        borderRadius: 'var(--radius-lg)',
-                        border: '1px solid var(--color-border)',
-                        textAlign: 'center'
-                    }}>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--color-brand)' }}>
-                            Ready to file with confidence?
-                        </h3>
-
-                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                            <Link href="/pricing" className="btn btn-primary">
-                                Get a Price Estimate
-                            </Link>
-                            <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark">
-                                Schedule a Consultation
-                            </Link>
+                    <div className="cta mt-8">
+                        <h3 className="cta-title">Ready to file with confidence?</h3>
+                        <p className="cta-subtitle">Get an estimate or speak with a specialist.</p>
+                        <div className="cta-actions">
+                            <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
+                            <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark">Schedule a Consultation</Link>
                         </div>
-
                         <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--color-text-light)', fontStyle: 'italic' }}>
                             *Before you begin: the quote shown will be an estimated amount, not a final price.
                             We'll confirm the exact fee after a detailed review of your documents, your situation and complexity.
