@@ -56,6 +56,7 @@ export default function Header() {
                             <ul className="dropdown-menu">
                                 <li><Link href="/services/personal-tax" onClick={closeMenu}>Personal Tax Preparation</Link></li>
                                 <li><Link href="/services/business-tax" onClick={closeMenu}>Business Tax Preparation</Link></li>
+                                <li><Link href="/services/accounting-bookkeeping" onClick={closeMenu}>Accounting & Bookkeeping</Link></li>
                                 <li><Link href="/services/estimated-tax" onClick={closeMenu}>Estimated Tax</Link></li>
                                 <li><Link href="/services/tax-optimization" onClick={closeMenu}>Tax Optimization & Planning</Link></li>
                                 <li><Link href="/services/books-reinstatement" onClick={closeMenu}>Books & Records Reinstatement</Link></li>

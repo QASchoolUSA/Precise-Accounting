@@ -18,12 +18,16 @@ export default function BooksReinstatementServices() {
             <section className="section">
                 <div className="container">
                     <div className="service-content" style={{ maxWidth: '800px', margin: '0 auto' }}>
-                        <p className="mb-6">Restore clarity and confidence in your financials. We clean up and reinstate neglected or outdated books, ensuring full readiness for tax season, lender evaluations, or audit requirements.</p>
-                        <p className="mb-6">Whether you've fallen behind due to rapid growth or simply need a fresh start, our reinstatement services ensure your business is always prepared, protected, and compliant.</p>
+                        <p className="mb-6">Restore clarity and confidence in your financials. We clean up and reinstate neglected or outdated books, ensuring full readiness for tax season, lender evaluations, or audit requirements, so your business is always prepared and protected.</p>
+                        <p className="mb-6">Ready to get your financial records back on track?</p>
 
                         <div className="service-actions mt-8 text-center">
-                            <Link href="/contact" className="btn btn-primary mr-4">Schedule Consultation</Link>
+                            <Link href="https://cal.com/precise-accounting" className="btn btn-primary mr-4">Schedule Consultation</Link>
                             <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
+                        </div>
+                        <div className="mt-8">
+                            <p className="mb-6">Falling behind on books happens, especially when a business is growing fast. But inaccurate financials can lead to IRS issues, cash-flow problems, denied funding, and costly tax amendments.</p>
+                            <p className="mb-6">We step in and restore full accuracy: missing records re-created, errors corrected, accounts aligned, and everything prepared to meet tax or audit standards. You’ll walk away with clean, organized books and a renewed sense of control over your business.</p>
                         </div>
                     </div>
                 </div>

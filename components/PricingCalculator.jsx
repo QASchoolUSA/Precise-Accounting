@@ -535,7 +535,7 @@ export default function PricingCalculator() {
                                     The amount above represents an approximate estimate only; final fees will be determined once we complete a comprehensive review.
                                 </p>
                                 <div className="result-actions">
-                                    <Link href="/contact" className="btn btn-primary">Schedule Consultation</Link>
+                                    <Link href="https://cal.com/precise-accounting" className="btn btn-primary">Schedule Consultation</Link>
                                     <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                                 </div>
                             </div>

@@ -19,9 +19,11 @@ export default function Form1099Services() {
                 <div className="container">
                     <div className="service-content" style={{ maxWidth: '800px', margin: '0 auto' }}>
                         <p className="mb-6">We provide fast, accurate 1099 filing for your contractors, including preparation, IRS submission, and recipient copies. Ensure you meet all deadlines and avoid potential penalties with our streamlined service.</p>
+                        <p className="mb-6">Even a single missing or incorrect contractor form can lead to IRS notices and penalties. We review payments, verify contractor details, prepare all required forms, and file electronically with the IRS ensuring full compliance and timely delivery.</p>
+                        <p className="mb-6">Perfect for business owners who want to eliminate paperwork stress and protect their business from avoidable fines.</p>
 
                         <div className="service-actions mt-8 text-center">
-                            <Link href="/contact" className="btn btn-primary mr-4">Schedule Consultation</Link>
+                            <Link href="https://cal.com/precise-accounting" className="btn btn-primary mr-4">Schedule Consultation</Link>
                             <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                         </div>
                     </div>

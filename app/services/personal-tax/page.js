@@ -55,6 +55,24 @@ export default function PersonalTaxPage() {
                         Your information is safe. Your rights are protected.
                     </div>
 
+                    <div style={{ marginBottom: '2rem' }}>
+                        <p style={{ marginBottom: '1.25rem' }}>
+                            Your life isn’t one-size-fits-all – and your tax return shouldn’t be either. We take time to understand the full picture of your income, deductions, credits, and personal circumstances so nothing gets overlooked. Whether you're a W-2 employee, self-employed, a homeowner, a freelancer, a non-resident, or have investment and rental income – we tailor your return to ensure every lawful benefit is used to your advantage.
+                        </p>
+                        <p style={{ marginBottom: '1.25rem' }}>
+                            Many taxpayers accidentally overpay or expose themselves to risk by filing alone. We protect you from IRS issues and help you avoid missing out on valuable tax savings you are entitled to. With Precise Accounting by your side, you gain clarity, confidence, and peace of mind – every step of the way.
+                        </p>
+                        <p style={{ marginBottom: '1.25rem' }}>
+                            We also specialize in working with immigrants from post-USSR countries — including Russia, Ukraine, Belarus, Kazakhstan, Uzbekistan, and others. We understand the unique tax situations involving foreign income, ITIN, visa status, U.S. tax residency rules, and new-to-the-system taxpayers. We provide explanations in simple language and help navigate the U.S. tax system with confidence.
+                        </p>
+                        <p style={{ marginBottom: '1.25rem' }}>
+                            We proudly serve clients locally in Central Florida including Orlando, Kissimmee, Lake Nona, Winter Garden, Windermere, Altamonte Springs, Sanford — and remotely across Florida and other states. With secure digital tools, expert support is always within reach, no matter where you live or move.
+                        </p>
+                        <p style={{ marginBottom: '1.25rem' }}>
+                            Whether you need help with IRS notices, education credits, child tax benefits, rental property reporting, gig-work, or international tax considerations, we make the process smooth, organized, and stress-free.
+                        </p>
+                    </div>
+
                     <div style={{
                         backgroundColor: 'var(--color-bg-alt)',
                         padding: '2.5rem',
@@ -70,7 +88,7 @@ export default function PersonalTaxPage() {
                             <Link href="/pricing" className="btn btn-primary">
                                 Get a Price Estimate
                             </Link>
-                            <Link href="/contact" className="btn btn-secondary-dark">
+                            <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark">
                                 Schedule a Consultation
                             </Link>
                         </div>

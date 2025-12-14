@@ -18,11 +18,16 @@ export default function SalesTaxServices() {
             <section className="section">
                 <div className="container">
                     <div className="service-content" style={{ maxWidth: '800px', margin: '0 auto' }}>
-                        <p className="mb-6">Navigating sales tax rules can be complex. We provide accurate multi-state sales tax calculation, filing, and compliance services to ensure your business meets its obligations in every jurisdiction it operates in.</p>
+                        <p className="mb-6">Accurate multi-state sales tax calculation, filing, and compliance.</p>
+                        <p className="mb-6">We help ensure you’re charging, tracking, and remitting sales tax correctly, no matter how complex your sales channels are.</p>
 
                         <div className="service-actions mt-8 text-center">
                             <Link href="/contact" className="btn btn-primary mr-4">Schedule Consultation</Link>
                             <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
+                        </div>
+                        <div className="mt-8">
+                            <p className="mb-6">Sales tax rules can vary not only by state but by county, product type, and sales channel. We help you understand where your obligations begin, how to stay compliant with nexus requirements, and how to set up systems that ensure accurate collection and reporting.</p>
+                            <p className="mb-6">Whether you operate locally in Florida or sell nationwide online we simplify compliance and reduce risk.</p>
                         </div>
                     </div>
                 </div>
