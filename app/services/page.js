@@ -26,7 +26,7 @@ export default function Services() {
                         <p>At Precise Accounting, we follow the highest standards of professional ethics, confidentiality, and compliance required by the IRS, and U.S. Treasury Department. Your information is safe. Your rights are protected.</p>
                         <div className="service-actions">
                             <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
-                            <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark">Schedule a Consultation</Link>
+                            <Link href="/payment/consultation" className="btn btn-secondary-dark">Schedule a Consultation</Link>
                         </div>
                     </div>
 
@@ -34,7 +34,7 @@ export default function Services() {
                         <h3>Business Tax</h3>
                         <p>We offer hands-on, detail-driven business tax preparation for corporations, partnerships, and self-employed, giving you the support of a trusted professional.</p>
                         <div className="service-actions">
-                            <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark">Schedule a Consultation</Link>
+                            <Link href="/payment/consultation" className="btn btn-secondary-dark">Schedule a Consultation</Link>
                         </div>
                     </div>
 
@@ -74,7 +74,7 @@ export default function Services() {
                     <p>We manage your books with the same level of detail and care as if they were our own. Every transaction is categorized correctly, every account reconciled, and every report delivered on schedule—giving you full visibility into your business performance without the burden of doing it yourself.</p>
                     <div className="service-actions mt-4">
                         <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
-                        <Link href="/contact" className="btn btn-secondary-dark">Schedule a Consultation</Link>
+                        <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark" target="_blank">Schedule a Consultation</Link>
                     </div>
                 </div>
             </section>

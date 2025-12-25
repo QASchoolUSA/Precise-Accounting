@@ -34,6 +34,16 @@ export default function PricingCalculator() {
         foreignTrans: 'no'
     });
 
+    // Request Form State
+    const [showRequestForm, setShowRequestForm] = useState(false);
+    const [requestForm, setRequestForm] = useState({
+        name: '',
+        email: '',
+        phone: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error'
+
     // Validations & Pricing Maps
     const FILING_PRICES = {
         'single': 0,
@@ -195,6 +205,54 @@ export default function PricingCalculator() {
     const handleBookkeepingChange = (e) => {
         const { name, value } = e.target;
         setBookkeepingData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleRequestChange = (e) => {
+        const { name, value } = e.target;
+        setRequestForm(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSendRequest = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus(null);
+
+        try {
+            const calculatorData = activeTab === 'tax' ? {
+                ...taxData,
+                situationIndices: Array.from(taxData.situationIndices).map(i => situationOptions[i].label).join(', '),
+                situations: undefined, // remove raw values
+                totalEstimate: totalAmount
+            } : {
+                ...bookkeepingData,
+                totalEstimate: totalAmount
+            };
+
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: requestForm.name,
+                    email: requestForm.email,
+                    phone: requestForm.phone,
+                    service: `Estimate Request - ${activeTab === 'tax' ? 'Tax Preparation' : 'Bookkeeping'}`,
+                    calculatorData
+                }),
+            });
+
+            if (response.ok) {
+                setSubmitStatus('success');
+                setShowRequestForm(false);
+                // Optional: Clear form or reset
+            } else {
+                setSubmitStatus('error');
+            }
+        } catch (error) {
+            console.error(error);
+            setSubmitStatus('error');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     // --- STEPPER LOGIC ---
@@ -407,11 +465,45 @@ export default function PricingCalculator() {
                                 <p className="disclaimer">
                                     The amount above represents an approximate estimate only; final fees will be determined once we complete a comprehensive review.
                                 </p>
-                                <div className="result-actions">
-                                    <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>Submit a payment to reserve your place in our schedule and ensure your project is started promptly.</p>
-                                    <button onClick={handlePayment} className="btn btn-primary">Reserve My Spot!</button>
-                                    <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
-                                </div>
+
+                                {submitStatus === 'success' ? (
+                                    <div className="info-box success" style={{ margin: '1rem 0', color: 'green', borderColor: 'green' }}>
+                                        <p><strong>Request Sent!</strong> We've received your estimate request and will be in touch shortly.</p>
+                                    </div>
+                                ) : showRequestForm ? (
+                                    <div className="request-form-overlay" style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
+                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Send My Request</h3>
+                                        <form onSubmit={handleSendRequest}>
+                                            <div className="form-group">
+                                                <label>Name</label>
+                                                <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Email</label>
+                                                <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Phone</label>
+                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} />
+                                            </div>
+                                            <div className="form-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+                                                <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
+                                                    {isSubmitting ? 'Sending...' : 'Submit Request'}
+                                                </button>
+                                                <button type="button" className="btn btn-secondary" onClick={() => setShowRequestForm(false)}>Cancel</button>
+                                            </div>
+                                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem' }}>Failed to send. Please try again.</p>}
+                                        </form>
+                                    </div>
+                                ) : (
+                                    <div className="result-actions">
+                                        <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
+                                            To reserve your spot and start the process, we require a <strong>$200 initial deposit</strong>. This amount will be credited towards your final fee.
+                                        </p>
+                                        <button onClick={handlePayment} className="btn btn-primary">Reserve My Spot!</button>
+                                        <button onClick={() => setShowRequestForm(true)} className="btn btn-secondary-dark">Send My Request</button>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </>
@@ -534,10 +626,42 @@ export default function PricingCalculator() {
                                 <p className="disclaimer">
                                     The amount above represents an approximate estimate only; final fees will be determined once we complete a comprehensive review.
                                 </p>
-                                <div className="result-actions">
-                                    <Link href="https://cal.com/precise-accounting" className="btn btn-primary">Schedule Consultation</Link>
-                                    <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
-                                </div>
+
+                                {submitStatus === 'success' ? (
+                                    <div className="info-box success" style={{ margin: '1rem 0', color: 'green', borderColor: 'green' }}>
+                                        <p><strong>Request Sent!</strong> We've received your estimate request and will be in touch shortly.</p>
+                                    </div>
+                                ) : showRequestForm ? (
+                                    <div className="request-form-overlay" style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
+                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Send My Request</h3>
+                                        <form onSubmit={handleSendRequest}>
+                                            <div className="form-group">
+                                                <label>Name</label>
+                                                <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Email</label>
+                                                <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Phone</label>
+                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} />
+                                            </div>
+                                            <div className="form-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+                                                <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
+                                                    {isSubmitting ? 'Sending...' : 'Submit Request'}
+                                                </button>
+                                                <button type="button" className="btn btn-secondary" onClick={() => setShowRequestForm(false)}>Cancel</button>
+                                            </div>
+                                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem' }}>Failed to send. Please try again.</p>}
+                                        </form>
+                                    </div>
+                                ) : (
+                                    <div className="result-actions">
+                                        <button onClick={() => setShowRequestForm(true)} className="btn btn-primary">Send My Request</button>
+                                        <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </>

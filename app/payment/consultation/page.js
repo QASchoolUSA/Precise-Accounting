@@ -1,46 +1,33 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function ConsultationPayment() {
+    const searchParams = useSearchParams();
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [termsOpen, setTermsOpen] = useState(false);
 
-    const handlePayment = async () => {
+    const handleBooking = () => {
         if (!termsAccepted) {
             alert("Please read and agree to the Consultation Engagement Terms before proceeding.");
             return;
         }
 
-        // Use existing payment API logic
-        try {
-            // Hardcoded amount for consultation for now, or could pass via query params.
-            // Assuming 150 for 30 min as per Contact page or generic checkout.
-            // But actually, the contact page had specific buttons for 30 ($150) and 60 ($250).
-            // This page should probably handle both or generic "Consultation".
-            // For now I'll default to a generic "Consultation Deposit" or similar, or just alert as placeholders if backend not ready.
-            // But the user requested "Payment Page: Consultation".
+        const calUrl = 'https://cal.com/precise-accounting';
 
-            // I'll assume this page is reached via a query param ?amount=150 or similar, 
-            // or I'll just hardcode a placeholder action that calls the same API.
-            // In PricingCalculator, it calls /api/create-checkout-session with { amount, serviceName }.
+        // We can pass params to Cal.com if needed, but for now a direct redirect is fine per request
+        // const amount = searchParams.get('amount') || 150;
+        // const desc = searchParams.get('desc') || 'Consultation';
 
-            // For simplicity I will prompt or assume a fixed amount or let user pick? 
-            // The prompt implies "Payment Page: Consultation".
-            // I'll make it generic.
-
-            alert("Redirecting to payment provider...");
-            // logic to call api would go here.
-        } catch (error) {
-            console.error(error);
-        }
+        window.location.href = calUrl;
     };
 
     return (
         <>
             <section className="page-header">
                 <div className="container">
-                    <h1 className="page-title">Consultation Payment</h1>
+                    <h1 className="page-title">Consultation Booking</h1>
                 </div>
             </section>
 
@@ -49,8 +36,8 @@ export default function ConsultationPayment() {
                     <div className="payment-content" style={{ maxWidth: '600px', margin: '0 auto' }}>
 
                         <div className="intro-text mb-6">
-                            <h2 className="section-title text-left" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Consultation Booking</h2>
-                            <p>Secure your professional consultation with Precise Accounting LLC.</p>
+                            <h2 className="section-title text-left" style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Book Your Consultation</h2>
+                            <p>Please review and accept the terms below to proceed to booking.</p>
                         </div>
 
                         <div className="terms-box" style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '1.5rem', marginBottom: '2rem' }}>
@@ -61,7 +48,7 @@ export default function ConsultationPayment() {
 
                             {termsOpen && (
                                 <div className="terms-body" style={{ fontSize: '0.9rem', color: '#555', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
-                                    <p className="mb-2"><strong>Precise Accounting LLC</strong><br />Payment confirms that you have reviewed and agreed to these terms.</p>
+                                    <p className="mb-2"><strong>Precise Accounting LLC</strong><br />Booking confirms that you have reviewed and agreed to these terms.</p>
 
                                     <h4 className="font-bold mt-4 mb-1">Scope of Services</h4>
                                     <p className="mb-2">A paid consultation provides professional guidance and answers to your questions related to tax matters, bookkeeping, and general tax optimization strategies. Advice is based solely on the information you provide and limited to the time scheduled.</p>
@@ -110,11 +97,11 @@ export default function ConsultationPayment() {
 
                         <button
                             className={`btn btn-primary btn-full ${!termsAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            onClick={handlePayment}
+                            onClick={handleBooking}
                             disabled={!termsAccepted}
                             style={{ width: '100%' }}
                         >
-                            Proceed to Payment
+                            Proceed to Booking
                         </button>
 
                     </div>

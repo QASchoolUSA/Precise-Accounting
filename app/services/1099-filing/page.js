@@ -26,7 +26,7 @@ export default function Form1099Services() {
                             <h3 className="cta-title">Got a question?</h3>
                             <p className="cta-subtitle">Speak with a specialist or book a consultation.</p>
                             <div className="cta-actions">
-                                <Link href="https://cal.com/precise-accounting" className="btn btn-primary">Schedule Consultation</Link>
+                                <Link href="/payment/consultation" className="btn btn-primary">Schedule Consultation</Link>
                                 <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                             </div>
                         </div>

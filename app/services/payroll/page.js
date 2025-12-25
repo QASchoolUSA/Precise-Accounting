@@ -42,7 +42,7 @@ export default function PayrollService() {
                         </div>
 
                         <div className="service-actions mt-8 text-center">
-                            <Link href="/contact" className="btn btn-primary mr-4">Schedule Consultation</Link>
+                            <Link href="/payment/consultation" className="btn btn-primary mr-4">Schedule Consultation</Link>
                             <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                         </div>
                     </div>

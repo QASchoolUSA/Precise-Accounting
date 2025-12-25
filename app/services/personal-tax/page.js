@@ -43,6 +43,19 @@ export default function PersonalTaxPage() {
                         </ul>
                     </div>
 
+                    <div className="cta mb-12">
+                        <h3 className="cta-title">Ready to file with confidence?</h3>
+                        <p className="cta-subtitle">Get an estimate or speak with a specialist.</p>
+                        <div className="cta-actions">
+                            <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
+                            <Link href="/payment/consultation" className="btn btn-secondary-dark">Schedule a Consultation</Link>
+                        </div>
+                        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--color-text-light)', fontStyle: 'italic' }}>
+                            *Before you begin: the quote shown will be an estimated amount, not a final price.
+                            We'll confirm the exact fee after a detailed review of your documents, your situation and complexity.
+                        </p>
+                    </div>
+
                     <p style={{ marginBottom: '2rem', fontSize: '1.1rem', lineHeight: '1.7' }}>
                         Our goal is to help you stay fully compliant while uncovering every opportunity
                         to maximize your refund or reduce your tax burden legally. You'll always know
@@ -73,18 +86,7 @@ export default function PersonalTaxPage() {
                         </p>
                     </div>
 
-                    <div className="cta mt-8">
-                        <h3 className="cta-title">Ready to file with confidence?</h3>
-                        <p className="cta-subtitle">Get an estimate or speak with a specialist.</p>
-                        <div className="cta-actions">
-                            <Link href="/pricing" className="btn btn-primary">Get a Price Estimate</Link>
-                            <Link href="https://cal.com/precise-accounting" className="btn btn-secondary-dark">Schedule a Consultation</Link>
-                        </div>
-                        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--color-text-light)', fontStyle: 'italic' }}>
-                            *Before you begin: the quote shown will be an estimated amount, not a final price.
-                            We'll confirm the exact fee after a detailed review of your documents, your situation and complexity.
-                        </p>
-                    </div>
+
                 </div>
             </section>
         </>

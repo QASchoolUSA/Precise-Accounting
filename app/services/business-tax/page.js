@@ -33,27 +33,13 @@ export default function BusinessTaxPage() {
                         </p>
                     </div>
 
-                    <div style={{
-                        backgroundColor: 'var(--color-bg-alt)',
-                        padding: '3rem',
-                        borderRadius: 'var(--radius-lg)',
-                        border: '1px solid var(--color-border)',
-                        textAlign: 'center'
-                    }}>
-                        <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem', color: 'var(--color-brand)' }}>
-                            Want to get your business taxes handled the right way?
-                        </h2>
 
-                        <Link href="https://cal.com/precise-accounting" className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem' }}>
-                            Schedule a Consultation
-                        </Link>
-                    </div>
 
                     <div className="cta mt-8">
                         <h3 className="cta-title">Got a question?</h3>
                         <p className="cta-subtitle">Speak with a specialist or book a consultation.</p>
                         <div className="cta-actions">
-                            <Link href="https://cal.com/precise-accounting" className="btn btn-primary">Schedule Consultation</Link>
+                            <Link href="/payment/consultation" className="btn btn-primary">Schedule Consultation</Link>
                             <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                         </div>
                     </div>

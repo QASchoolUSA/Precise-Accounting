@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ContactForm from '@/components/ContactForm';
 
 export const metadata = {
     title: 'Contact | Precise Accounting',
@@ -19,29 +20,33 @@ export default function Contact() {
                 <div className="container contact-container">
                     <div className="contact-methods">
                         <div className="contact-info">
-                            <h2>Get in Touch</h2>
-                            <p className="mb-4">We're text- and messenger-friendly!</p>
+                            <ContactForm />
 
-                            <div className="contact-item">
-                                <strong>Email:</strong>
-                                <a href="mailto:contact@proaccountingusa.com">contact@proaccountingusa.com</a>
-                            </div>
-                            <div className="contact-item">
-                                <strong>Call or Text:</strong>
-                                <a href="tel:+14079667778">+1(407) 966-7778</a>
-                            </div>
-                            <div className="contact-item">
-                                <strong>WhatsApp:</strong>
-                                <a href="https://wa.me/message/QAOEHLU4XRVHL1" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a>
-                            </div>
+                            <div className="mt-8 pt-8 border-t border-gray-200">
+                                <h2>Other Ways to Connect</h2>
+                                <p className="mb-4">We're text- and messenger-friendly!</p>
 
-                            <div className="social-links mt-6">
-                                <h3>Follow us:</h3>
-                                <ul>
-                                    <li><a href="https://www.instagram.com/precisetaxes" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                                    <li><a href="https://t.me/precisetaxes" target="_blank" rel="noopener noreferrer">Telegram</a></li>
-                                    <li><a href="https://facebook.com/groups/1395083481908820/" target="_blank" rel="noopener noreferrer">Facebook Group</a></li>
-                                </ul>
+                                <div className="contact-item">
+                                    <strong>Email:</strong>
+                                    <a href="mailto:contact@proaccountingusa.com">contact@proaccountingusa.com</a>
+                                </div>
+                                <div className="contact-item">
+                                    <strong>Call or Text:</strong>
+                                    <a href="tel:+14079667778">+1(407) 966-7778</a>
+                                </div>
+                                <div className="contact-item">
+                                    <strong>WhatsApp:</strong>
+                                    <a href="https://wa.me/message/QAOEHLU4XRVHL1" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a>
+                                </div>
+
+                                <div className="social-links mt-6">
+                                    <h3>Follow us:</h3>
+                                    <ul>
+                                        <li><a href="https://www.instagram.com/precisetaxes" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                                        <li><a href="https://t.me/precisetaxes" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                                        <li><a href="https://facebook.com/groups/1395083481908820/" target="_blank" rel="noopener noreferrer">Facebook Group</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
@@ -50,12 +55,12 @@ export default function Contact() {
                             <div className="pricing-card">
                                 <h3>30 Minutes</h3>
                                 <p className="price">$150</p>
-                                <Link href="/payment/consultation" className="btn btn-primary btn-full">Book Now</Link>
+                                <Link href="/payment/consultation?amount=150&desc=30+Minute+Consultation" className="btn btn-primary btn-full">Book Now</Link>
                             </div>
                             <div className="pricing-card mt-4">
                                 <h3>60 Minutes</h3>
                                 <p className="price">$250</p>
-                                <Link href="/payment/consultation" className="btn btn-primary btn-full">Book Now</Link>
+                                <Link href="/payment/consultation?amount=250&desc=60+Minute+Consultation" className="btn btn-primary btn-full">Book Now</Link>
                             </div>
                         </div>
                     </div>

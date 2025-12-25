@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,14 +30,9 @@ export default function Header() {
         <header className="header">
             <div className="container header-container">
                 <Link href="/" className="logo" onClick={closeMenu}>
-                    <Image
-                        src="/PreciseAccountingUSA-Logo.svg"
-                        alt="Precise Accounting USA"
-                        width={200}
-                        height={50}
-                        style={{ height: '50px', width: 'auto' }}
-                        priority
-                    />
+                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
+                        Precise Accounting
+                    </span>
                 </Link>
                 <button
                     className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
