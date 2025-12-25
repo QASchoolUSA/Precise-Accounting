@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { name, phone, email, businessName, service } = body;
+        const { name, phone, email, businessName, service, calculatorData, subject } = body;
 
         // Validation
         if (!name || !phone || !email || !service) {
@@ -31,7 +31,7 @@ export async function POST(request) {
         const mailOptions = {
             from: process.env.EMAIL_USER, // Sender address
             to: 'contact@proaccountingusa.com', // Receiver address
-            subject: `New Lead: ${name} - ${service}`,
+            subject: subject || `New Lead: ${name} - ${service}`,
             text: `
 New Lead from Website Contact Form:
 

@@ -43,6 +43,7 @@ export default function PricingCalculator() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error'
+    const [isPaymentFlow, setIsPaymentFlow] = useState(false);
 
     // Validations & Pricing Maps
     const FILING_PRICES = {
@@ -228,6 +229,8 @@ export default function PricingCalculator() {
                 totalEstimate: totalAmount
             };
 
+            const subject = isPaymentFlow ? 'New Service Request' : `Estimate Request - ${activeTab === 'tax' ? 'Tax Preparation' : 'Bookkeeping'}`;
+
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -235,15 +238,20 @@ export default function PricingCalculator() {
                     name: requestForm.name,
                     email: requestForm.email,
                     phone: requestForm.phone,
-                    service: `Estimate Request - ${activeTab === 'tax' ? 'Tax Preparation' : 'Bookkeeping'}`,
+                    service: isPaymentFlow ? `Booking Attempt - ${activeTab}` : subject,
+                    subject: subject,
                     calculatorData
                 }),
             });
 
             if (response.ok) {
-                setSubmitStatus('success');
-                setShowRequestForm(false);
-                // Optional: Clear form or reset
+                if (isPaymentFlow) {
+                    // Proceed to Stripe
+                    await performStripeRedirect();
+                } else {
+                    setSubmitStatus('success');
+                    setShowRequestForm(false);
+                }
             } else {
                 setSubmitStatus('error');
             }
@@ -275,7 +283,7 @@ export default function PricingCalculator() {
     const currentSteps = activeTab === 'tax' ? TAX_STEPS : BOOKKEEPING_STEPS;
     const totalSteps = currentSteps.length;
 
-    const handlePayment = async () => {
+    const performStripeRedirect = async () => {
         try {
             const prepayAmount = 200;
             const amount = prepayAmount;
@@ -302,6 +310,11 @@ export default function PricingCalculator() {
             console.error('Payment Error:', error);
             alert('An error occurred. Please try again.');
         }
+    };
+
+    const handlePayment = () => {
+        setIsPaymentFlow(true);
+        setShowRequestForm(true);
     };
 
     const nextStep = () => {
@@ -472,7 +485,9 @@ export default function PricingCalculator() {
                                     </div>
                                 ) : showRequestForm ? (
                                     <div className="request-form-overlay" style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
-                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Send My Request</h3>
+                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
+                                            {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
+                                        </h3>
                                         <form onSubmit={handleSendRequest}>
                                             <div className="form-group">
                                                 <label>Name</label>
@@ -488,7 +503,7 @@ export default function PricingCalculator() {
                                             </div>
                                             <div className="form-actions" style={{ display: 'flex', gap: '0.5rem' }}>
                                                 <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
-                                                    {isSubmitting ? 'Sending...' : 'Submit Request'}
+                                                    {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
                                                 </button>
                                                 <button type="button" className="btn btn-secondary" onClick={() => setShowRequestForm(false)}>Cancel</button>
                                             </div>
@@ -501,7 +516,7 @@ export default function PricingCalculator() {
                                             To reserve your spot and start the process, we require a <strong>$200 initial deposit</strong>. This amount will be credited towards your final fee.
                                         </p>
                                         <button onClick={handlePayment} className="btn btn-primary">Reserve My Spot!</button>
-                                        <button onClick={() => setShowRequestForm(true)} className="btn btn-secondary-dark">Send My Request</button>
+                                        <button onClick={() => { setIsPaymentFlow(false); setShowRequestForm(true); }} className="btn btn-secondary-dark">Send My Request</button>
                                     </div>
                                 )}
                             </div>
@@ -633,7 +648,9 @@ export default function PricingCalculator() {
                                     </div>
                                 ) : showRequestForm ? (
                                     <div className="request-form-overlay" style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
-                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Send My Request</h3>
+                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
+                                            {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
+                                        </h3>
                                         <form onSubmit={handleSendRequest}>
                                             <div className="form-group">
                                                 <label>Name</label>
@@ -649,7 +666,7 @@ export default function PricingCalculator() {
                                             </div>
                                             <div className="form-actions" style={{ display: 'flex', gap: '0.5rem' }}>
                                                 <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
-                                                    {isSubmitting ? 'Sending...' : 'Submit Request'}
+                                                    {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
                                                 </button>
                                                 <button type="button" className="btn btn-secondary" onClick={() => setShowRequestForm(false)}>Cancel</button>
                                             </div>
@@ -658,7 +675,7 @@ export default function PricingCalculator() {
                                     </div>
                                 ) : (
                                     <div className="result-actions">
-                                        <button onClick={() => setShowRequestForm(true)} className="btn btn-primary">Send My Request</button>
+                                        <button onClick={() => { setIsPaymentFlow(false); setShowRequestForm(true); }} className="btn btn-primary">Send My Request</button>
                                         <Link href="/contact" className="btn btn-secondary-dark">Contact Us</Link>
                                     </div>
                                 )}
