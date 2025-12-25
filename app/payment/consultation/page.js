@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function ConsultationPayment() {
+function ConsultationContent() {
     const searchParams = useSearchParams();
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [termsOpen, setTermsOpen] = useState(false);
@@ -108,5 +108,13 @@ export default function ConsultationPayment() {
                 </div>
             </section>
         </>
+    );
+}
+
+export default function ConsultationPayment() {
+    return (
+        <Suspense fallback={<div className="container py-10 text-center">Loading booking details...</div>}>
+            <ConsultationContent />
+        </Suspense>
     );
 }
