@@ -107,8 +107,45 @@ ${calculatorDetailsHtml}
             `,
         };
 
-        // Send email
+        // Send admin email
         await transporter.sendMail(mailOptions);
+
+        // Send client confirmation email
+        const clientMailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email, // Client's email
+            subject: 'Booking Confirmation - Precise Accounting',
+            text: `
+Hello ${name},
+
+Thanks for using Precise Accounting!
+
+We have received your request for: ${service}.
+
+If you have any questions, please contact us:
+Phone: +1(407) 966-7778
+Email: contact@proaccountingusa.com
+
+--
+Precise Accounting
+            `,
+            html: `
+<h3>Thanks for using Precise Accounting!</h3>
+<p>Hello <strong>${name}</strong>,</p>
+<p>We have received your request for: <strong>${service}</strong>.</p>
+<hr />
+<p>If you have any questions, please contact us:</p>
+<p><strong>Phone:</strong> <a href="tel:+14079667778">+1(407) 966-7778</a></p>
+<p><strong>Email:</strong> <a href="mailto:contact@proaccountingusa.com">contact@proaccountingusa.com</a></p>
+            `,
+        };
+
+        try {
+            await transporter.sendMail(clientMailOptions);
+        } catch (clientError) {
+            console.error('Error sending client confirmation:', clientError);
+            // Don't fail the request if client email fails, but log it
+        }
 
         return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
     } catch (error) {
