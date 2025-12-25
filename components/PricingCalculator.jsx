@@ -484,24 +484,24 @@ export default function PricingCalculator() {
                                         <p><strong>Request Sent!</strong> We've received your estimate request and will be in touch shortly.</p>
                                     </div>
                                 ) : showRequestForm ? (
-                                    <div className="request-form-overlay" style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
-                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
+                                    <div className="request-form-overlay form-card enhanced-form" style={{ marginTop: '2rem' }}>
+                                        <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>
                                             {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
                                         </h3>
                                         <form onSubmit={handleSendRequest}>
                                             <div className="form-group">
-                                                <label>Name</label>
-                                                <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} />
+                                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Name</label>
+                                                <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
                                             <div className="form-group">
-                                                <label>Email</label>
-                                                <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} />
+                                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email</label>
+                                                <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
                                             <div className="form-group">
-                                                <label>Phone</label>
-                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} />
+                                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
+                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
                                                 <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
                                                     {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
                                                 </button>
@@ -647,24 +647,24 @@ export default function PricingCalculator() {
                                         <p><strong>Request Sent!</strong> We've received your estimate request and will be in touch shortly.</p>
                                     </div>
                                 ) : showRequestForm ? (
-                                    <div className="request-form-overlay" style={{ marginTop: '1rem', padding: '1rem', background: '#f9f9f9', borderRadius: '8px' }}>
-                                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
+                                    <div className="request-form-overlay form-card enhanced-form" style={{ marginTop: '2rem' }}>
+                                        <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>
                                             {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
                                         </h3>
                                         <form onSubmit={handleSendRequest}>
                                             <div className="form-group">
-                                                <label>Name</label>
-                                                <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} />
+                                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Name</label>
+                                                <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
                                             <div className="form-group">
-                                                <label>Email</label>
-                                                <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} />
+                                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email</label>
+                                                <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
                                             <div className="form-group">
-                                                <label>Phone</label>
-                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} />
+                                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
+                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-actions" style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
                                                 <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
                                                     {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
                                                 </button>
