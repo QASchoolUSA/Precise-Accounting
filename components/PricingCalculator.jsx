@@ -243,7 +243,7 @@ export default function PricingCalculator() {
                     name: requestForm.name,
                     email: requestForm.email,
                     phone: requestForm.phone,
-                    service: isPaymentFlow ? `Booking Attempt - ${activeTab}` : subject,
+                    service: activeTab === 'tax' ? 'Tax Preparation' : 'Bookkeeping',
                     subject: subject,
                     calculatorData
                 }),

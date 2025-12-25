@@ -27,6 +27,54 @@ export async function POST(request) {
             },
         });
 
+        // Format calculator data if present
+        let calculatorDetailsHtml = '';
+        let calculatorDetailsText = '';
+
+        if (calculatorData) {
+            const formatKey = (key) => {
+                const map = {
+                    filingStatus: 'Filing Status',
+                    state: 'State',
+                    situationIndices: 'Common Situations',
+                    totalEstimate: 'Total Estimate',
+                    industry: 'Industry',
+                    baseRate: 'Monthly Transactions', // mapping raw value might be needed, but this is a start
+                    history: 'Years in Business',
+                    merchant: 'Merchant Processors',
+                    loans: 'Loans/Leases',
+                    assets: 'Depreciable Assets',
+                    booksUpdated: 'Books Updated',
+                    salesTax: 'Sales Tax',
+                    need1099: '1099 Prep',
+                    foreignTrans: 'Foreign Transactions',
+                    accounts: 'Number of Accounts',
+                    method: 'Accounting Method'
+                };
+                return map[key] || key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+            };
+
+            const details = Object.entries(calculatorData)
+                .filter(([_, value]) => value !== undefined && value !== null && value !== '')
+                .map(([key, value]) => {
+                    const label = formatKey(key);
+                    return { label, value };
+                });
+
+            if (details.length > 0) {
+                calculatorDetailsHtml = `
+                    <h3>Calculator Details</h3>
+                    <ul>
+                        ${details.map(d => `<li><strong>${d.label}:</strong> ${d.value}</li>`).join('')}
+                    </ul>
+                `;
+                calculatorDetailsText = `
+Calculator Details:
+${details.map(d => `${d.label}: ${d.value}`).join('\n')}
+`;
+            }
+        }
+
         // Email content
         const mailOptions = {
             from: process.env.EMAIL_USER, // Sender address
@@ -41,6 +89,8 @@ Email: ${email}
 Business Name: ${businessName || 'N/A'}
 Interested Service: ${service}
 
+${calculatorDetailsText}
+
 --
 Precise Accounting Website
             `,
@@ -53,6 +103,7 @@ Precise Accounting Website
     <li><strong>Business Name:</strong> ${businessName || 'N/A'}</li>
     <li><strong>Interested Service:</strong> ${service}</li>
 </ul>
+${calculatorDetailsHtml}
             `,
         };
 
