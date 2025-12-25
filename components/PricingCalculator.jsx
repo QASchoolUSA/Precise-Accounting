@@ -489,25 +489,25 @@ export default function PricingCalculator() {
                                             {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
                                         </h3>
                                         <form onSubmit={handleSendRequest}>
-                                            <div className="form-group">
+                                            <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Name</label>
                                                 <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-group">
+                                            <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email</label>
                                                 <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-group">
+                                            <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
                                                 <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-                                                <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
+                                            <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'center' }}>
+                                                <button type="submit" className="btn btn-primary" style={{ minWidth: '200px' }} disabled={isSubmitting}>
                                                     {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
                                                 </button>
                                                 <button type="button" className="btn btn-secondary" onClick={() => setShowRequestForm(false)}>Cancel</button>
                                             </div>
-                                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem' }}>Failed to send. Please try again.</p>}
+                                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'center' }}>Failed to send. Please try again.</p>}
                                         </form>
                                     </div>
                                 ) : (
@@ -652,25 +652,25 @@ export default function PricingCalculator() {
                                             {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
                                         </h3>
                                         <form onSubmit={handleSendRequest}>
-                                            <div className="form-group">
+                                            <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Name</label>
                                                 <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-group">
+                                            <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email</label>
                                                 <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-group">
+                                            <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
                                                 <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
-                                            <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-                                                <button type="submit" className="btn btn-primary btn-full" disabled={isSubmitting}>
+                                            <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'center' }}>
+                                                <button type="submit" className="btn btn-primary" style={{ minWidth: '200px' }} disabled={isSubmitting}>
                                                     {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
                                                 </button>
                                                 <button type="button" className="btn btn-secondary" onClick={() => setShowRequestForm(false)}>Cancel</button>
                                             </div>
-                                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem' }}>Failed to send. Please try again.</p>}
+                                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'center' }}>Failed to send. Please try again.</p>}
                                         </form>
                                     </div>
                                 ) : (
