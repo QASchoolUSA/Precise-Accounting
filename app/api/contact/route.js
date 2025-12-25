@@ -18,7 +18,9 @@ export async function POST(request) {
         // NOTE: These environment variables need to be set in .env.local
         // If not set, this will fail in production/dev
         const transporter = nodemailer.createTransport({
-            service: 'gmail', // Or use 'host', 'port' etc for other providers
+            host: 'mail.spacemail.com',
+            port: 465,
+            secure: true, // true for 465, false for other ports
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
