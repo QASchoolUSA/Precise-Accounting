@@ -210,7 +210,12 @@ export default function PricingCalculator() {
 
     const handleRequestChange = (e) => {
         const { name, value } = e.target;
-        setRequestForm(prev => ({ ...prev, [name]: value }));
+        if (name === 'phone') {
+            const numericValue = value.replace(/\D/g, '');
+            setRequestForm(prev => ({ ...prev, [name]: numericValue }));
+        } else {
+            setRequestForm(prev => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleSendRequest = async (e) => {
@@ -499,7 +504,7 @@ export default function PricingCalculator() {
                                             </div>
                                             <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto', textAlign: 'left' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
-                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
+                                                <input type="tel" inputMode="numeric" pattern="[0-9]*" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
                                             <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'center', width: '100%' }}>
                                                 <button type="submit" className="btn btn-primary" style={{ minWidth: '200px' }} disabled={isSubmitting}>
@@ -662,7 +667,7 @@ export default function PricingCalculator() {
                                             </div>
                                             <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto', textAlign: 'left' }}>
                                                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
-                                                <input type="tel" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
+                                                <input type="tel" inputMode="numeric" pattern="[0-9]*" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                             </div>
                                             <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'center', width: '100%' }}>
                                                 <button type="submit" className="btn btn-primary" style={{ minWidth: '200px' }} disabled={isSubmitting}>
