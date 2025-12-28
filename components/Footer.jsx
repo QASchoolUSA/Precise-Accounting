@@ -1,5 +1,7 @@
 
 
+import LanguageSwitcher from './LanguageSwitcher';
+
 export default function Footer({ lang, dict }) {
     return (
         <footer className="footer">
@@ -7,6 +9,7 @@ export default function Footer({ lang, dict }) {
                 <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'white' }}>
                     Precise Accounting
                 </span>
+                <LanguageSwitcher />
                 <p>{dict.rights}</p>
             </div>
         </footer>

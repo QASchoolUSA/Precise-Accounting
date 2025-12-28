@@ -1211,3 +1211,74 @@ main {
     box-shadow: none;
     border-color: var(--color-border);
 }
+
+/* Language Switcher */
+.language-switcher {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-radius: 999px;
+    padding: 0.25rem;
+    gap: 0;
+    margin-left: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.language-switcher .divider {
+    display: none;
+}
+
+.language-switcher .lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6b7280;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.language-switcher .lang-btn:hover {
+    color: var(--color-text);
+}
+
+.language-switcher .lang-btn.active {
+    background-color: white;
+    color: var(--color-brand);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+/* Footer Language Switcher Context */
+.footer .language-switcher {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+}
+
+.footer .language-switcher .lang-btn {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer .language-switcher .lang-btn:hover {
+    color: white;
+}
+
+.footer .language-switcher .lang-btn.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    box-shadow: none;
+}
+
+/* Mobile Adjustments for Language Switcher inside Nav */
+@media (max-width: 768px) {
+    .language-switcher {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        width: auto;
+    }
+}
