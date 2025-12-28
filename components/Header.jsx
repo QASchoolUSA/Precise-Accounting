@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import LanguageSwitcher from './LanguageSwitcher';
 
 
 export default function Header({ lang, dict }) {
@@ -62,6 +63,7 @@ export default function Header({ lang, dict }) {
                             </ul>
                         </li>
                         <li><Link href={`/${lang}/pricing`} onClick={closeMenu}>{dict.pricing}</Link></li>
+                        <li><LanguageSwitcher /></li>
                         <li><Link href={`/${lang}/contact`} className="btn btn-primary" onClick={closeMenu}>{dict.contact}</Link></li>
                     </ul>
                 </nav>
