@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
     try {
-        const { amount, serviceName } = await req.json();
+        const { amount, serviceName, locale } = await req.json();
 
         if (!amount || amount <= 0) {
             return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
@@ -15,6 +15,7 @@ export async function POST(req) {
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
+            locale: locale || 'en',
             line_items: [
                 {
                     price_data: {
@@ -28,8 +29,8 @@ export async function POST(req) {
                 },
             ],
             mode: 'payment',
-            success_url: `${origin}/success`,
-            cancel_url: `${origin}/#calculator`,
+            success_url: `${origin}/${locale || 'en'}/success`,
+            cancel_url: `${origin}/${locale || 'en'}/pricing`,
         });
 
         return NextResponse.json({ url: session.url });

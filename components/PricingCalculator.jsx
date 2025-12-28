@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function PricingCalculator() {
+export default function PricingCalculator({ lang, dict }) {
     const [step, setStep] = useState(1);
     const [totalAmount, setTotalAmount] = useState(0);
     const [showInternationalMsg, setShowInternationalMsg] = useState(false);
@@ -63,19 +63,18 @@ export default function PricingCalculator() {
     const SORTED_STATES = Object.keys(STATE_PRICES).sort();
 
     // Checkbox options for Tax
+    // Using keys to map to dictionary values
     const situationOptions = [
-        { label: 'W-2 employment', value: 0 },
-        { label: 'Self-employment / contractor income (1099-NEC)', value: 50 },
-        { label: 'Rental property income', value: 50 },
-        { label: 'Investment income (stocks, dividends, etc.)', value: 50 },
-        { label: 'Crypto transactions', value: 50 },
-        { label: 'Interest income', value: 30 },
-        { label: 'Retirement income (Social Security, pensions, 1099-R)', value: 30 },
-        { label: 'Foreign source of income', value: 100 },
-        { label: 'Itemized deduction', value: 50 },
-        { label: 'Education credit (1098-T)', value: 30 },
-        { label: 'Depreciation of vehicles/equipment', value: 50 },
-    ];
+        { key: 'interest', value: 30 },
+        { key: 'retirement', value: 30 },
+        { key: 'foreign', value: 100 },
+        { key: 'itemized', value: 50 },
+        { key: 'education', value: 30 },
+        { key: 'depreciation', value: 50 },
+    ].map(opt => ({
+        ...opt,
+        label: dict.income.options[opt.key] || opt.key
+    }));
 
     // Scroll to top on step change
     useEffect(() => {
@@ -101,7 +100,7 @@ export default function PricingCalculator() {
             setShowInternationalMsg(true);
             return;
         } else if (['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(taxData.state)) {
-            setTotalAmount("Estimate Unavailable");
+            setTotalAmount(dict.location.unavailable);
             // Message handled in render
             return;
         } else {
@@ -216,10 +215,10 @@ export default function PricingCalculator() {
     // --- STEPPER LOGIC ---
 
     const TAX_STEPS = [
-        { title: "Location", id: 1 },
-        { title: "Basics", id: 2 },
-        { title: "Income & Deductions", id: 3 },
-        { title: "Review", id: 4 }
+        { title: dict.steps.location, id: 1 },
+        { title: dict.steps.basics, id: 2 },
+        { title: dict.steps.income, id: 3 },
+        { title: dict.steps.review, id: 4 }
     ];
 
     const currentSteps = TAX_STEPS;
@@ -301,7 +300,7 @@ export default function PricingCalculator() {
                     ))}
                 </div>
                 <div className="step-text-container">
-                    <div className="step-count">Step {step} of {totalSteps}</div>
+                    <div className="step-count">{dict.steps.location} {step} / {totalSteps}</div>
                     <div className="step-name">{currentSteps[step - 1].title}</div>
                 </div>
             </div>
@@ -312,28 +311,28 @@ export default function PricingCalculator() {
                 {/* --- TAX FLOW (ALWAYS ACTIVE) --- */}
                 {step === 1 && (
                     <div className="step-slide">
-                        <h2 className="step-title">Where do you live?</h2>
+                        <h2 className="step-title">{dict.location.title}</h2>
                         <div className="form-group">
-                            <label>State of Residence</label>
+                            <label>{dict.location.label}</label>
                             <select name="state" value={taxData.state} onChange={handleStateChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
-                                <option value="" disabled>Select your state...</option>
-                                <option value="custom">I do NOT reside in the USA</option>
-                                <optgroup label="United States">
+                                <option value="" disabled>{dict.location.selectState}</option>
+                                <option value="custom">{dict.location.notInUSA}</option>
+                                <optgroup label={dict.location.unitedStates}>
                                     {SORTED_STATES.map(stateName => (
                                         <option key={stateName} value={stateName} disabled={['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName)}>
-                                            {stateName} {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName) ? '(Unavailable)' : ''}
+                                            {stateName} {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName) ? `(${dict.location.unavailable})` : ''}
                                         </option>
                                     ))}
                                 </optgroup>
                             </select>
                             {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(taxData.state) && (
                                 <div className="info-box error" style={{ marginTop: '1rem', color: 'red', borderColor: 'red' }}>
-                                    Sorry - we can’t generate an estimate for this state at this time.
+                                    {dict.location.errorUnavailable}
                                 </div>
                             )}
                             {showInternationalMsg && (
                                 <div className="info-box" style={{ marginTop: '1rem' }}>
-                                    Because you are currently outside the USA, your pricing requires a more detailed review. Please reach out for a custom estimate.
+                                    {dict.location.intlMessage}
                                 </div>
                             )}
                         </div>
@@ -342,32 +341,32 @@ export default function PricingCalculator() {
 
                 {step === 2 && (
                     <div className="step-slide">
-                        <h2 className="step-title">The Basics</h2>
+                        <h2 className="step-title">{dict.basics.title}</h2>
                         <div className="form-group">
-                            <label>Filing Status</label>
+                            <label>{dict.basics.filingStatus}</label>
                             <select name="filingStatus" value={taxData.filingStatus} onChange={handleTaxChange} style={{ padding: '1rem', width: '100%', maxWidth: '100%' }}>
-                                <option value="single">Single</option>
-                                <option value="joint">Married Filing Jointly</option>
-                                <option value="sep">Married Filing Separately</option>
-                                <option value="head">Head of Household</option>
-                                <option value="widow">Qualifying Widow(er)</option>
+                                <option value="single">{dict.basics.options.single}</option>
+                                <option value="joint">{dict.basics.options.joint}</option>
+                                <option value="sep">{dict.basics.options.sep}</option>
+                                <option value="head">{dict.basics.options.head}</option>
+                                <option value="widow">{dict.basics.options.widow}</option>
                             </select>
                         </div>
 
                         <div className="form-group">
-                            <label>Do you have dependents?</label>
+                            <label>{dict.basics.dependents}</label>
                             <div className="selection-grid">
                                 <SelectionCard
                                     name="dependents"
                                     value="no"
-                                    label="No"
+                                    label={dict.basics.options.no}
                                     selected={taxData.dependents === 'no'}
                                     onChange={handleTaxChange}
                                 />
                                 <SelectionCard
                                     name="dependents"
                                     value="yes"
-                                    label="Yes"
+                                    label={dict.basics.options.yes}
                                     selected={taxData.dependents === 'yes'}
                                     onChange={handleTaxChange}
                                 />
@@ -378,8 +377,8 @@ export default function PricingCalculator() {
 
                 {step === 3 && (
                     <div className="step-slide">
-                        <h2 className="step-title">Income & Situations</h2>
-                        <p style={{ marginBottom: '1rem', color: 'var(--color-text-light)' }}>Check all that apply to your situation:</p>
+                        <h2 className="step-title">{dict.income.title}</h2>
+                        <p style={{ marginBottom: '1rem', color: 'var(--color-text-light)' }}>{dict.income.subtitle}</p>
                         <div className="selection-grid">
                             {situationOptions.map((option, index) => (
                                 <label key={index} className={`selection-card ${taxData.situationIndices.has(index) ? 'selected' : ''}`}>
@@ -397,49 +396,49 @@ export default function PricingCalculator() {
 
                 {step === 4 && (
                     <div className="step-slide result-section" style={{ padding: '0' }}>
-                        <h2 className="step-title">Your Estimate</h2>
+                        <h2 className="step-title">{dict.review.title}</h2>
                         <div className="total-price">{totalAmount}</div>
                         <p className="disclaimer">
-                            The amount above represents an approximate estimate only; final fees will be determined once we complete a comprehensive review.
+                            {dict.review.disclaimer}
                         </p>
 
                         {submitStatus === 'success' ? (
                             <div className="info-box success" style={{ margin: '1rem 0', color: 'green', borderColor: 'green' }}>
-                                <p><strong>Request Sent!</strong> We've received your estimate request and will be in touch shortly.</p>
+                                <p>{dict.review.success}</p>
                             </div>
                         ) : showRequestForm ? (
                             <div className="request-form-overlay form-card enhanced-form" style={{ marginTop: '2rem' }}>
                                 <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>
-                                    {isPaymentFlow ? 'Complete Your Booking' : 'Send My Request'}
+                                    {isPaymentFlow ? dict.review.bookingTitle : dict.review.requestTitle}
                                 </h3>
                                 <form onSubmit={handleSendRequest}>
                                     <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto', textAlign: 'left' }}>
-                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Name</label>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>{dict.review.name}</label>
                                         <input type="text" name="name" required value={requestForm.name} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                     </div>
                                     <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto', textAlign: 'left' }}>
-                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email</label>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>{dict.review.email}</label>
                                         <input type="email" name="email" required value={requestForm.email} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                     </div>
                                     <div className="form-group" style={{ width: '50%', minWidth: '280px', margin: '0 auto 1rem auto', textAlign: 'left' }}>
-                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Phone</label>
+                                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>{dict.review.phone}</label>
                                         <input type="tel" inputMode="numeric" pattern="[0-9]*" name="phone" required value={requestForm.phone} onChange={handleRequestChange} className="form-input" style={{ width: '100%', padding: '0.75rem', borderRadius: '4px', border: '1px solid #ddd' }} />
                                     </div>
                                     <div className="form-actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'center', width: '100%', maxWidth: '100%' }}>
                                         <button type="submit" className="btn btn-primary" style={{ minWidth: '200px' }} disabled={isSubmitting}>
-                                            {isSubmitting ? 'Processing...' : (isPaymentFlow ? 'Proceed to Payment' : 'Submit Request')}
+                                            {isSubmitting ? dict.review.processing : (isPaymentFlow ? dict.review.proceedPayment : dict.review.submitRequest)}
                                         </button>
                                     </div>
-                                    {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'center' }}>Failed to send. Please try again.</p>}
+                                    {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'center' }}>{dict.review.error}</p>}
                                 </form>
                             </div>
                         ) : (
                             <div className="result-actions">
                                 <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
-                                    To reserve your spot and start the process, we require a <strong>$200 initial deposit</strong>. This amount will be credited towards your final fee.
+                                    {dict.review.depositInfo}
                                 </p>
-                                <button onClick={handlePayment} className="btn btn-primary">Reserve My Spot!</button>
-                                <button onClick={() => { setIsPaymentFlow(false); setShowRequestForm(true); }} className="btn btn-secondary-dark">Send My Request</button>
+                                <button onClick={handlePayment} className="btn btn-primary">{dict.review.reserveBtn}</button>
+                                <button onClick={() => { setIsPaymentFlow(false); setShowRequestForm(true); }} className="btn btn-secondary-dark">{dict.review.sendRequestBtn}</button>
                             </div>
                         )}
                     </div>
@@ -449,13 +448,13 @@ export default function PricingCalculator() {
             {/* Navigation Buttons */}
             <div className="nav-buttons">
                 {step > 1 ? (
-                    <button className="btn btn-secondary-dark" onClick={prevStep}>← Back</button>
+                    <button className="btn btn-secondary-dark" onClick={prevStep}>{dict.review.back || '← Back'}</button>
                 ) : (
                     <div></div> // Spacer
                 )}
 
                 {step < totalSteps && (
-                    <button className="btn btn-primary" onClick={nextStep}>Next →</button>
+                    <button className="btn btn-primary" onClick={nextStep}>{dict.review.next || 'Next →'}</button>
                 )}
             </div>
         </div>
