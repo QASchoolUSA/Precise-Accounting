@@ -78,17 +78,17 @@
             "title": "Income & Situations",
             "subtitle": "Check all that apply to your situation:",
             "options": {
-                "w2": "W-2 employment",
-                "selfEmployed": "Self-employment / contractor income (1099-NEC)",
-                "rental": "Rental property income",
-                "investment": "Investment income (stocks, dividends, etc.)",
-                "crypto": "Crypto transactions",
-                "interest": "Interest income",
-                "retirement": "Retirement income (Social Security, pensions, 1099-R)",
-                "foreign": "Foreign source of income",
-                "itemized": "Itemized deduction",
-                "education": "Education credit (1098-T)",
-                "depreciation": "Depreciation of vehicles/equipment"
+                "w2": "W-2 employment (not changing the Base)",
+                "selfEmployed": "Self-employment / contractor income (1099-NEC) +$50 to the Base",
+                "rental": "Rental property income +$50 to the Base",
+                "investment": "Investment income (stocks, dividends, etc.) +$50 to the Base",
+                "crypto": "Crypto transactions (you received, sold, exchanged a digital asset) +$50 to the Base",
+                "interest": "Interest income +$30 to the Base",
+                "retirement": "Retirement income (Social Security, pensions, 1099-R) +$30 to the Base",
+                "foreign": "Foreign source of income +$100 to the Base",
+                "itemized": "Itemized deduction +$50 to the Base",
+                "education": "Education credit (1098-T) +$30 to the Base",
+                "depreciation": "Depreciation of vehicles/equipment +$50 to the Base"
             }
         },
         "review": {
