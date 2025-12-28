@@ -82,7 +82,7 @@
                 "selfEmployed": "Self-employment / contractor income (1099-NEC)",
                 "rental": "Rental property income",
                 "investment": "Investment income (stocks, dividends, etc.)",
-                "crypto": "Crypto transactions",
+                "crypto": "Crypto transactions (you received, sold, exchanged a digital asset)",
                 "interest": "Interest income",
                 "retirement": "Retirement income (Social Security, pensions, 1099-R)",
                 "foreign": "Foreign source of income",

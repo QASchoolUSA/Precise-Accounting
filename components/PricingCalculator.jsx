@@ -65,6 +65,11 @@ export default function PricingCalculator({ lang, dict }) {
     // Checkbox options for Tax
     // Using keys to map to dictionary values
     const situationOptions = [
+        { key: 'w2', value: 0 },
+        { key: 'selfEmployed', value: 50 },
+        { key: 'rental', value: 50 },
+        { key: 'investment', value: 50 },
+        { key: 'crypto', value: 50 },
         { key: 'interest', value: 30 },
         { key: 'retirement', value: 30 },
         { key: 'foreign', value: 100 },
