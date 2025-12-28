@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 
-export default function Header() {
+export default function Header({ lang, dict }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isServicesOpen, setIsServicesOpen] = useState(false);
 
@@ -29,7 +29,7 @@ export default function Header() {
     return (
         <header className="header">
             <div className="container header-container">
-                <Link href="/" className="logo" onClick={closeMenu}>
+                <Link href={`/${lang}/`} className="logo" onClick={closeMenu}>
                     <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
                         Precise Accounting
                     </span>
@@ -45,24 +45,24 @@ export default function Header() {
                 </button>
                 <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
                     <ul>
-                        <li><Link href="/" onClick={closeMenu}>Home</Link></li>
+                        <li><Link href={`/${lang}/`} onClick={closeMenu}>{dict.home}</Link></li>
                         <li className={`dropdown ${isServicesOpen ? 'open' : ''}`}>
-                            <span className="dropdown-trigger" onClick={toggleServices}>Services ▾</span>
+                            <span className="dropdown-trigger" onClick={toggleServices}>{dict.services} ▾</span>
                             <ul className="dropdown-menu">
-                                <li><Link href="/services/personal-tax" onClick={closeMenu}>Personal Tax Preparation</Link></li>
-                                <li><Link href="/services/business-tax" onClick={closeMenu}>Business Tax Preparation</Link></li>
-                                <li><Link href="/services/accounting-bookkeeping" onClick={closeMenu}>Accounting & Bookkeeping</Link></li>
-                                <li><Link href="/services/estimated-tax" onClick={closeMenu}>Estimated Tax</Link></li>
-                                <li><Link href="/services/tax-optimization" onClick={closeMenu}>Tax Optimization & Planning</Link></li>
-                                <li><Link href="/services/books-reinstatement" onClick={closeMenu}>Books & Records Reinstatement</Link></li>
-                                <li><Link href="/services/payroll" onClick={closeMenu}>Payroll Setup & Maintenance</Link></li>
-                                <li><Link href="/services/1099-filing" onClick={closeMenu}>1099 Preparation & Filing</Link></li>
-                                <li><Link href="/services/sales-tax" onClick={closeMenu}>Sales Tax</Link></li>
-                                <li><Link href="/services/new-business" onClick={closeMenu}>New Business Formation</Link></li>
+                                <li><Link href={`/${lang}/services/personal-tax`} onClick={closeMenu}>{dict.personalTax}</Link></li>
+                                <li><Link href={`/${lang}/services/business-tax`} onClick={closeMenu}>{dict.businessTax}</Link></li>
+                                <li><Link href={`/${lang}/services/accounting-bookkeeping`} onClick={closeMenu}>{dict.accounting}</Link></li>
+                                <li><Link href={`/${lang}/services/estimated-tax`} onClick={closeMenu}>{dict.estimatedTax}</Link></li>
+                                <li><Link href={`/${lang}/services/tax-optimization`} onClick={closeMenu}>{dict.taxOptimization}</Link></li>
+                                <li><Link href={`/${lang}/services/books-reinstatement`} onClick={closeMenu}>{dict.booksReinstatement}</Link></li>
+                                <li><Link href={`/${lang}/services/payroll`} onClick={closeMenu}>{dict.payroll}</Link></li>
+                                <li><Link href={`/${lang}/services/1099-filing`} onClick={closeMenu}>{dict.form1099}</Link></li>
+                                <li><Link href={`/${lang}/services/sales-tax`} onClick={closeMenu}>{dict.salesTax}</Link></li>
+                                <li><Link href={`/${lang}/services/new-business`} onClick={closeMenu}>{dict.newBusiness}</Link></li>
                             </ul>
                         </li>
-                        <li><Link href="/pricing" onClick={closeMenu}>Pricing</Link></li>
-                        <li><Link href="/contact" className="btn btn-primary" onClick={closeMenu}>Contact Us</Link></li>
+                        <li><Link href={`/${lang}/pricing`} onClick={closeMenu}>{dict.pricing}</Link></li>
+                        <li><Link href={`/${lang}/contact`} className="btn btn-primary" onClick={closeMenu}>{dict.contact}</Link></li>
                     </ul>
                 </nav>
             </div>
