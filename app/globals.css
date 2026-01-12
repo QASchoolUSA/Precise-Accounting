@@ -1445,7 +1445,6 @@ main {
 @media (max-width: 768px) {
     .language-switcher {
         margin-left: 0;
-        margin-top: 0.5rem;
         width: auto;
     }
 }

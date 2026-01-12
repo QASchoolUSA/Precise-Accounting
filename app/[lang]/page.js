@@ -36,24 +36,21 @@ export default async function Home({ params: { lang } }) {
                             </div>
                         </div>
 
-                        {/* Random selection of other services */}
+                        {/* Fixed order of remaining services */}
                         {[
-                            { href: `/${lang}/services/estimated-tax`, label: dict.navigation.estimatedTax },
                             { href: `/${lang}/services/tax-optimization`, label: dict.navigation.taxOptimization },
                             { href: `/${lang}/services/accounting-bookkeeping`, label: dict.navigation.accounting },
+                            { href: `/${lang}/services/estimated-tax`, label: dict.navigation.estimatedTax },
                             { href: `/${lang}/services/books-reinstatement`, label: dict.navigation.booksReinstatement },
                             { href: `/${lang}/services/payroll`, label: dict.navigation.payroll },
                             { href: `/${lang}/services/1099-filing`, label: dict.navigation.form1099 },
                             { href: `/${lang}/services/sales-tax`, label: dict.navigation.salesTax },
                             { href: `/${lang}/services/new-business`, label: dict.navigation.newBusiness }
-                        ]
-                            .sort(() => 0.5 - Math.random())
-                            .slice(0, 3)
-                            .map((service, index) => (
-                                <Link key={index} href={service.href} className="service-card-home">
-                                    <h3>{service.label}</h3>
-                                </Link>
-                            ))}
+                        ].map((service, index) => (
+                            <Link key={index} href={service.href} className="service-card-home">
+                                <h3>{service.label}</h3>
+                            </Link>
+                        ))}
                     </div>
                     <div className="text-center" style={{ marginTop: '1rem' }}>
                         <Link href={`/${lang}/services`} className="btn btn-secondary-dark">{t.viewAllServices}</Link>
