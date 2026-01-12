@@ -3,4 +3,7 @@ const dictionaries = {
     ru: () => import('./dictionaries/ru.json').then((module) => module.default),
 }
 
-export const getDictionary = async (locale) => dictionaries[locale]()
+export const getDictionary = async (locale) => {
+    return dictionaries[locale] ? dictionaries[locale]() : dictionaries['en']();
+}
+
