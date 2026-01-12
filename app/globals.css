@@ -41,7 +41,7 @@ html {
 
 /* Android Zoom Adjustment */
 html.is-android {
-    font-size: 90%;
+    font-size: 70%;
 }
 
 body {
