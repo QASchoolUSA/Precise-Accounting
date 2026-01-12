@@ -964,7 +964,7 @@ main {
     }
 
     .hero {
-        padding: 5rem 0 4rem;
+        padding: 2.5rem 0 2rem;
     }
 
     .hero-title {
@@ -1112,6 +1112,15 @@ main {
     .mobile-menu-btn.active span:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
         background-color: var(--color-brand);
+    }
+
+    .services-preview {
+        padding: 3rem 0;
+    }
+
+    .services-grid-home {
+        margin-top: 1.5rem;
+        gap: 1rem;
     }
 }
 
