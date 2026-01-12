@@ -29,7 +29,7 @@ export default async function AccountingBookkeepingServices({ params: { lang } }
                             <h3 className="cta-title">{dict.servicesPage.taxOptTitle}</h3>
                             <p className="cta-subtitle">{dict.servicesPage.subtitle}</p>
                             <div className="cta-actions">
-                                <Link href={`/${lang}/payment/consultation`} className="btn btn-primary">{dict.servicesPage.scheduleConsultation}</Link>
+                                <Link href={`/${lang}/pricing?tab=bookkeeping`} className="btn btn-primary">{lang === 'ru' ? 'Получить бесплатную оценку' : 'Get Free Estimate'}</Link>
                                 <Link href={`/${lang}/contact`} className="btn btn-secondary-dark">{dict.contactPage.title}</Link>
                             </div>
                         </div>

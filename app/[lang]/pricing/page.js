@@ -7,8 +7,9 @@ export const metadata = {
     description: 'Get a price estimate for Tax Preparation and Bookkeeping services.',
 };
 
-export default async function Pricing({ params: { lang } }) {
+export default async function Pricing({ params: { lang }, searchParams }) {
     const dict = await getDictionary(lang);
+    const initialTab = searchParams?.tab || 'tax';
 
     return (
         <>
@@ -21,7 +22,7 @@ export default async function Pricing({ params: { lang } }) {
 
             <section className="section">
                 <div className="container">
-                    <PricingCalculator lang={lang} dict={dict.pricingCalculator} />
+                    <PricingCalculator lang={lang} dict={dict.pricingCalculator} initialTab={initialTab} />
 
                     {/* Payroll section moved to /services/payroll */}
                 </div>

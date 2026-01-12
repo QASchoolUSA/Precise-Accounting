@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function PricingCalculator({ lang, dict }) {
+export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
     const [step, setStep] = useState(1);
     const [totalAmount, setTotalAmount] = useState(0);
     const [showInternationalMsg, setShowInternationalMsg] = useState(false);
@@ -18,7 +18,7 @@ export default function PricingCalculator({ lang, dict }) {
     });
 
     // Bookkeeping State
-    const [activeTab, setActiveTab] = useState('tax');
+    const [activeTab, setActiveTab] = useState(initialTab);
     const [bookkeepingData, setBookkeepingData] = useState({
         industry: '',
         businessAge: '',
