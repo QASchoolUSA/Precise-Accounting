@@ -985,10 +985,18 @@ main {
 
     .mobile-header-actions {
         display: flex !important;
-        /* Width auto so it sits on the right */
         width: auto;
         gap: 0.75rem;
         align-items: center;
+        /* Absolute center alignment */
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .mobile-menu-btn {
+        display: flex !important;
+        /* Ensure it's visible on mobile since we moved it out */
     }
 
     .mobile-header-actions .btn {

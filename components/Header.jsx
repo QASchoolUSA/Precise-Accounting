@@ -45,16 +45,17 @@ export default function Header({ lang, dict }) {
                     <Link href={`/${lang}/contact`} className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
                         {dict.contact}
                     </Link>
-                    <button
-                        className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
-                        aria-label="Toggle menu"
-                        onClick={toggleMenu}
-                    >
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
                 </div>
+                <button
+                    className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
+                    aria-label="Toggle menu"
+                    onClick={toggleMenu}
+                    style={{ display: 'none' }} /* controlled via css */
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
                     <div className="mobile-menu-header" style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid #f3f4f6' }}>
                         <Link href={`/${lang}/`} className="logo" onClick={closeMenu}>
