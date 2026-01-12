@@ -30,13 +30,21 @@ export default function Header({ lang, dict }) {
     return (
         <header className="header">
             <div className="container header-container">
-                <Link href={`/${lang}/`} className="logo" onClick={closeMenu}>
+                <Link href={`/${lang}/`} className="logo desktop-logo" onClick={closeMenu}>
                     <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
                         Precise Accounting
                     </span>
                 </Link>
-                <div className="mobile-header-actions" style={{ display: 'none', alignItems: 'center', gap: '1rem' }}>
+                <Link href={`/${lang}/`} className="logo mobile-logo-icon" onClick={closeMenu} style={{ display: 'none' }}>
+                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
+                        PA
+                    </span>
+                </Link>
+                <div className="mobile-header-actions" style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }}>
                     <LanguageSwitcher />
+                    <Link href={`/${lang}/contact`} className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
+                        {dict.contact}
+                    </Link>
                     <button
                         className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
                         aria-label="Toggle menu"
@@ -48,6 +56,13 @@ export default function Header({ lang, dict }) {
                     </button>
                 </div>
                 <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
+                    <div className="mobile-menu-header" style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid #f3f4f6' }}>
+                        <Link href={`/${lang}/`} className="logo" onClick={closeMenu}>
+                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
+                                Precise Accounting
+                            </span>
+                        </Link>
+                    </div>
                     <ul>
                         <li><Link href={`/${lang}/`} onClick={closeMenu}>{dict.home}</Link></li>
                         <li className={`dropdown ${isServicesOpen ? 'open' : ''}`}>

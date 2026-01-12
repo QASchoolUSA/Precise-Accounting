@@ -186,6 +186,14 @@ ul {
     align-items: center;
 }
 
+.mobile-logo-icon {
+    display: none;
+}
+
+.mobile-menu-header {
+    display: none;
+}
+
 .nav ul {
     display: flex;
     align-items: center;
@@ -963,8 +971,45 @@ main {
         font-size: 2.5rem;
     }
 
+    .desktop-logo {
+        display: none !important;
+    }
+
+    .mobile-logo-icon {
+        display: flex !important;
+    }
+
+    .mobile-menu-header {
+        display: block;
+    }
+
     .mobile-header-actions {
         display: flex !important;
+        /* Width auto so it sits on the right */
+        width: auto;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    .mobile-header-actions .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px !important;
+        padding: 0 1rem !important;
+        font-size: 0.85rem !important;
+        line-height: 1;
+        margin: 0 !important;
+    }
+
+    .mobile-header-actions .language-switcher {
+        display: flex;
+        align-items: center;
+        height: 36px;
+        padding: 0 0.5rem;
+        /* Optional: background/border to match button visual weight if needed */
+        /* background: rgba(0,0,0,0.03); */
+        /* border-radius: 4px; */
     }
 
     .nav {
@@ -1024,11 +1069,17 @@ main {
     }
 
     .nav .btn-primary {
+        /* Hide duplicated button in nav if desired, or keep as alternative */
         width: 100%;
         justify-content: center;
         margin-top: 2rem;
         padding: 1rem;
         font-size: 1rem;
+    }
+
+    /* Optional: Hide Contact button within the menu list if it's already in header */
+    .nav li:has(a[href*="/contact"]) {
+        display: none;
     }
 
     .contact-methods {
