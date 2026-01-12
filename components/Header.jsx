@@ -35,15 +35,18 @@ export default function Header({ lang, dict }) {
                         Precise Accounting
                     </span>
                 </Link>
-                <button
-                    className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
-                    aria-label="Toggle menu"
-                    onClick={toggleMenu}
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                <div className="mobile-header-actions" style={{ display: 'none', alignItems: 'center', gap: '1rem' }}>
+                    <LanguageSwitcher />
+                    <button
+                        className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
+                        aria-label="Toggle menu"
+                        onClick={toggleMenu}
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
                 <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
                     <ul>
                         <li><Link href={`/${lang}/`} onClick={closeMenu}>{dict.home}</Link></li>

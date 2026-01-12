@@ -21,12 +21,17 @@ export default function PricingCalculator({ lang, dict }) {
     const [activeTab, setActiveTab] = useState('tax');
     const [bookkeepingData, setBookkeepingData] = useState({
         industry: '',
-        revenue: '',
-        expenses: '',
-        accounts: '',
-        employees: '',
-        frequency: 'monthly',
-        software: 'qbo'
+        businessAge: '',
+        transactionCount: 'range0_300',
+        accountCount: 'upto5',
+        accountingMethod: 'cash',
+        merchantProcessors: 'no',
+        loans: 'no',
+        depreciableAssets: '0',
+        booksUpToDate: 'yes',
+        salesTax: 'no',
+        form1099: 'no',
+        foreignTransactions: 'no'
     });
 
     // Request Form State
@@ -112,11 +117,43 @@ export default function PricingCalculator({ lang, dict }) {
         let total = 0;
 
         if (activeTab === 'bookkeeping') {
-            setTotalAmount(dict.location.custom || "Custom Quote");
+            // Bookkeeping Logic
+            let baseRate = 0;
+
+            // 1. Transaction Volume (Base)
+            switch (bookkeepingData.transactionCount) {
+                case 'range0_300': baseRate = 250; break;
+                case 'range301_600': baseRate = 300; break;
+                case 'range601_1000': baseRate = 500; break;
+                case 'range1001_2000': baseRate = 1000; break;
+                case 'rangeOver2000': baseRate = 1500; break;
+                default: baseRate = 250;
+            }
+
+            // 2. Account Count
+            if (bookkeepingData.accountCount === '5to10') baseRate += 50;
+            if (bookkeepingData.accountCount === 'over10') baseRate += 150;
+
+            // 3. Accounting Method (Multiplier)
+            if (bookkeepingData.accountingMethod === 'accrual') baseRate *= 2;
+
+            // 4. Merchant Processors
+            if (bookkeepingData.merchantProcessors === 'yes') baseRate += 100;
+
+            // 5. Loans
+            if (bookkeepingData.loans === 'yes') baseRate += 50;
+
+            // 6. Depreciable Assets
+            if (bookkeepingData.depreciableAssets === '1to5') baseRate += 50;
+            if (bookkeepingData.depreciableAssets === '6to10') baseRate += 100;
+            if (bookkeepingData.depreciableAssets === 'over10') baseRate += 200;
+
+            // Formatting
+            setTotalAmount('$' + baseRate + (dict?.bookkeeping?.options?.monthly ? ' / ' + dict.bookkeeping.options.monthly : ' / month'));
             return;
         }
 
-        // Base Fee (State)
+        // Tax Logic
         if (taxData.state === 'custom') {
             setTotalAmount("Custom Quote");
             setShowInternationalMsg(true);
@@ -262,6 +299,13 @@ export default function PricingCalculator({ lang, dict }) {
     const currentSteps = activeTab === 'bookkeeping' ? BOOKKEEPING_STEPS : TAX_STEPS;
     const totalSteps = currentSteps.length;
 
+    // Trigger calculation when bookkeeping data changes
+    useEffect(() => {
+        if (activeTab === 'bookkeeping') {
+            calculateTotal();
+        }
+    }, [bookkeepingData, activeTab]);
+
     const performStripeRedirect = async () => {
         try {
             const prepayAmount = 200;
@@ -371,41 +415,98 @@ export default function PricingCalculator({ lang, dict }) {
                         <h2 className="step-title">{dict.bookkeeping.title}</h2>
                         <div className="form-group">
                             <label>{dict.bookkeeping.industry}</label>
-                            <input type="text" name="industry" value={bookkeepingData.industry} onChange={handleBookkeepingChange} className="form-input" placeholder="e.g. IT, Retail, Construction" />
+                            <input type="text" name="industry" value={bookkeepingData.industry} onChange={handleBookkeepingChange} className="form-input" />
                         </div>
                         <div className="form-group">
-                            <label>{dict.bookkeeping.revenue}</label>
-                            <input type="text" name="revenue" value={bookkeepingData.revenue} onChange={handleBookkeepingChange} className="form-input" placeholder="$0 - $1M" />
-                        </div>
-                        <div className="form-group">
-                            <label>{dict.bookkeeping.expenses}</label>
-                            <input type="text" name="expenses" value={bookkeepingData.expenses} onChange={handleBookkeepingChange} className="form-input" placeholder="$" />
-                        </div>
-                        <div className="form-group">
-                            <label>{dict.bookkeeping.accounts}</label>
-                            <input type="number" name="accounts" value={bookkeepingData.accounts} onChange={handleBookkeepingChange} className="form-input" />
-                        </div>
-                        <div className="form-group">
-                            <label>{dict.bookkeeping.employees}</label>
-                            <input type="number" name="employees" value={bookkeepingData.employees} onChange={handleBookkeepingChange} className="form-input" />
+                            <label>{dict.bookkeeping.businessAge}</label>
+                            <input type="text" name="businessAge" value={bookkeepingData.businessAge} onChange={handleBookkeepingChange} className="form-input" />
                         </div>
 
                         <div className="form-group">
-                            <label>{dict.bookkeeping.frequency}</label>
-                            <select name="frequency" value={bookkeepingData.frequency} onChange={handleBookkeepingChange} className="form-input">
-                                <option value="monthly">{dict.bookkeeping.options.monthly}</option>
-                                <option value="quarterly">{dict.bookkeeping.options.quarterly}</option>
-                                <option value="catchup">{dict.bookkeeping.options.catchup}</option>
+                            <label>{dict.bookkeeping.transactionCount}</label>
+                            <select name="transactionCount" value={bookkeepingData.transactionCount} onChange={handleBookkeepingChange} className="form-input">
+                                <option value="range0_300">{dict.bookkeeping.options.range0_300}</option>
+                                <option value="range301_600">{dict.bookkeeping.options.range301_600}</option>
+                                <option value="range601_1000">{dict.bookkeeping.options.range601_1000}</option>
+                                <option value="range1001_2000">{dict.bookkeeping.options.range1001_2000}</option>
+                                <option value="rangeOver2000">{dict.bookkeeping.options.rangeOver2000}</option>
                             </select>
                         </div>
+
                         <div className="form-group">
-                            <label>{dict.bookkeeping.software}</label>
-                            <select name="software" value={bookkeepingData.software} onChange={handleBookkeepingChange} className="form-input">
-                                <option value="qbo">{dict.bookkeeping.options.qbo}</option>
-                                <option value="xero">{dict.bookkeeping.options.xero}</option>
-                                <option value="excel">{dict.bookkeeping.options.excel}</option>
-                                <option value="none">{dict.bookkeeping.options.none}</option>
+                            <label>{dict.bookkeeping.accountCount}</label>
+                            <select name="accountCount" value={bookkeepingData.accountCount} onChange={handleBookkeepingChange} className="form-input">
+                                <option value="upto5">{dict.bookkeeping.options.upto5}</option>
+                                <option value="5to10">{dict.bookkeeping.options['5to10']}</option>
+                                <option value="over10">{dict.bookkeeping.options.over10}</option>
                             </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.accountingMethod}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="accountingMethod" value="cash" label={dict.bookkeeping.options.cash} selected={bookkeepingData.accountingMethod === 'cash'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="accountingMethod" value="accrual" label={dict.bookkeeping.options.accrual} selected={bookkeepingData.accountingMethod === 'accrual'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="accountingMethod" value="notSure" label={dict.bookkeeping.options.notSure} selected={bookkeepingData.accountingMethod === 'notSure'} onChange={handleBookkeepingChange} />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.merchantProcessors}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="merchantProcessors" value="yes" label={dict.bookkeeping.options.yes} selected={bookkeepingData.merchantProcessors === 'yes'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="merchantProcessors" value="no" label={dict.bookkeeping.options.no} selected={bookkeepingData.merchantProcessors === 'no'} onChange={handleBookkeepingChange} />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.loans}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="loans" value="yes" label={dict.bookkeeping.options.yes} selected={bookkeepingData.loans === 'yes'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="loans" value="no" label={dict.bookkeeping.options.no} selected={bookkeepingData.loans === 'no'} onChange={handleBookkeepingChange} />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.depreciableAssets}</label>
+                            <select name="depreciableAssets" value={bookkeepingData.depreciableAssets} onChange={handleBookkeepingChange} className="form-input">
+                                <option value="0">{dict.bookkeeping.options['0']}</option>
+                                <option value="1to5">{dict.bookkeeping.options['1to5']}</option>
+                                <option value="6to10">{dict.bookkeeping.options['6to10']}</option>
+                                <option value="over10">{dict.bookkeeping.options.over10}</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.booksUpToDate}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="booksUpToDate" value="yes" label={dict.bookkeeping.options.yes} selected={bookkeepingData.booksUpToDate === 'yes'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="booksUpToDate" value="no" label={dict.bookkeeping.options.no} selected={bookkeepingData.booksUpToDate === 'no'} onChange={handleBookkeepingChange} />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.salesTax}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="salesTax" value="yes" label={dict.bookkeeping.options.yes} selected={bookkeepingData.salesTax === 'yes'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="salesTax" value="no" label={dict.bookkeeping.options.no} selected={bookkeepingData.salesTax === 'no'} onChange={handleBookkeepingChange} />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.form1099}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="form1099" value="yes" label={dict.bookkeeping.options.yes} selected={bookkeepingData.form1099 === 'yes'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="form1099" value="no" label={dict.bookkeeping.options.no} selected={bookkeepingData.form1099 === 'no'} onChange={handleBookkeepingChange} />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.foreignTransactions}</label>
+                            <div className="selection-grid">
+                                <SelectionCard name="foreignTransactions" value="yes" label={dict.bookkeeping.options.yes} selected={bookkeepingData.foreignTransactions === 'yes'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="foreignTransactions" value="no" label={dict.bookkeeping.options.no} selected={bookkeepingData.foreignTransactions === 'no'} onChange={handleBookkeepingChange} />
+                            </div>
                         </div>
                     </div>
                 )}
