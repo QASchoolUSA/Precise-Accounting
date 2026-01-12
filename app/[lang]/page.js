@@ -27,6 +27,7 @@ export default async function Home({ params: { lang } }) {
                 <div className="container">
                     <h2 className="section-title text-center">{t.ourServices}</h2>
                     <div className="services-grid-home">
+                        {/* Card 1: Tax Prep (Always visible as it's the core service) */}
                         <div className="service-card-home" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.5rem' }}>
                             <h3 style={{ marginBottom: '0.5rem' }}>{t.services.taxPrep}</h3>
                             <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
@@ -34,27 +35,25 @@ export default async function Home({ params: { lang } }) {
                                 <Link href={`/${lang}/services/business-tax`} className="btn btn-secondary-dark" style={{ fontSize: '0.85rem', padding: '0.5rem', width: '100%' }}>{t.services.business}</Link>
                             </div>
                         </div>
-                        <Link href={`/${lang}/services/estimated-tax`} className="service-card-home">
-                            <h3>{dict.navigation.estimatedTax}</h3>
-                        </Link>
-                        <Link href={`/${lang}/services/tax-optimization`} className="service-card-home">
-                            <h3>{dict.navigation.taxOptimization}</h3>
-                        </Link>
-                        <Link href={`/${lang}/services/books-reinstatement`} className="service-card-home">
-                            <h3>{dict.navigation.booksReinstatement}</h3>
-                        </Link>
-                        <Link href={`/${lang}/services/payroll`} className="service-card-home">
-                            <h3>{dict.navigation.payroll}</h3>
-                        </Link>
-                        <Link href={`/${lang}/services/1099-filing`} className="service-card-home">
-                            <h3>{dict.navigation.form1099}</h3>
-                        </Link>
-                        <Link href={`/${lang}/services/sales-tax`} className="service-card-home">
-                            <h3>{dict.navigation.salesTax}</h3>
-                        </Link>
-                        <Link href={`/${lang}/services/new-business`} className="service-card-home">
-                            <h3>{dict.navigation.newBusiness}</h3>
-                        </Link>
+
+                        {/* Random selection of other services */}
+                        {[
+                            { href: `/${lang}/services/estimated-tax`, label: dict.navigation.estimatedTax },
+                            { href: `/${lang}/services/tax-optimization`, label: dict.navigation.taxOptimization },
+                            { href: `/${lang}/services/accounting-bookkeeping`, label: dict.navigation.accounting },
+                            { href: `/${lang}/services/books-reinstatement`, label: dict.navigation.booksReinstatement },
+                            { href: `/${lang}/services/payroll`, label: dict.navigation.payroll },
+                            { href: `/${lang}/services/1099-filing`, label: dict.navigation.form1099 },
+                            { href: `/${lang}/services/sales-tax`, label: dict.navigation.salesTax },
+                            { href: `/${lang}/services/new-business`, label: dict.navigation.newBusiness }
+                        ]
+                            .sort(() => 0.5 - Math.random())
+                            .slice(0, 3)
+                            .map((service, index) => (
+                                <Link key={index} href={service.href} className="service-card-home">
+                                    <h3>{service.label}</h3>
+                                </Link>
+                            ))}
                     </div>
                     <div className="text-center" style={{ marginTop: '1rem' }}>
                         <Link href={`/${lang}/services`} className="btn btn-secondary-dark">{t.viewAllServices}</Link>

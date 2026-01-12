@@ -34,7 +34,7 @@
         "meetOwner": "Meet the Owner, Iana Korentsova",
         "ownerBio1": "I bring over a decade of experience in finance and accounting, supported by a Master's degree in Mathematics and Statistics, giving me a strong analytical edge in everything I do.",
         "ownerBio2": "My career began in Russia as a bank economist, analyzing businesses for lending and investment decisions, a role that shaped my analytical approach and attention to detail. After moving to the U.S., I continued my work as an accountant in the trucking industry, one of the most complex areas of small business finance. This blend of financial analysis and U.S. accounting experience allows me to offer a deeper, more comprehensive understanding of each client's financial situation.",
-        "ownerBio3": "I'm also an IRS Annual Filing Season Program (AFSP) credentialed tax professional, committed to continuous learning and staying fully up to date with the changing tax landscape. Every recommendation I make is rooted in legal, compliant, and ethical tax-reduction strategies.",
+        "ownerBio3": "I complete the IRS Annual Filing Season Program (AFSP) certification every year, which includes the required 18 hours of continuing education in federal tax law and ethics. I continuously invest in professional development to stay up to date with all changes in tax legislation. Every recommendation I provide is based on lawful and ethical tax-saving strategies.",
         "aboutText1": "At our firm precision meets personalized service. We believe that accounting should feel clear, supportive, and empowering - not overwhelming.",
         "aboutText2": "We take the time to understand your unique situation so we can provide accurate work, honest guidance, and tax strategies that are fully compliant and tailored to your goals.",
         "services": {
@@ -44,11 +44,16 @@
         }
     },
     "pricingCalculator": {
+        "tabs": {
+            "taxPrep": "Tax Preparation",
+            "bookkeeping": "Bookkeeping"
+        },
         "steps": {
             "location": "Location",
             "basics": "Basics",
             "income": "Income & Deductions",
-            "review": "Review"
+            "review": "Review",
+            "progressLabel": "Step"
         },
         "location": {
             "title": "Where do you live?",
@@ -63,7 +68,7 @@
         "basics": {
             "title": "The Basics",
             "filingStatus": "Filing Status",
-            "dependents": "Do you have dependents?",
+            "dependents": "Do you have dependents (children, dependent parents)?",
             "options": {
                 "single": "Single",
                 "joint": "Married Filing Jointly",
@@ -89,6 +94,25 @@
                 "itemized": "Itemized deduction",
                 "education": "Education credit (1098-T)",
                 "depreciation": "Depreciation of vehicles/equipment"
+            }
+        },
+        "bookkeeping": {
+            "title": "Business Details",
+            "industry": "Industry / Business Type",
+            "revenue": "Annual Revenue",
+            "expenses": "Monthly Expenses (Approx)",
+            "accounts": "Number of Bank/Credit Card Accounts",
+            "employees": "Number of Employees/Contractors",
+            "frequency": "Service Frequency",
+            "software": "Current Accounting Software",
+            "options": {
+                "monthly": "Monthly",
+                "quarterly": "Quarterly",
+                "catchup": "Catch-up / Clean-up",
+                "qbo": "QuickBooks Online",
+                "xero": "Xero",
+                "excel": "Excel / Spreadsheets",
+                "none": "None / Other"
             }
         },
         "review": {

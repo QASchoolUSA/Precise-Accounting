@@ -57,6 +57,14 @@ export default async function Services({ params: { lang } }) {
                             <Link href={`/${lang}/services/estimated-tax`} className="btn btn-secondary-dark">{t.learnMore}</Link>
                         </div>
                     </div>
+
+                    <div className="service-card">
+                        <h3>{t.salesTaxTitle}</h3>
+                        <p>{t.salesTaxDesc}</p>
+                        <div className="service-actions">
+                            <Link href={`/${lang}/services/sales-tax`} className="btn btn-secondary-dark">{t.learnMore}</Link>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -99,17 +107,18 @@ export default async function Services({ params: { lang } }) {
                             <p>{t.form1099Desc}</p>
                             <Link href={`/${lang}/services/1099-filing`} className="text-link">{t.learnMore} →</Link>
                         </div>
+                    </div>
+                </div>
+            </section>
 
-                        <div className="service-card-small">
-                            <h3>{t.salesTaxTitle}</h3>
-                            <p>{t.salesTaxDesc}</p>
-                            <Link href={`/${lang}/services/sales-tax`} className="text-link">{t.learnMore} →</Link>
-                        </div>
-
-                        <div className="service-card-small">
-                            <h3>{t.newBusinessTitle}</h3>
-                            <p>{t.newBusinessDesc}</p>
-                            <Link href={`/${lang}/services/new-business`} className="text-link">{t.learnMore} →</Link>
+            <section className="section">
+                <div className="container">
+                    <h2 className="section-title">{t.newBusinessTitle}</h2>
+                    <div className="service-card">
+                        <h3>{t.newBusinessTitle}</h3>
+                        <p>{t.newBusinessDesc}</p>
+                        <div className="service-actions">
+                            <Link href={`/${lang}/services/new-business`} className="btn btn-secondary-dark">{t.learnMore}</Link>
                         </div>
                     </div>
                 </div>

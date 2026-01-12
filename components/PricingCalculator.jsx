@@ -17,6 +17,18 @@ export default function PricingCalculator({ lang, dict }) {
         situations: []
     });
 
+    // Bookkeeping State
+    const [activeTab, setActiveTab] = useState('tax');
+    const [bookkeepingData, setBookkeepingData] = useState({
+        industry: '',
+        revenue: '',
+        expenses: '',
+        accounts: '',
+        employees: '',
+        frequency: 'monthly',
+        software: 'qbo'
+    });
+
     // Request Form State
     const [showRequestForm, setShowRequestForm] = useState(false);
     const [requestForm, setRequestForm] = useState({
@@ -57,7 +69,7 @@ export default function PricingCalculator({ lang, dict }) {
         // Group 4 ($500)
         'California': 500, 'New York': 500, 'New Jersey': 500, 'Pennsylvania': 500,
         'Ohio': 500, 'Maryland': 500, 'Virginia': 500, 'Massachusetts': 500,
-        'Illinois': 500, 'Connecticut': 500, 'D.C.': 500
+        'Illinois': 500, 'Connecticut': 500, 'D.C.': 500, 'Oregon': 500
     };
 
     const SORTED_STATES = Object.keys(STATE_PRICES).sort();
@@ -99,6 +111,11 @@ export default function PricingCalculator({ lang, dict }) {
     const calculateTotal = () => {
         let total = 0;
 
+        if (activeTab === 'bookkeeping') {
+            setTotalAmount(dict.location.custom || "Custom Quote");
+            return;
+        }
+
         // Base Fee (State)
         if (taxData.state === 'custom') {
             setTotalAmount("Custom Quote");
@@ -131,18 +148,22 @@ export default function PricingCalculator({ lang, dict }) {
         setTaxData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleBookkeepingChange = (e) => {
+        const { name, value } = e.target;
+        setBookkeepingData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+        setStep(1);
+        setSubmitStatus(null);
+        setShowRequestForm(false);
+    };
+
     // Auto-advance for State selection
     const handleStateChange = (e) => {
         const { name, value } = e.target;
         setTaxData(prev => ({ ...prev, [name]: value }));
-
-        // Auto-advance logic
-        const blockedStates = ['custom', 'California', 'Oregon', 'Pennsylvania', 'Maryland'];
-        if (value && !blockedStates.includes(value)) {
-            setTimeout(() => {
-                nextStep();
-            }, 500);
-        }
     };
 
     const toggleSituation = (index, cost) => {
@@ -183,6 +204,13 @@ export default function PricingCalculator({ lang, dict }) {
                 totalEstimate: totalAmount
             };
 
+            const bookkeepingPayload = {
+                ...bookkeepingData,
+                totalEstimate: totalAmount
+            };
+
+            const payload = activeTab === 'bookkeeping' ? bookkeepingPayload : calculatorData;
+
             const subject = isPaymentFlow ? 'New Service Request' : 'Estimate Request - Tax Preparation';
 
             const response = await fetch('/api/contact', {
@@ -192,9 +220,9 @@ export default function PricingCalculator({ lang, dict }) {
                     name: requestForm.name,
                     email: requestForm.email,
                     phone: requestForm.phone,
-                    service: 'Tax Preparation',
+                    service: activeTab === 'bookkeeping' ? 'Bookkeeping' : 'Tax Preparation',
                     subject: subject,
-                    calculatorData
+                    calculatorData: payload
                 }),
             });
 
@@ -226,7 +254,12 @@ export default function PricingCalculator({ lang, dict }) {
         { title: dict.steps.review, id: 4 }
     ];
 
-    const currentSteps = TAX_STEPS;
+    const BOOKKEEPING_STEPS = [
+        { title: dict.bookkeeping.title, id: 1 },
+        { title: dict.review.title, id: 2 }
+    ];
+
+    const currentSteps = activeTab === 'bookkeeping' ? BOOKKEEPING_STEPS : TAX_STEPS;
     const totalSteps = currentSteps.length;
 
     const performStripeRedirect = async () => {
@@ -274,6 +307,11 @@ export default function PricingCalculator({ lang, dict }) {
     };
 
     const prevStep = () => {
+        const isLastStep = (activeTab === 'tax' && step === 4) || (activeTab === 'bookkeeping' && step === 2);
+        if (isLastStep && showRequestForm) {
+            setShowRequestForm(false);
+            return;
+        }
         if (step > 1) setStep(step - 1);
     };
 
@@ -295,7 +333,21 @@ export default function PricingCalculator({ lang, dict }) {
 
     return (
         <div className="calculator-container">
-            {/* NO TABS, JUST TITLE IF NEEDED OR CLEAN HEADER */}
+            {/* Tabs */}
+            <div className="tabs">
+                <button
+                    className={`tab-btn ${activeTab === 'tax' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('tax')}
+                >
+                    {dict.tabs.taxPrep}
+                </button>
+                <button
+                    className={`tab-btn ${activeTab === 'bookkeeping' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('bookkeeping')}
+                >
+                    {dict.tabs.bookkeeping}
+                </button>
+            </div>
 
             {/* Progress Bar */}
             <div className="stepper-progress">
@@ -305,7 +357,7 @@ export default function PricingCalculator({ lang, dict }) {
                     ))}
                 </div>
                 <div className="step-text-container">
-                    <div className="step-count">{dict.steps.location} {step} / {totalSteps}</div>
+                    <div className="step-count">{dict.steps.progressLabel || 'Step'} {step} / {totalSteps}</div>
                     <div className="step-name">{currentSteps[step - 1].title}</div>
                 </div>
             </div>
@@ -313,8 +365,53 @@ export default function PricingCalculator({ lang, dict }) {
             {/* Content Area */}
             <div className="calculator-content">
 
-                {/* --- TAX FLOW (ALWAYS ACTIVE) --- */}
-                {step === 1 && (
+                {/* --- BOOKKEEPING FLOW --- */}
+                {activeTab === 'bookkeeping' && step === 1 && (
+                    <div className="step-slide">
+                        <h2 className="step-title">{dict.bookkeeping.title}</h2>
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.industry}</label>
+                            <input type="text" name="industry" value={bookkeepingData.industry} onChange={handleBookkeepingChange} className="form-input" placeholder="e.g. IT, Retail, Construction" />
+                        </div>
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.revenue}</label>
+                            <input type="text" name="revenue" value={bookkeepingData.revenue} onChange={handleBookkeepingChange} className="form-input" placeholder="$0 - $1M" />
+                        </div>
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.expenses}</label>
+                            <input type="text" name="expenses" value={bookkeepingData.expenses} onChange={handleBookkeepingChange} className="form-input" placeholder="$" />
+                        </div>
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.accounts}</label>
+                            <input type="number" name="accounts" value={bookkeepingData.accounts} onChange={handleBookkeepingChange} className="form-input" />
+                        </div>
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.employees}</label>
+                            <input type="number" name="employees" value={bookkeepingData.employees} onChange={handleBookkeepingChange} className="form-input" />
+                        </div>
+
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.frequency}</label>
+                            <select name="frequency" value={bookkeepingData.frequency} onChange={handleBookkeepingChange} className="form-input">
+                                <option value="monthly">{dict.bookkeeping.options.monthly}</option>
+                                <option value="quarterly">{dict.bookkeeping.options.quarterly}</option>
+                                <option value="catchup">{dict.bookkeeping.options.catchup}</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label>{dict.bookkeeping.software}</label>
+                            <select name="software" value={bookkeepingData.software} onChange={handleBookkeepingChange} className="form-input">
+                                <option value="qbo">{dict.bookkeeping.options.qbo}</option>
+                                <option value="xero">{dict.bookkeeping.options.xero}</option>
+                                <option value="excel">{dict.bookkeeping.options.excel}</option>
+                                <option value="none">{dict.bookkeeping.options.none}</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+
+                {/* --- TAX FLOW --- */}
+                {activeTab === 'tax' && step === 1 && (
                     <div className="step-slide">
                         <h2 className="step-title">{dict.location.title}</h2>
                         <div className="form-group">
@@ -344,7 +441,7 @@ export default function PricingCalculator({ lang, dict }) {
                     </div>
                 )}
 
-                {step === 2 && (
+                {activeTab === 'tax' && step === 2 && (
                     <div className="step-slide">
                         <h2 className="step-title">{dict.basics.title}</h2>
                         <div className="form-group">
@@ -380,7 +477,7 @@ export default function PricingCalculator({ lang, dict }) {
                     </div>
                 )}
 
-                {step === 3 && (
+                {activeTab === 'tax' && step === 3 && (
                     <div className="step-slide">
                         <h2 className="step-title">{dict.income.title}</h2>
                         <p style={{ marginBottom: '1rem', color: 'var(--color-text-light)' }}>{dict.income.subtitle}</p>
@@ -399,7 +496,7 @@ export default function PricingCalculator({ lang, dict }) {
                     </div>
                 )}
 
-                {step === 4 && (
+                {((activeTab === 'tax' && step === 4) || (activeTab === 'bookkeeping' && step === 2)) && (
                     <div className="step-slide result-section" style={{ padding: '0' }}>
                         <h2 className="step-title">{dict.review.title}</h2>
                         <div className="total-price">{totalAmount}</div>
@@ -442,7 +539,9 @@ export default function PricingCalculator({ lang, dict }) {
                                 <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
                                     {dict.review.depositInfo}
                                 </p>
-                                <button onClick={handlePayment} className="btn btn-primary">{dict.review.reserveBtn}</button>
+                                {activeTab === 'tax' && (
+                                    <button onClick={handlePayment} className="btn btn-primary">{dict.review.reserveBtn}</button>
+                                )}
                                 <button onClick={() => { setIsPaymentFlow(false); setShowRequestForm(true); }} className="btn btn-secondary-dark">{dict.review.sendRequestBtn}</button>
                             </div>
                         )}
@@ -453,13 +552,13 @@ export default function PricingCalculator({ lang, dict }) {
             {/* Navigation Buttons */}
             <div className="nav-buttons">
                 {step > 1 ? (
-                    <button className="btn btn-secondary-dark" onClick={prevStep}>{dict.review.back || '← Back'}</button>
+                    <button className="btn btn-secondary-dark" onClick={prevStep}>{dict.nav?.back || '← Back'}</button>
                 ) : (
                     <div></div> // Spacer
                 )}
 
                 {step < totalSteps && (
-                    <button className="btn btn-primary" onClick={nextStep}>{dict.review.next || 'Next →'}</button>
+                    <button className="btn btn-primary" onClick={nextStep}>{dict.nav?.next || 'Next →'}</button>
                 )}
             </div>
         </div>
