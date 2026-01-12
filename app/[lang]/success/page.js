@@ -18,7 +18,7 @@ export default function SuccessPage() {
             }}>
                 ✓
             </div>
-            <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#333' }}>Payment Successful!</h1>
+            <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#333' }}>Booking Successful!</h1>
             <p style={{ fontSize: '1.2rem', color: '#666', maxWidth: '600px', marginBottom: '2rem' }}>
                 Thank you for your business. We have received your payment and will be in touch shortly to confirm the details of your service.
             </p>
