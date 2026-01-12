@@ -2,6 +2,7 @@ import '../globals.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { getDictionary } from '../../get-dictionary';
+import AndroidScaler from '../../components/AndroidScaler';
 
 export async function generateMetadata({ params: { lang } }) {
     const dict = await getDictionary(lang);
@@ -34,6 +35,7 @@ export default async function RootLayout({ children, params: { lang } }) {
                 <link rel="icon" type="image/svg+xml" href="/vite.svg" />
             </head>
             <body>
+                <AndroidScaler />
                 <div id="app">
                     <Header lang={lang} dict={dict.navigation} />
                     <main>{children}</main>

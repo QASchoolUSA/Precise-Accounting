@@ -637,9 +637,11 @@ export default function PricingCalculator({ lang, dict }) {
                             </div>
                         ) : (
                             <div className="result-actions">
-                                <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
-                                    {dict.review.depositInfo}
-                                </p>
+                                {activeTab === 'tax' && (
+                                    <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
+                                        {dict.review.depositInfo}
+                                    </p>
+                                )}
                                 {activeTab === 'tax' && (
                                     <button onClick={handlePayment} className="btn btn-primary">{dict.review.reserveBtn}</button>
                                 )}
