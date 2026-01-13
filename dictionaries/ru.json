@@ -102,7 +102,7 @@
             "businessAge": "Как давно вы ведете бизнес?",
             "transactionCount": "Количество ежемесячных транзакций (все счета)",
             "accountCount": "Количество банковских счетов и кредитных карт",
-            "accountingMethod": "Метод учета (Cash или Accrual)?",
+            "accountingMethod": "Какой у вас метод учета?",
             "merchantProcessors": "Есть ли платежные системы? (Stripe, Square, PayPal, Amazon и т.д.)",
             "loans": "Есть ли кредиты, лизинг или займы?",
             "depreciableAssets": "Количество амортизируемых активов (авто, оборудование и т.д.)?",

@@ -445,9 +445,7 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
                         <div className="form-group">
                             <label>{dict.bookkeeping.accountingMethod}</label>
                             <div className="selection-grid">
-                                <SelectionCard name="accountingMethod" value="cash" label={dict.bookkeeping.options.cash} selected={bookkeepingData.accountingMethod === 'cash'} onChange={handleBookkeepingChange} />
-                                <SelectionCard name="accountingMethod" value="accrual" label={dict.bookkeeping.options.accrual} selected={bookkeepingData.accountingMethod === 'accrual'} onChange={handleBookkeepingChange} />
-                                <SelectionCard name="accountingMethod" value="notSure" label={dict.bookkeeping.options.notSure} selected={bookkeepingData.accountingMethod === 'notSure'} onChange={handleBookkeepingChange} />
+                                <SelectionCard name="accountingMethod" value="cash" label={dict.bookkeeping.options.cash} selected={true} onChange={() => { }} />
                             </div>
                         </div>
 
@@ -523,7 +521,7 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
                                 <optgroup label={dict.location.unitedStates}>
                                     {SORTED_STATES.map(stateName => (
                                         <option key={stateName} value={stateName} disabled={['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName)}>
-                                            {stateName} {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName) ? `(${dict.location.unavailable})` : ''}
+                                            {stateName} {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName) ? ` ${dict.location.unavailable}` : ''}
                                         </option>
                                     ))}
                                 </optgroup>

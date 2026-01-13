@@ -15,6 +15,9 @@ export async function POST(request) {
         }
 
         // Configure transporter
+        console.log('Checking credentials...');
+        console.log('EMAIL_USER present:', !!process.env.EMAIL_USER);
+        console.log('EMAIL_PASS present:', !!process.env.EMAIL_PASS);
         // NOTE: These environment variables need to be set in .env.local
         // If not set, this will fail in production/dev
         const transporter = nodemailer.createTransport({
