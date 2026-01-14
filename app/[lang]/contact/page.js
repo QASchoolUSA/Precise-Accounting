@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
+import { MailIcon, PhoneIcon, WhatsAppIcon, InstagramIcon, TelegramIcon, FacebookIcon } from '@/components/SocialIcons';
 import { getDictionary } from '../../../get-dictionary';
 
 export const metadata = {
@@ -30,26 +31,37 @@ export default async function Contact({ params: { lang } }) {
                                 <h2>{t.otherWays}</h2>
                                 <p className="mb-4">{t.friendly}</p>
 
-                                <div className="contact-item">
-                                    <strong>{t.email}</strong>
-                                    <a href="mailto:contact@proaccountingusa.com">contact@proaccountingusa.com</a>
-                                </div>
-                                <div className="contact-item">
-                                    <strong>{t.callText}</strong>
-                                    <a href="tel:+14079667778">+1(407) 966-7778</a>
-                                </div>
-                                <div className="contact-item">
-                                    <strong>{t.whatsapp}</strong>
-                                    <a href="https://wa.me/message/QAOEHLU4XRVHL1" target="_blank" rel="noopener noreferrer">{t.messageWhatsapp}</a>
+                                <div className="social-grid">
+                                    <a href="mailto:contact@proaccountingusa.com" className="social-btn">
+                                        <MailIcon />
+                                        <span>{t.email}</span>
+                                    </a>
+                                    <a href="tel:+14079667778" className="social-btn">
+                                        <PhoneIcon />
+                                        <span>{t.callText}</span>
+                                    </a>
+                                    <a href="https://wa.me/message/QAOEHLU4XRVHL1" target="_blank" rel="noopener noreferrer" className="social-btn">
+                                        <WhatsAppIcon />
+                                        <span>{t.whatsapp}</span>
+                                    </a>
                                 </div>
 
                                 <div className="social-links mt-6">
                                     <h3>{t.followUs}</h3>
-                                    <ul>
-                                        <li><a href="https://www.instagram.com/precisetaxes" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                                        <li><a href="https://t.me/precisetaxes" target="_blank" rel="noopener noreferrer">Telegram</a></li>
-                                        <li><a href="https://facebook.com/groups/1395083481908820/" target="_blank" rel="noopener noreferrer">Facebook Group</a></li>
-                                    </ul>
+                                    <div className="social-grid">
+                                        <a href="https://www.instagram.com/precisetaxes" target="_blank" rel="noopener noreferrer" className="social-btn">
+                                            <InstagramIcon />
+                                            <span>Instagram</span>
+                                        </a>
+                                        <a href="https://t.me/precisetaxes" target="_blank" rel="noopener noreferrer" className="social-btn">
+                                            <TelegramIcon />
+                                            <span>Telegram</span>
+                                        </a>
+                                        <a href="https://facebook.com/groups/1395083481908820/" target="_blank" rel="noopener noreferrer" className="social-btn">
+                                            <FacebookIcon />
+                                            <span>Facebook Group</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

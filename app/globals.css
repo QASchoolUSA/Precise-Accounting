@@ -1448,3 +1448,52 @@ main {
         width: auto;
     }
 }
+/* Social Buttons Grid */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-weight: 600;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.social-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background-color: #f0fdf4; /* Light emerald tint */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.social-btn svg {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    transition: color 0.2s ease;
+}
+
+.social-btn:hover svg {
+    color: var(--color-accent-hover);
+}
+
+/* Utility Helpers */
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 2.5rem; }
+.mt-8 { margin-top: 3rem; }
+.mb-4 { margin-bottom: 1rem; }
+.pt-8 { padding-top: 2rem; }
+.border-t { border-top: 1px solid var(--color-border); }
+.border-gray-200 { border-color: var(--color-border); }
