@@ -94,6 +94,9 @@ export default async function Home({ params: { lang } }) {
                         <p>
                             {t.aboutText2}
                         </p>
+                        <p>
+                            {t.aboutText3}
+                        </p>
                     </div>
 
                     <div className="owner-profile">

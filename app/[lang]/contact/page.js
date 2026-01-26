@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
-import { MailIcon, PhoneIcon, WhatsAppIcon, InstagramIcon, TelegramIcon, FacebookIcon } from '@/components/SocialIcons';
+import { MailIcon, PhoneIcon, WhatsAppIcon, InstagramIcon, TelegramIcon, FacebookIcon, MapPinIcon } from '@/components/SocialIcons';
 import { getDictionary } from '../../../get-dictionary';
 
 export const metadata = {
@@ -32,6 +32,13 @@ export default async function Contact({ params: { lang } }) {
                                 <p className="mb-4">{t.friendly}</p>
 
                                 <div className="social-grid">
+                                    <div className="social-btn" style={{ height: 'auto', alignItems: 'flex-start' }}>
+                                        <MapPinIcon className="flex-shrink-0 mt-1" />
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span style={{ fontWeight: '600' }}>{t.addressTitle}</span>
+                                            <span style={{ whiteSpace: 'pre-line' }}>{t.address}</span>
+                                        </div>
+                                    </div>
                                     <a href="mailto:contact@proaccountingusa.com" className="social-btn">
                                         <MailIcon />
                                         <span>{t.email}</span>

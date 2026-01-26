@@ -37,6 +37,7 @@
         "ownerBio3": "I complete the IRS Annual Filing Season Program (AFSP) certification every year, which includes the required 18 hours of continuing education in federal tax law and ethics. I continuously invest in professional development to stay up to date with all changes in tax legislation. Every recommendation I provide is based on lawful and ethical tax-saving strategies.",
         "aboutText1": "At our firm precision meets personalized service. We believe that accounting should feel clear, supportive, and empowering - not overwhelming.",
         "aboutText2": "We take the time to understand your unique situation so we can provide accurate work, honest guidance, and tax strategies that are fully compliant and tailored to your goals.",
+        "aboutText3": "We also collaborate with licensed CPAs (Certified Public Accountants), which allows us to involve their expertise in complex or non-standard situations. This gives our clients an additional level of assurance, access to deeper tax analysis, and confidence that all accounting and tax decisions fully comply with U.S. regulations.",
         "services": {
             "personal": "Personal",
             "business": "Business",
@@ -480,6 +481,8 @@
         "subtitle": "We're here to help with your accounting needs.",
         "otherWays": "Other Ways to Reach Us",
         "friendly": "We are available via email, phone, and messaging apps.",
+        "addressTitle": "Our Office",
+        "address": "283 Cranes Roost Blvd, Suite 27\nAltamonte Springs, FL 32701",
         "email": "Email",
         "callText": "Call/Text",
         "whatsapp": "WhatsApp",
