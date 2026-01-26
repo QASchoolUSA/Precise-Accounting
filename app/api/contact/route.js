@@ -4,12 +4,37 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { name, phone, email, businessName, service, calculatorData, subject } = body;
+        const { name, phone, email, businessName, service, calculatorData, subject, captchaToken } = body;
 
         // Validation
         if (!name || !phone || !email || !service) {
             return NextResponse.json(
                 { message: 'Missing required fields' },
+                { status: 400 }
+            );
+        }
+
+        // Verify reCAPTCHA
+        if (!captchaToken) {
+            return NextResponse.json(
+                { message: 'Missing reCAPTCHA token' },
+                { status: 400 }
+            );
+        }
+
+        const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
+        const recaptchaVerifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${captchaToken}`;
+
+        const recaptchaResponse = await fetch(recaptchaVerifyUrl, {
+            method: 'POST',
+        });
+
+        const recaptchaData = await recaptchaResponse.json();
+
+        if (!recaptchaData.success) {
+            console.error('reCAPTCHA verification failed:', recaptchaData);
+            return NextResponse.json(
+                { message: 'reCAPTCHA verification failed', details: recaptchaData },
                 { status: 400 }
             );
         }

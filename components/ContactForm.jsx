@@ -16,6 +16,8 @@ const SERVICES = [
     'Other'
 ];
 
+import ReCAPTCHA from 'react-google-recaptcha';
+
 export default function ContactForm() {
     const [formData, setFormData] = useState({
         name: '',
@@ -25,6 +27,7 @@ export default function ContactForm() {
         service: SERVICES[0]
     });
     const [status, setStatus] = useState('idle'); // idle, loading, success, error
+    const [captchaToken, setCaptchaToken] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,13 +38,19 @@ export default function ContactForm() {
         e.preventDefault();
         setStatus('loading');
 
+        if (!captchaToken) {
+            alert('Please check the reCAPTCHA box.');
+            setStatus('idle');
+            return;
+        }
+
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, captchaToken }),
             });
 
             if (response.ok) {
@@ -146,6 +155,13 @@ export default function ContactForm() {
                                 <option key={service} value={service}>{service}</option>
                             ))}
                         </select>
+                    </div>
+
+                    <div className="mb-6 flex justify-center">
+                        <ReCAPTCHA
+                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                            onChange={(token) => setCaptchaToken(token)}
+                        />
                     </div>
 
                     {status === 'error' && (
