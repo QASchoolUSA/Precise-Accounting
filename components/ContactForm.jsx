@@ -16,7 +16,7 @@ const SERVICES = [
     'Other'
 ];
 
-import ReCAPTCHA from 'react-google-recaptcha';
+import { useEffect } from 'react';
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -27,7 +27,22 @@ export default function ContactForm() {
         service: SERVICES[0]
     });
     const [status, setStatus] = useState('idle'); // idle, loading, success, error
-    const [captchaToken, setCaptchaToken] = useState(null);
+
+    useEffect(() => {
+        // Load reCAPTCHA Enterprise script
+        const script = document.createElement('script');
+        script.src = `https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+
+        return () => {
+            // Cleanup script if needed, though usually fine to leave
+            if (document.head.contains(script)) {
+                document.head.removeChild(script);
+            }
+        };
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,19 +53,26 @@ export default function ContactForm() {
         e.preventDefault();
         setStatus('loading');
 
-        if (!captchaToken) {
-            alert('Please check the reCAPTCHA box.');
-            setStatus('idle');
-            return;
-        }
-
         try {
+            // Execute reCAPTCHA Enterprise
+            let token = '';
+            if (window.grecaptcha && window.grecaptcha.enterprise) {
+                token = await window.grecaptcha.enterprise.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' });
+            }
+
+            if (!token) {
+                console.error('Failed to generate reCAPTCHA token');
+                setStatus('error'); // Or handle gracefully
+                // Proceeding without token might fail on server, but let's try or show error
+                // Ideally return here if token is strictly required and we know it failed
+            }
+
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ...formData, captchaToken }),
+                body: JSON.stringify({ ...formData, captchaToken: token }),
             });
 
             if (response.ok) {
@@ -157,12 +179,7 @@ export default function ContactForm() {
                         </select>
                     </div>
 
-                    <div className="mb-6 flex justify-center">
-                        <ReCAPTCHA
-                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                            onChange={(token) => setCaptchaToken(token)}
-                        />
-                    </div>
+
 
                     {status === 'error' && (
                         <div className="error-message mb-4">

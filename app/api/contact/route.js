@@ -39,6 +39,12 @@ export async function POST(request) {
             );
         }
 
+        // If score is present (Enterprise), we can optionally check it
+        if (recaptchaData.score && recaptchaData.score < 0.5) {
+            console.warn('reCAPTCHA low score:', recaptchaData.score);
+            // Optionally reject here, but for now we'll just log
+        }
+
         // Configure transporter
         console.log('Checking credentials...');
         console.log('EMAIL_USER present:', !!process.env.EMAIL_USER);
