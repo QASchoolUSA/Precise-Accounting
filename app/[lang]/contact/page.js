@@ -32,13 +32,19 @@ export default async function Contact({ params: { lang } }) {
                                 <p className="mb-4">{t.friendly}</p>
 
                                 <div className="social-grid">
-                                    <div className="social-btn" style={{ height: 'auto', alignItems: 'flex-start' }}>
+                                    <a
+                                        href="https://www.google.com/maps/dir/?api=1&destination=283+Cranes+Roost+Blvd,+Suite+27,+Altamonte+Springs,+FL+32701"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="social-btn"
+                                        style={{ height: 'auto', alignItems: 'flex-start' }}
+                                    >
                                         <MapPinIcon className="flex-shrink-0 mt-1" />
                                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                                             <span style={{ fontWeight: '600' }}>{t.addressTitle}</span>
                                             <span style={{ whiteSpace: 'pre-line' }}>{t.address}</span>
                                         </div>
-                                    </div>
+                                    </a>
                                     <a href="mailto:contact@proaccountingusa.com" className="social-btn">
                                         <MailIcon />
                                         <span>{t.email}</span>
