@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { name, phone, email, businessName, service, calculatorData, subject, captchaToken } = body;
+        const { name, phone, email, businessName, service, calculatorData, subject } = body;
 
         // Validation
         if (!name || !phone || !email || !service) {
@@ -12,46 +12,6 @@ export async function POST(request) {
                 { message: 'Missing required fields' },
                 { status: 400 }
             );
-        }
-
-        // Verify reCAPTCHA v3 (standard siteverify)
-        if (!captchaToken) {
-            return NextResponse.json(
-                { message: 'Missing reCAPTCHA token' },
-                { status: 400 }
-            );
-        }
-
-        const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-        if (!recaptchaSecret) {
-            console.error('RECAPTCHA_SECRET_KEY is not configured');
-            return NextResponse.json(
-                { message: 'reCAPTCHA is not configured on the server' },
-                { status: 500 }
-            );
-        }
-
-        const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                secret: recaptchaSecret,
-                response: captchaToken,
-            }),
-        });
-
-        const recaptchaData = await recaptchaResponse.json();
-
-        if (!recaptchaData.success) {
-            console.error('reCAPTCHA verification failed:', recaptchaData);
-            return NextResponse.json(
-                { message: 'reCAPTCHA verification failed', details: recaptchaData },
-                { status: 400 }
-            );
-        }
-
-        if (typeof recaptchaData.score === 'number' && recaptchaData.score < 0.5) {
-            console.warn('reCAPTCHA low score:', recaptchaData.score);
         }
 
         // Configure transporter

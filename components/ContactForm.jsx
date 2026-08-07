@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getRecaptchaToken, loadRecaptcha } from '@/lib/recaptcha-client';
+import { useState } from 'react';
 
 const SERVICES = [
     'Personal Tax Preparation',
@@ -27,12 +26,6 @@ export default function ContactForm() {
     });
     const [status, setStatus] = useState('idle'); // idle, loading, success, error
 
-    useEffect(() => {
-        loadRecaptcha().catch((err) => {
-            console.error('Failed to preload reCAPTCHA:', err);
-        });
-    }, []);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -43,14 +36,12 @@ export default function ContactForm() {
         setStatus('loading');
 
         try {
-            const captchaToken = await getRecaptchaToken('contact');
-
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ...formData, captchaToken }),
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
