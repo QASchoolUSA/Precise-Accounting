@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: 'Accounting & Bookkeeping | Precise Accounting',
-    description: 'Professional bookkeeping and financial reporting at a predictable monthly cost.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/accounting-bookkeeping/',
+        title: dict.accountingBookkeepingPage.title,
+        description: dict.accountingBookkeepingPage.subtitle
+    });
+}
 
-export default async function AccountingBookkeepingServices({ params: { lang } }) {
+export default async function AccountingBookkeepingServices({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.accountingBookkeepingPage;
 

@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../get-dictionary';
+import { buildPageMetadata } from '../../../lib/metadata';
 
-export const metadata = {
-    title: 'Services | Precise Accounting',
-    description: 'Precise Accounting Services: Tax Preparation, Bookkeeping, Payroll, and Financial Planning.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/',
+        title: dict.servicesPage.title,
+        description: dict.servicesPage.subtitle
+    });
+}
 
-export default async function Services({ params: { lang } }) {
+export default async function Services({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.servicesPage;
 

@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: 'Books & Financial Records Reinstatement | Precise Accounting',
-    description: 'Restore clarity and accuracy to your financial records.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/books-reinstatement/',
+        title: dict.booksReinstatementPage.title,
+        description: dict.booksReinstatementPage.subtitle
+    });
+}
 
-export default async function BooksReinstatementServices({ params: { lang } }) {
+export default async function BooksReinstatementServices({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.booksReinstatementPage;
 

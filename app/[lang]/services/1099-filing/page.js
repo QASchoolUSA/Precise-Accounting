@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: '1099 Preparation & Filing | Precise Accounting',
-    description: 'Fast and accurate 1099 preparation and filing services.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/1099-filing/',
+        title: dict.form1099Page.title,
+        description: dict.form1099Page.subtitle
+    });
+}
 
-export default async function Form1099Services({ params: { lang } }) {
+export default async function Form1099Services({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.form1099Page;
 

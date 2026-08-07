@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: 'Sales Tax | Precise Accounting',
-    description: 'Sales tax calculation, filing, and compliance services.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/sales-tax/',
+        title: dict.salesTaxPage.title,
+        description: dict.salesTaxPage.subtitle
+    });
+}
 
-export default async function SalesTaxServices({ params: { lang } }) {
+export default async function SalesTaxServices({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.salesTaxPage;
 

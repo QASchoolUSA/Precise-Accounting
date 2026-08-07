@@ -1,15 +1,24 @@
 import PricingCalculator from '../../../components/PricingCalculator';
 import Link from 'next/link';
 import { getDictionary } from '../../../get-dictionary';
+import { buildPageMetadata } from '../../../lib/metadata';
 
-export const metadata = {
-    title: 'Pricing Estimate | Precise Accounting',
-    description: 'Get a price estimate for Tax Preparation and Bookkeeping services.',
-};
-
-export default async function Pricing({ params: { lang }, searchParams }) {
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
-    const initialTab = searchParams?.tab || 'tax';
+    return buildPageMetadata({
+        lang,
+        path: '/pricing/',
+        title: lang === 'en' ? 'Pricing Estimate' : dict.navigation.pricing,
+        description: lang === 'en' ? 'Get a price estimate for Tax Preparation and Bookkeeping services.' : dict.servicesPage.subtitle
+    });
+}
+
+export default async function Pricing({ params, searchParams }) {
+    const { lang } = await params;
+    const resolvedSearchParams = await searchParams;
+    const dict = await getDictionary(lang);
+    const initialTab = resolvedSearchParams?.tab || 'tax';
 
     return (
         <>

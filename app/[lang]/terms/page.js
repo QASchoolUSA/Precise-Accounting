@@ -1,7 +1,14 @@
-export const metadata = {
-    title: 'Terms and Conditions | Precise Accounting',
-    description: 'Terms and Conditions for Precise Accounting services.',
-};
+import { buildPageMetadata } from '../../../lib/metadata';
+
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    return buildPageMetadata({
+        lang,
+        path: '/terms/',
+        title: 'Terms and Conditions',
+        description: 'Terms and Conditions for Precise Accounting services.',
+    });
+}
 
 export default function Terms() {
     return (

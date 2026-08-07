@@ -2,13 +2,21 @@ import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import { MailIcon, PhoneIcon, WhatsAppIcon, InstagramIcon, TelegramIcon, FacebookIcon, MapPinIcon } from '@/components/SocialIcons';
 import { getDictionary } from '../../../get-dictionary';
+import { buildPageMetadata } from '../../../lib/metadata';
 
-export const metadata = {
-    title: 'Contact | Precise Accounting',
-    description: 'Contact Precise Accounting related queries.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/contact/',
+        title: dict.contactPage.title,
+        description: dict.contactPage.subtitle
+    });
+}
 
-export default async function Contact({ params: { lang } }) {
+export default async function Contact({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.contactPage;
 

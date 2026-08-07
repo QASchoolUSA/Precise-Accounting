@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: 'Business Tax Preparation | Precise Accounting',
-    description: 'Hands-on, detail-driven business tax preparation for corporations, partnerships, and self-employed individuals.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/business-tax/',
+        title: dict.businessTaxPage.title,
+        description: dict.businessTaxPage.subtitle
+    });
+}
 
-export default async function BusinessTaxPage({ params: { lang } }) {
+export default async function BusinessTaxPage({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.businessTaxPage;
 

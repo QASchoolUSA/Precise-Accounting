@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getRecaptchaToken, loadRecaptcha } from '@/lib/recaptcha-client';
 
 export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
     const [step, setStep] = useState(1);
@@ -44,6 +45,12 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error'
     const [isPaymentFlow, setIsPaymentFlow] = useState(false);
+
+    useEffect(() => {
+        loadRecaptcha().catch((err) => {
+            console.error('Failed to preload reCAPTCHA:', err);
+        });
+    }, []);
 
     // Validations & Pricing Maps
     const FILING_PRICES = {
@@ -249,6 +256,7 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
             const payload = activeTab === 'bookkeeping' ? bookkeepingPayload : calculatorData;
 
             const subject = isPaymentFlow ? 'New Service Request' : 'Estimate Request - Tax Preparation';
+            const captchaToken = await getRecaptchaToken(isPaymentFlow ? 'booking' : 'estimate');
 
             const response = await fetch('/api/contact', {
                 method: 'POST',
@@ -259,7 +267,8 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
                     phone: requestForm.phone,
                     service: activeTab === 'bookkeeping' ? 'Bookkeeping' : 'Tax Preparation',
                     subject: subject,
-                    calculatorData: payload
+                    calculatorData: payload,
+                    captchaToken,
                 }),
             });
 

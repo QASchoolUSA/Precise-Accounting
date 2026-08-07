@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: 'New Business Entity Formation | Precise Accounting',
-    description: 'Expert guidance for setting up your new business entity.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/new-business/',
+        title: dict.newBusinessPage.title,
+        description: dict.newBusinessPage.subtitle
+    });
+}
 
-export default async function NewBusinessServices({ params: { lang } }) {
+export default async function NewBusinessServices({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.newBusinessPage;
 

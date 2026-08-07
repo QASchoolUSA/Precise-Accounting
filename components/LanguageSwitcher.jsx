@@ -1,21 +1,12 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
 
 export default function LanguageSwitcher() {
     const pathname = usePathname();
     const router = useRouter();
-    const [currentLang, setCurrentLang] = useState('en');
-
-    useEffect(() => {
-        if (pathname) {
-            const segment = pathname.split('/')[1];
-            if (segment === 'en' || segment === 'ru') {
-                setCurrentLang(segment);
-            }
-        }
-    }, [pathname]);
+    const segment = pathname?.split('/')[1];
+    const currentLang = segment === 'en' || segment === 'ru' ? segment : 'en';
 
     const switchLanguage = (lang) => {
         if (!pathname) return;

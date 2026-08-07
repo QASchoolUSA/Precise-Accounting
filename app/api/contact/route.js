@@ -14,7 +14,7 @@ export async function POST(request) {
             );
         }
 
-        // Verify reCAPTCHA
+        // Verify reCAPTCHA v3 (standard siteverify)
         if (!captchaToken) {
             return NextResponse.json(
                 { message: 'Missing reCAPTCHA token' },
@@ -23,10 +23,21 @@ export async function POST(request) {
         }
 
         const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-        const recaptchaVerifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${captchaToken}`;
+        if (!recaptchaSecret) {
+            console.error('RECAPTCHA_SECRET_KEY is not configured');
+            return NextResponse.json(
+                { message: 'reCAPTCHA is not configured on the server' },
+                { status: 500 }
+            );
+        }
 
-        const recaptchaResponse = await fetch(recaptchaVerifyUrl, {
+        const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
             method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                secret: recaptchaSecret,
+                response: captchaToken,
+            }),
         });
 
         const recaptchaData = await recaptchaResponse.json();
@@ -39,10 +50,8 @@ export async function POST(request) {
             );
         }
 
-        // If score is present (Enterprise), we can optionally check it
-        if (recaptchaData.score && recaptchaData.score < 0.5) {
+        if (typeof recaptchaData.score === 'number' && recaptchaData.score < 0.5) {
             console.warn('reCAPTCHA low score:', recaptchaData.score);
-            // Optionally reject here, but for now we'll just log
         }
 
         // Configure transporter

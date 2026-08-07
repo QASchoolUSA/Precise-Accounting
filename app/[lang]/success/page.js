@@ -1,4 +1,17 @@
+import { buildPageMetadata } from '../../../lib/metadata';
 import Link from 'next/link';
+
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    return buildPageMetadata({
+        lang,
+        path: '/success/',
+        title: 'Booking Successful',
+        description: 'Thank you for your payment to Precise Accounting.',
+        index: false,
+    });
+}
+
 
 export default function SuccessPage() {
     return (

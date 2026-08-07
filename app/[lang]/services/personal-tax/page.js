@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
+import { buildPageMetadata } from '../../../../lib/metadata';
 
-export const metadata = {
-    title: 'Personal Tax Preparation | Precise Accounting',
-    description: 'Accurate and compliant personal tax preparation services maximizing your refund and reducing your tax burden legally.',
-};
+export async function generateMetadata({ params }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    return buildPageMetadata({
+        lang,
+        path: '/services/personal-tax/',
+        title: dict.personalTaxPage.title,
+        description: dict.personalTaxPage.subtitle
+    });
+}
 
-export default async function PersonalTaxPage({ params: { lang } }) {
+export default async function PersonalTaxPage({ params }) {
+    const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.personalTaxPage;
 
