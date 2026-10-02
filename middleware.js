@@ -5,19 +5,37 @@ import Negotiator from "negotiator";
 let locales = ["en", "ru"];
 export let defaultLocale = "en";
 
+const METADATA_PATHS = new Set([
+    "/icon",
+    "/apple-icon",
+    "/opengraph-image",
+    "/twitter-image",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/llms.txt",
+    "/manifest.webmanifest",
+    "/favicon.ico",
+]);
+
 function getLocale(request) {
     const negotiatorHeaders = {};
     request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
     let languages = new Negotiator({ headers: negotiatorHeaders }).languages();
-    return match(languages, locales, defaultLocale);
+    // Negotiator can return "*" when Accept-Language is missing/wildcard;
+    // Intl.match throws on "*", so fall back to default.
+    const safeLanguages = languages.filter((lang) => lang && lang !== "*");
+    if (safeLanguages.length === 0) {
+        return defaultLocale;
+    }
+    return match(safeLanguages, locales, defaultLocale);
 }
 
 export function middleware(request) {
-    // Check if there is any supported locale in the pathname
     const { pathname } = request.nextUrl;
+    const barePath = pathname.replace(/\/$/, "") || "/";
 
-    // Skip if path is already localized or is a public file
+    // Already localized
     if (
         pathname.startsWith(`/${defaultLocale}/`) ||
         pathname.startsWith(`/ru/`) ||
@@ -27,20 +45,20 @@ export function middleware(request) {
         return;
     }
 
-    // Skip API routes, static files, images, etc.
+    // Skip API, Next internals, static files, and App Router metadata routes
     if (
-        pathname.includes('.') || // files with extensions
-        pathname.startsWith('/api/') || // api routes
-        pathname.startsWith('/_next/') ||
-        pathname.startsWith('/monitoring')
+        pathname.includes(".") ||
+        pathname.startsWith("/api/") ||
+        pathname.startsWith("/_next/") ||
+        pathname.startsWith("/monitoring") ||
+        METADATA_PATHS.has(barePath) ||
+        METADATA_PATHS.has(pathname)
     ) {
         return;
     }
 
     const locale = getLocale(request);
-    const newUrl = new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url);
-
-    // Preserve query parameters
+    const newUrl = new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url);
     newUrl.search = request.nextUrl.search;
 
     return NextResponse.redirect(newUrl);
@@ -48,9 +66,6 @@ export function middleware(request) {
 
 export const config = {
     matcher: [
-        // Skip all internal paths (_next)
-        '/((?!_next|api|favicon.ico).*)',
-        // Optional: only run on root (/)
-        // '/'
+        "/((?!_next|api|favicon.ico|icon|apple-icon|opengraph-image|twitter-image|robots.txt|sitemap.xml|llms.txt).*)",
     ],
 };

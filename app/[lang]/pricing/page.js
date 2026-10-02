@@ -1,7 +1,11 @@
 import PricingCalculator from '../../../components/PricingCalculator';
-import Link from 'next/link';
 import { getDictionary } from '../../../get-dictionary';
-import { buildPageMetadata } from '../../../lib/metadata';
+import {
+    buildBreadcrumbJsonLd,
+    buildPageMetadata,
+    buildWebPageJsonLd,
+} from '../../../lib/metadata';
+import JsonLd from '../../../components/JsonLd';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -9,8 +13,8 @@ export async function generateMetadata({ params }) {
     return buildPageMetadata({
         lang,
         path: '/pricing/',
-        title: lang === 'en' ? 'Pricing Estimate' : dict.navigation.pricing,
-        description: lang === 'en' ? 'Get a price estimate for Tax Preparation and Bookkeeping services.' : dict.servicesPage.subtitle
+        title: dict.navigation.pricing,
+        description: dict.servicesPage.subtitle,
     });
 }
 
@@ -19,9 +23,22 @@ export default async function Pricing({ params, searchParams }) {
     const resolvedSearchParams = await searchParams;
     const dict = await getDictionary(lang);
     const initialTab = resolvedSearchParams?.tab || 'tax';
+    const schemas = [
+        buildWebPageJsonLd({
+            lang,
+            path: '/pricing/',
+            name: dict.navigation.pricing,
+            description: dict.servicesPage.subtitle,
+        }),
+        buildBreadcrumbJsonLd(lang, [
+            { name: dict.navigation.home, path: '/' },
+            { name: dict.navigation.pricing, path: '/pricing/' },
+        ]),
+    ];
 
     return (
         <>
+            <JsonLd data={schemas} />
             <section className="page-header">
                 <div className="container">
                     <h1 className="page-title">{dict.pricingCalculator.review.requestTitle}</h1>

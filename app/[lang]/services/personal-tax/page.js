@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
-import { buildPageMetadata } from '../../../../lib/metadata';
+import { buildPageMetadata, buildServicePageSchemas } from '../../../../lib/metadata';
+import JsonLd from '../../../../components/JsonLd';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -18,8 +19,18 @@ export default async function PersonalTaxPage({ params }) {
     const dict = await getDictionary(lang);
     const t = dict.personalTaxPage;
 
+    const schemas = buildServicePageSchemas({
+        lang,
+        path: '/services/personal-tax/',
+        name: t.title,
+        description: t.subtitle,
+        homeLabel: dict.navigation.home,
+        servicesLabel: dict.navigation.services,
+    });
+
     return (
         <>
+            <JsonLd data={schemas} />
             <header className="page-header">
                 <div className="container">
                     <h1 className="page-title">{t.title}</h1>

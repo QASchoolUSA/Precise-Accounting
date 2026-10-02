@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../get-dictionary';
-import { buildPageMetadata } from '../../../lib/metadata';
+import {
+    buildBreadcrumbJsonLd,
+    buildPageMetadata,
+    buildWebPageJsonLd,
+} from '../../../lib/metadata';
+import JsonLd from '../../../components/JsonLd';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -17,9 +22,23 @@ export default async function Services({ params }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.servicesPage;
+    const schemas = [
+        buildWebPageJsonLd({
+            lang,
+            path: '/services/',
+            name: t.title,
+            description: t.subtitle,
+            type: 'CollectionPage',
+        }),
+        buildBreadcrumbJsonLd(lang, [
+            { name: dict.navigation.home, path: '/' },
+            { name: dict.navigation.services, path: '/services/' },
+        ]),
+    ];
 
     return (
         <>
+            <JsonLd data={schemas} />
             <section className="page-header">
                 <div className="container">
                     <h1 className="page-title">{t.title}</h1>

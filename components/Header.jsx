@@ -8,9 +8,14 @@ import LanguageSwitcher from './LanguageSwitcher';
 export default function Header({ lang, dict }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isServicesOpen, setIsServicesOpen] = useState(false);
+    const [isResourcesOpen, setIsResourcesOpen] = useState(false);
 
     const toggleServices = () => {
         setIsServicesOpen(!isServicesOpen);
+    };
+
+    const toggleResources = () => {
+        setIsResourcesOpen(!isResourcesOpen);
     };
 
     const toggleMenu = () => {
@@ -24,6 +29,8 @@ export default function Header({ lang, dict }) {
 
     const closeMenu = () => {
         setIsMenuOpen(false);
+        setIsServicesOpen(false);
+        setIsResourcesOpen(false);
         document.body.classList.remove('no-scroll');
     };
 
@@ -82,6 +89,14 @@ export default function Header({ lang, dict }) {
                             </ul>
                         </li>
                         <li><Link href={`/${lang}/pricing`} onClick={closeMenu}>{dict.pricing}</Link></li>
+                        <li className={`dropdown ${isResourcesOpen ? 'open' : ''}`}>
+                            <span className="dropdown-trigger" onClick={toggleResources}>{dict.resources} ▾</span>
+                            <ul className="dropdown-menu">
+                                <li><Link href={`/${lang}/resources/tax-news`} onClick={closeMenu}>{dict.taxNews}</Link></li>
+                                <li><Link href={`/${lang}/resources/insights`} onClick={closeMenu}>{dict.insights}</Link></li>
+                                <li><Link href={`/${lang}/resources/guides`} onClick={closeMenu}>{dict.guides}</Link></li>
+                            </ul>
+                        </li>
                         <li><LanguageSwitcher /></li>
                         <li><Link href={`/${lang}/contact`} className="btn btn-primary" onClick={closeMenu}>{dict.contact}</Link></li>
                     </ul>
