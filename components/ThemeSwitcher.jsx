@@ -34,10 +34,14 @@ export default function ThemeSwitcher() {
                 className="theme-switcher__toggle"
                 aria-expanded={open}
                 aria-controls={panelId}
+                aria-label={`Design preview: ${theme.label}`}
                 onClick={() => setOpen((value) => !value)}
             >
-                <span className="theme-switcher__eyebrow">Design preview</span>
-                <span className="theme-switcher__current">{theme.label}</span>
+                <span className="theme-switcher__fab-mark" aria-hidden="true">Aa</span>
+                <span className="theme-switcher__copy">
+                    <span className="theme-switcher__eyebrow">Design preview</span>
+                    <span className="theme-switcher__current">{theme.label}</span>
+                </span>
             </button>
 
             <div id={panelId} className="theme-switcher__panel" hidden={!open}>
