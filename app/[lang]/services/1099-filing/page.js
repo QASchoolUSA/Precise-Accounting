@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
-import { buildPageMetadata } from '../../../../lib/metadata';
+import { buildPageMetadata, buildServicePageSchemas } from '../../../../lib/metadata';
+import JsonLd from '../../../../components/JsonLd';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -18,8 +19,18 @@ export default async function Form1099Services({ params }) {
     const dict = await getDictionary(lang);
     const t = dict.form1099Page;
 
+    const schemas = buildServicePageSchemas({
+        lang,
+        path: '/services/1099-filing/',
+        name: t.title,
+        description: t.subtitle,
+        homeLabel: dict.navigation.home,
+        servicesLabel: dict.navigation.services,
+    });
+
     return (
         <>
+            <JsonLd data={schemas} />
             <section className="page-header">
                 <div className="container">
                     <h1 className="page-title">{t.title}</h1>

@@ -1,9 +1,10 @@
 import { getDictionary } from '../../get-dictionary';
-import { buildOrganizationJsonLd, buildPageMetadata } from '../../lib/metadata';
+import { buildPageMetadata, buildSitewideJsonLd } from '../../lib/metadata';
 import { siteConfig } from '../../lib/site';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import AndroidScaler from '../../components/AndroidScaler';
+import JsonLd from '../../components/JsonLd';
 import '../globals.css';
 
 export async function generateMetadata({ params }) {
@@ -15,6 +16,14 @@ export async function generateMetadata({ params }) {
         title: dict.metadata.title,
         description: dict.metadata.description,
     });
+
+    const verification = {};
+    if (siteConfig.verification?.google) {
+        verification.google = siteConfig.verification.google;
+    }
+    if (siteConfig.verification?.bing) {
+        verification.other = { 'msvalidate.01': siteConfig.verification.bing };
+    }
 
     return {
         metadataBase: new URL(siteConfig.url),
@@ -31,6 +40,7 @@ export async function generateMetadata({ params }) {
             ...page.twitter,
             title: dict.metadata.title,
         },
+        ...(Object.keys(verification).length > 0 ? { verification } : {}),
     };
 }
 
@@ -41,7 +51,7 @@ export async function generateStaticParams() {
 export default async function RootLayout({ children, params }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
-    const jsonLd = buildOrganizationJsonLd();
+    const sitewideJsonLd = buildSitewideJsonLd(lang);
 
     return (
         <html lang={lang}>
@@ -49,11 +59,7 @@ export default async function RootLayout({ children, params }) {
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-                <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                />
+                <JsonLd data={sitewideJsonLd} />
                 {/* Meta Pixel Code */}
                 <script
                     id="meta-pixel"

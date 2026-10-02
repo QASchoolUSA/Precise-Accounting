@@ -2,7 +2,12 @@ import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import { MailIcon, PhoneIcon, WhatsAppIcon, InstagramIcon, TelegramIcon, FacebookIcon, MapPinIcon } from '@/components/SocialIcons';
 import { getDictionary } from '../../../get-dictionary';
-import { buildPageMetadata } from '../../../lib/metadata';
+import {
+    buildBreadcrumbJsonLd,
+    buildContactPageJsonLd,
+    buildPageMetadata,
+} from '../../../lib/metadata';
+import JsonLd from '../../../components/JsonLd';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -19,9 +24,21 @@ export default async function Contact({ params }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = dict.contactPage;
+    const schemas = [
+        buildContactPageJsonLd({
+            lang,
+            name: t.title,
+            description: t.subtitle,
+        }),
+        buildBreadcrumbJsonLd(lang, [
+            { name: dict.navigation.home, path: '/' },
+            { name: dict.navigation.contact, path: '/contact/' },
+        ]),
+    ];
 
     return (
         <>
+            <JsonLd data={schemas} />
             <section className="page-header">
                 <div className="container">
                     <h1 className="page-title">{t.title}</h1>

@@ -1,7 +1,12 @@
 import { getDictionary } from '../../../get-dictionary';
-import { buildPageMetadata } from '../../../lib/metadata';
+import {
+    buildBreadcrumbJsonLd,
+    buildPageMetadata,
+    buildWebPageJsonLd,
+} from '../../../lib/metadata';
 import { resourcesData } from '../../../lib/resources-data';
 import ResourcesView from '../../../components/ResourcesView';
+import JsonLd from '../../../components/JsonLd';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -9,7 +14,7 @@ export async function generateMetadata({ params }) {
     return buildPageMetadata({
         lang,
         path: '/resources/',
-        title: `${dict.resourcesPage.title} | Tax News, Insights & Guides`,
+        title: dict.resourcesPage.title,
         description: dict.resourcesPage.subtitle,
     });
 }
@@ -19,9 +24,23 @@ export default async function ResourcesPage({ params, searchParams }) {
     const resolvedSearchParams = await searchParams;
     const dict = await getDictionary(lang);
     const initialCategory = resolvedSearchParams?.category || 'all';
+    const schemas = [
+        buildWebPageJsonLd({
+            lang,
+            path: '/resources/',
+            name: dict.resourcesPage.title,
+            description: dict.resourcesPage.subtitle,
+            type: 'CollectionPage',
+        }),
+        buildBreadcrumbJsonLd(lang, [
+            { name: dict.navigation.home, path: '/' },
+            { name: dict.navigation.resources, path: '/resources/' },
+        ]),
+    ];
 
     return (
         <>
+            <JsonLd data={schemas} />
             <section className="page-header">
                 <div className="container">
                     <h1 className="page-title">{dict.resourcesPage.title}</h1>
