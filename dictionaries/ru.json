@@ -16,7 +16,7 @@
         "newBusiness": "Регистрация бизнеса",
         "resources": "Полезное",
         "taxNews": "Новости",
-        "insights": "Информация",
+        "insights": "Полезное",
         "guides": "Инструкции"
     },
     "metadata": {
@@ -503,7 +503,7 @@
         "subtitle": "Налоговые новости, экспертная аналитика и практические инструкции от Precise Accounting.",
         "all": "Все",
         "taxNews": "Новости",
-        "insights": "Информация",
+        "insights": "Полезное",
         "guides": "Инструкции",
         "readArticle": "Читать статью",
         "collapseArticle": "Свернуть статью",
