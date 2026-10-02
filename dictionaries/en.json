@@ -13,7 +13,11 @@
         "payroll": "Payroll Setup & Maintenance",
         "form1099": "1099 Preparation & Filing",
         "salesTax": "Sales Tax",
-        "newBusiness": "New Business Formation"
+        "newBusiness": "New Business Formation",
+        "resources": "Resources",
+        "taxNews": "Tax News",
+        "insights": "Insights",
+        "guides": "Guides"
     },
     "metadata": {
         "title": "Precise Accounting | Accuracy. Integrity. Results.",
@@ -106,7 +110,7 @@
             "accountingMethod": "What is your accounting method?",
             "merchantProcessors": "Do you have merchant processors? (Stripe, Square, PayPal, Shopify, Amazon, etc.)",
             "loans": "Any loans, leases, or financing we need to track?",
-            "depreciableAssets": "Number of depreciable assets (vehicles, equipment, buildings, etc)?",
+            "depreciableAssets": "Number of depreciable assets added monthly (vehicles, equipment, buildings, etc)?",
             "booksUpToDate": "Are your books up to date?",
             "salesTax": "Do you need sales tax filings?",
             "form1099": "Do you need 1099 preparation at year-end?",
@@ -493,5 +497,21 @@
         "min60": "60 Minute Consultation",
         "bookNow": "Book Now",
         "securityNote": "Your information is secure and confidential."
+    },
+    "resourcesPage": {
+        "title": "Resources",
+        "subtitle": "Tax news, expert insights, and practical guides from Precise Accounting.",
+        "all": "All",
+        "taxNews": "Tax News",
+        "insights": "Insights",
+        "guides": "Guides",
+        "readArticle": "Read Article",
+        "collapseArticle": "Collapse Article",
+        "minRead": "min read",
+        "source": "Source",
+        "published": "Published",
+        "backToAll": "← All Resources",
+        "shareLink": "Copy Link",
+        "linkCopied": "Link copied to clipboard!"
     }
 }

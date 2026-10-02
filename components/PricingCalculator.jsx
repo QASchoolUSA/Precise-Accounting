@@ -46,35 +46,39 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
     const [isPaymentFlow, setIsPaymentFlow] = useState(false);
 
     // Validations & Pricing Maps
+    // Validations & Pricing Maps
+    const INACTIVE_STATES = ['Maryland', 'Nevada', 'Oregon'];
+
     const FILING_PRICES = {
         'single': 0,
-        'joint': 30,
+        'joint': 0,
         'sep': 0,
         'head': 0,
-        'widow': 30
+        'widow': 0
     };
 
     const DEPENDENT_PRICES = {
         'no': 0,
-        'yes': 30
+        'yes': 0
     };
 
     const STATE_PRICES = {
-        // Group 1 ($200)
-        'Alaska': 200, 'Florida': 200, 'Nevada': 200, 'South Dakota': 200,
-        'Tennessee': 200, 'Texas': 200, 'Washington': 200, 'Wyoming': 200, 'New Hampshire': 200,
+        // Group 1 ($250)
+        'Alaska': 250, 'Florida': 250, 'New Hampshire': 250, 'South Dakota': 250,
+        'Tennessee': 250, 'Texas': 250, 'Washington': 250, 'Wyoming': 250,
         // Group 2 ($300)
-        'Arizona': 300, 'Colorado': 300, 'Idaho': 300, 'Indiana': 300, 'Kansas': 300,
-        'Kentucky': 300, 'Maine': 300, 'Michigan': 300, 'Minnesota': 300, 'Mississippi': 300,
-        'Missouri': 300, 'Nebraska': 300, 'New Mexico': 300, 'North Dakota': 300,
-        'Oklahoma': 300, 'South Carolina': 300, 'Utah': 300, 'Wisconsin': 300,
-        // Group 3 ($400)
-        'Alabama': 400, 'Arkansas': 400, 'Georgia': 400, 'Iowa': 400, 'Louisiana': 400,
-        'Montana': 400, 'Rhode Island': 400, 'Vermont': 400, 'West Virginia': 400,
-        // Group 4 ($500)
-        'California': 500, 'New York': 500, 'New Jersey': 500, 'Pennsylvania': 500,
-        'Ohio': 500, 'Maryland': 500, 'Virginia': 500, 'Massachusetts': 500,
-        'Illinois': 500, 'Connecticut': 500, 'D.C.': 500, 'Oregon': 500
+        'Alabama': 300, 'Arizona': 300, 'Arkansas': 300, 'Colorado': 300, 'Connecticut': 300,
+        'District of Columbia (D.C.)': 300, 'Georgia': 300, 'Idaho': 300, 'Illinois': 300,
+        'Indiana': 300, 'Iowa': 300, 'Kansas': 300, 'Kentucky': 300, 'Louisiana': 300,
+        'Maine': 300, 'Michigan': 300, 'Minnesota': 300, 'Mississippi': 300, 'Missouri': 300,
+        'Montana': 300, 'Nebraska': 300, 'New Mexico': 300, 'North Dakota': 300,
+        'Oklahoma': 300, 'Rhode Island': 300, 'South Carolina': 300, 'Utah': 300,
+        'Vermont': 300, 'Virginia': 300, 'West Virginia': 300, 'Wisconsin': 300,
+        // Group 3 ($350)
+        'California': 350, 'Massachusetts': 350, 'New Jersey': 350, 'New York': 350,
+        'Ohio': 350, 'Pennsylvania': 350,
+        // Inactive states (currently not preparing)
+        'Maryland': 0, 'Nevada': 0, 'Oregon': 0
     };
 
     const SORTED_STATES = Object.keys(STATE_PRICES).sort();
@@ -85,14 +89,14 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
         { key: 'w2', value: 0 },
         { key: 'selfEmployed', value: 50 },
         { key: 'rental', value: 50 },
-        { key: 'investment', value: 50 },
-        { key: 'crypto', value: 50 },
-        { key: 'interest', value: 30 },
-        { key: 'retirement', value: 30 },
+        { key: 'investment', value: 25 },
+        { key: 'crypto', value: 25 },
+        { key: 'interest', value: 0 },
+        { key: 'retirement', value: 0 },
         { key: 'foreign', value: 100 },
-        { key: 'itemized', value: 50 },
-        { key: 'education', value: 30 },
-        { key: 'depreciation', value: 50 },
+        { key: 'itemized', value: 25 },
+        { key: 'education', value: 0 },
+        { key: 'depreciation', value: 0 },
     ].map(opt => ({
         ...opt,
         label: dict.income.options[opt.key] || opt.key
@@ -122,23 +126,23 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
 
             // 1. Transaction Volume (Base)
             switch (bookkeepingData.transactionCount) {
-                case 'range0_300': baseRate = 250; break;
-                case 'range301_600': baseRate = 300; break;
-                case 'range601_1000': baseRate = 500; break;
-                case 'range1001_2000': baseRate = 1000; break;
-                case 'rangeOver2000': baseRate = 1500; break;
-                default: baseRate = 250;
+                case 'range0_300': baseRate = 150; break;
+                case 'range301_600': baseRate = 250; break;
+                case 'range601_1000': baseRate = 300; break;
+                case 'range1001_2000': baseRate = 500; break;
+                case 'rangeOver2000': baseRate = 800; break;
+                default: baseRate = 150;
             }
 
             // 2. Account Count
             if (bookkeepingData.accountCount === '5to10') baseRate += 50;
-            if (bookkeepingData.accountCount === 'over10') baseRate += 150;
+            if (bookkeepingData.accountCount === 'over10') baseRate += 100;
 
             // 3. Accounting Method (Multiplier)
             if (bookkeepingData.accountingMethod === 'accrual') baseRate *= 2;
 
             // 4. Merchant Processors
-            if (bookkeepingData.merchantProcessors === 'yes') baseRate += 100;
+            if (bookkeepingData.merchantProcessors === 'yes') baseRate += 50;
 
             // 5. Loans
             if (bookkeepingData.loans === 'yes') baseRate += 50;
@@ -158,7 +162,7 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
             setTotalAmount("Custom Quote");
             setShowInternationalMsg(true);
             return;
-        } else if (['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(taxData.state)) {
+        } else if (INACTIVE_STATES.includes(taxData.state)) {
             setTotalAmount(dict.location.unavailable);
             // Message handled in render
             return;
@@ -343,7 +347,7 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
     const nextStep = () => {
         if (step < totalSteps) {
             if (step === 1) {
-                const blockedStates = ['custom', 'California', 'Oregon', 'Pennsylvania', 'Maryland'];
+                const blockedStates = ['custom', ...INACTIVE_STATES];
                 if (blockedStates.includes(taxData.state)) return;
             }
             setStep(step + 1);
@@ -520,13 +524,13 @@ export default function PricingCalculator({ lang, dict, initialTab = 'tax' }) {
                                 <option value="custom">{dict.location.notInUSA}</option>
                                 <optgroup label={dict.location.unitedStates}>
                                     {SORTED_STATES.map(stateName => (
-                                        <option key={stateName} value={stateName} disabled={['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName)}>
-                                            {stateName} {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(stateName) ? ` ${dict.location.unavailable}` : ''}
+                                        <option key={stateName} value={stateName} disabled={INACTIVE_STATES.includes(stateName)}>
+                                            {stateName} {INACTIVE_STATES.includes(stateName) ? ` ${dict.location.unavailable}` : ''}
                                         </option>
                                     ))}
                                 </optgroup>
                             </select>
-                            {['California', 'Oregon', 'Pennsylvania', 'Maryland'].includes(taxData.state) && (
+                            {INACTIVE_STATES.includes(taxData.state) && (
                                 <div className="info-box error" style={{ marginTop: '1rem', color: 'red', borderColor: 'red' }}>
                                     {dict.location.errorUnavailable}
                                 </div>
