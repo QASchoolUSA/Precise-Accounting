@@ -42,7 +42,7 @@ export default function ThemeSwitcher() {
 
             <div id={panelId} className="theme-switcher__panel" hidden={!open}>
                 <p className="theme-switcher__hint">
-                    Same charcoal + emerald. Five full-site directions — pick one to preview.
+                    Same charcoal + emerald. Three full-site directions — pick one to preview.
                 </p>
                 <ul className="theme-switcher__list">
                     {themes.map((item) => {

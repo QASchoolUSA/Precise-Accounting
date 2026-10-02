@@ -16,10 +16,8 @@ const THEME_FONTS =
     [
         'family=Fraunces:opsz,wght@9..144,500;600;700',
         'family=Source+Sans+3:wght@300;400;500;600;700',
-        'family=Outfit:wght@400;500;600;700',
         'family=Libre+Baskerville:wght@400;700',
         'family=IBM+Plex+Sans:wght@300;400;500;600;700',
-        'family=Space+Grotesk:wght@400;500;600;700',
         'family=DM+Serif+Display',
         'family=DM+Sans:wght@400;500;600;700',
     ].join('&') +
@@ -79,7 +77,7 @@ export default async function RootLayout({ children, params }) {
                 <link href={THEME_FONTS} rel="stylesheet" />
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: `(function(){try{var k='pa-design-theme';var t=localStorage.getItem(k);var ok=['ledger','studio','cornerstone','clarity','harbor'];if(ok.indexOf(t)!==-1)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+                        __html: `(function(){try{var k='pa-design-theme';var t=localStorage.getItem(k);var ok=['ledger','cornerstone','harbor'];if(ok.indexOf(t)!==-1)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
                     }}
                 />
                 <JsonLd data={sitewideJsonLd} />
