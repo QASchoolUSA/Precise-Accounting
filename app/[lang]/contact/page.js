@@ -8,6 +8,7 @@ import {
     buildPageMetadata,
 } from '../../../lib/metadata';
 import JsonLd from '../../../components/JsonLd';
+import PageHero from '../../../components/design/PageHero';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -39,12 +40,7 @@ export default async function Contact({ params }) {
     return (
         <>
             <JsonLd data={schemas} />
-            <section className="page-header">
-                <div className="container">
-                    <h1 className="page-title">{t.title}</h1>
-                    <p className="page-subtitle">{t.subtitle}</p>
-                </div>
-            </section>
+            <PageHero title={t.title} subtitle={t.subtitle} />
 
             <section className="section">
                 <div className="container contact-container">

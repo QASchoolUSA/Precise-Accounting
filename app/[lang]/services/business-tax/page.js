@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getDictionary } from '../../../../get-dictionary';
 import { buildPageMetadata, buildServicePageSchemas } from '../../../../lib/metadata';
 import JsonLd from '../../../../components/JsonLd';
+import PageHero from '../../../../components/design/PageHero';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -31,12 +32,7 @@ export default async function BusinessTaxPage({ params }) {
     return (
         <>
             <JsonLd data={schemas} />
-            <header className="page-header">
-                <div className="container">
-                    <h1 className="page-title">{t.title}</h1>
-                    <p className="page-subtitle">{t.subtitle}</p>
-                </div>
-            </header>
+            <PageHero title={t.title} subtitle={t.subtitle} />
 
             <section className="section">
                 <div className="container" style={{ maxWidth: '800px' }}>

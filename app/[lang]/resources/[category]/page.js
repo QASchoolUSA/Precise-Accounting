@@ -8,6 +8,7 @@ import {
 import { resourcesData } from '../../../../lib/resources-data';
 import ResourcesView from '../../../../components/ResourcesView';
 import JsonLd from '../../../../components/JsonLd';
+import PageHero from '../../../../components/design/PageHero';
 
 const VALID_CATEGORIES = ['tax-news', 'insights', 'guides'];
 
@@ -72,12 +73,7 @@ export default async function ResourceCategoryPage({ params }) {
     return (
         <>
             <JsonLd data={schemas} />
-            <section className="page-header">
-                <div className="container">
-                    <h1 className="page-title">{categoryName}</h1>
-                    <p className="page-subtitle">{dict.resourcesPage.subtitle}</p>
-                </div>
-            </section>
+            <PageHero title={categoryName} subtitle={dict.resourcesPage.subtitle} />
 
             <section className="section" style={{ paddingTop: '2.5rem' }}>
                 <div className="container">

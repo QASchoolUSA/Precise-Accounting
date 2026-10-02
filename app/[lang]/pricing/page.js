@@ -6,6 +6,7 @@ import {
     buildWebPageJsonLd,
 } from '../../../lib/metadata';
 import JsonLd from '../../../components/JsonLd';
+import PageHero from '../../../components/design/PageHero';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -39,12 +40,7 @@ export default async function Pricing({ params, searchParams }) {
     return (
         <>
             <JsonLd data={schemas} />
-            <section className="page-header">
-                <div className="container">
-                    <h1 className="page-title">{dict.pricingCalculator.review.requestTitle}</h1>
-                    <p className="page-subtitle">{dict.servicesPage.subtitle}</p>
-                </div>
-            </section>
+            <PageHero title={dict.pricingCalculator.review.requestTitle} subtitle={dict.servicesPage.subtitle} />
 
             <section className="section">
                 <div className="container">

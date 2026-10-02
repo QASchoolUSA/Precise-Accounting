@@ -1,4 +1,5 @@
 import { buildPageMetadata } from '../../../lib/metadata';
+import PageHero from '../../../components/design/PageHero';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -13,11 +14,7 @@ export async function generateMetadata({ params }) {
 export default function Terms() {
     return (
         <>
-            <section className="page-header">
-                <div className="container">
-                    <h1 className="page-title">Terms and Conditions</h1>
-                </div>
-            </section>
+            <PageHero title="Terms and Conditions" />
 
             <section className="section">
                 <div className="container">

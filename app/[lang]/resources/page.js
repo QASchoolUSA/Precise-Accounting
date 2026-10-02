@@ -7,6 +7,7 @@ import {
 import { resourcesData } from '../../../lib/resources-data';
 import ResourcesView from '../../../components/ResourcesView';
 import JsonLd from '../../../components/JsonLd';
+import PageHero from '../../../components/design/PageHero';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -41,12 +42,7 @@ export default async function ResourcesPage({ params, searchParams }) {
     return (
         <>
             <JsonLd data={schemas} />
-            <section className="page-header">
-                <div className="container">
-                    <h1 className="page-title">{dict.resourcesPage.title}</h1>
-                    <p className="page-subtitle">{dict.resourcesPage.subtitle}</p>
-                </div>
-            </section>
+            <PageHero title={dict.resourcesPage.title} subtitle={dict.resourcesPage.subtitle} />
 
             <section className="section" style={{ paddingTop: '2.5rem' }}>
                 <div className="container">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getDictionary } from '../../get-dictionary';
+import Section from '../../components/design/Section';
 
 export default async function Home({ params }) {
     const { lang } = await params;
@@ -24,20 +25,18 @@ export default async function Home({ params }) {
                 </div>
             </section>
 
-            <section className="section services-preview">
+            <Section className="services-preview">
                 <div className="container">
                     <h2 className="section-title text-center">{t.ourServices}</h2>
                     <div className="services-grid-home">
-                        {/* Card 1: Tax Prep (Always visible as it's the core service) */}
-                        <div className="service-card-home" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.5rem' }}>
-                            <h3 style={{ marginBottom: '0.5rem' }}>{t.services.taxPrep}</h3>
-                            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                                <Link href={`/${lang}/services/personal-tax`} className="btn btn-secondary-dark" style={{ fontSize: '0.85rem', padding: '0.5rem', width: '100%' }}>{t.services.personal}</Link>
-                                <Link href={`/${lang}/services/business-tax`} className="btn btn-secondary-dark" style={{ fontSize: '0.85rem', padding: '0.5rem', width: '100%' }}>{t.services.business}</Link>
+                        <div className="service-card-home service-card-home--featured">
+                            <h3>{t.services.taxPrep}</h3>
+                            <div className="service-card-home__actions">
+                                <Link href={`/${lang}/services/personal-tax`} className="btn btn-secondary-dark">{t.services.personal}</Link>
+                                <Link href={`/${lang}/services/business-tax`} className="btn btn-secondary-dark">{t.services.business}</Link>
                             </div>
                         </div>
 
-                        {/* Fixed order of remaining services */}
                         {[
                             { href: `/${lang}/services/tax-optimization`, label: dict.navigation.taxOptimization },
                             { href: `/${lang}/services/accounting-bookkeeping`, label: dict.navigation.accounting },
@@ -47,19 +46,19 @@ export default async function Home({ params }) {
                             { href: `/${lang}/services/1099-filing`, label: dict.navigation.form1099 },
                             { href: `/${lang}/services/sales-tax`, label: dict.navigation.salesTax },
                             { href: `/${lang}/services/new-business`, label: dict.navigation.newBusiness }
-                        ].map((service, index) => (
-                            <Link key={index} href={service.href} className="service-card-home">
+                        ].map((service) => (
+                            <Link key={service.href} href={service.href} className="service-card-home">
                                 <h3>{service.label}</h3>
                             </Link>
                         ))}
                     </div>
-                    <div className="text-center" style={{ marginTop: '1rem' }}>
+                    <div className="text-center services-preview__more">
                         <Link href={`/${lang}/services`} className="btn btn-secondary-dark">{t.viewAllServices}</Link>
                     </div>
                 </div>
-            </section>
+            </Section>
 
-            <section className="values-section">
+            <Section className="values-section" tone="alt">
                 <div className="container">
                     <h2 className="section-title text-center">{t.whyChooseUs}</h2>
                     <div className="values-grid">
@@ -83,37 +82,27 @@ export default async function Home({ params }) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
 
-            <section id="about" className="section about-section">
+            <Section id="about" className="about-section">
                 <div className="container">
                     <div className="about-intro">
                         <h2 className="section-title">{t.aboutUs}</h2>
-                        <p>
-                            {t.aboutText1}
-                        </p>
-                        <p>
-                            {t.aboutText2}
-                        </p>
-                        <p>
-                            {t.aboutText3}
-                        </p>
+                        <p>{t.aboutText1}</p>
+                        <p>{t.aboutText2}</p>
+                        <p>{t.aboutText3}</p>
                     </div>
 
                     <div className="owner-profile">
                         <h3 className="owner-title">{t.meetOwner}</h3>
                         <div className="owner-content">
-                            <p>
-                                {t.ownerBio1}
-                            </p>
-                            <p>
-                                {t.ownerBio2}
-                            </p>
+                            <p>{t.ownerBio1}</p>
+                            <p>{t.ownerBio2}</p>
                             <p dangerouslySetInnerHTML={{ __html: t.ownerBio3 }} />
                         </div>
                     </div>
                 </div>
-            </section>
+            </Section>
         </>
     );
 }

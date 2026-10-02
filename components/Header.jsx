@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 
-
 export default function Header({ lang, dict }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -38,14 +37,10 @@ export default function Header({ lang, dict }) {
         <header className="header">
             <div className="container header-container">
                 <Link href={`/${lang}/`} className="logo desktop-logo" onClick={closeMenu}>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-                        Precise Accounting
-                    </span>
+                    <span className="logo-text">Precise Accounting</span>
                 </Link>
                 <Link href={`/${lang}/`} className="logo mobile-logo-icon" onClick={closeMenu} style={{ display: 'none' }}>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-                        PA
-                    </span>
+                    <span className="logo-text">PA</span>
                 </Link>
                 <div className="mobile-header-actions" style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }}>
                     <LanguageSwitcher />
@@ -57,18 +52,16 @@ export default function Header({ lang, dict }) {
                     className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
                     aria-label="Toggle menu"
                     onClick={toggleMenu}
-                    style={{ display: 'none' }} /* controlled via css */
+                    style={{ display: 'none' }}
                 >
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
-                    <div className="mobile-menu-header" style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid #f3f4f6' }}>
+                    <div className="mobile-menu-header" style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--color-border)' }}>
                         <Link href={`/${lang}/`} className="logo" onClick={closeMenu}>
-                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937' }}>
-                                Precise Accounting
-                            </span>
+                            <span className="logo-text">Precise Accounting</span>
                         </Link>
                     </div>
                     <ul>

@@ -1,11 +1,29 @@
 import { getDictionary } from '../../get-dictionary';
 import { buildPageMetadata, buildSitewideJsonLd } from '../../lib/metadata';
 import { siteConfig } from '../../lib/site';
+import { DEFAULT_THEME } from '../../lib/themes';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import AndroidScaler from '../../components/AndroidScaler';
 import JsonLd from '../../components/JsonLd';
+import { ThemeProvider } from '../../components/ThemeProvider';
+import ThemeSwitcher from '../../components/ThemeSwitcher';
 import '../globals.css';
+import '../themes.css';
+
+const THEME_FONTS =
+    'https://fonts.googleapis.com/css2?' +
+    [
+        'family=Fraunces:opsz,wght@9..144,500;600;700',
+        'family=Source+Sans+3:wght@300;400;500;600;700',
+        'family=Outfit:wght@400;500;600;700',
+        'family=Libre+Baskerville:wght@400;700',
+        'family=IBM+Plex+Sans:wght@300;400;500;600;700',
+        'family=Space+Grotesk:wght@400;500;600;700',
+        'family=DM+Serif+Display',
+        'family=DM+Sans:wght@400;500;600;700',
+    ].join('&') +
+    '&display=swap';
 
 export async function generateMetadata({ params }) {
     const { lang } = await params;
@@ -54,11 +72,16 @@ export default async function RootLayout({ children, params }) {
     const sitewideJsonLd = buildSitewideJsonLd(lang);
 
     return (
-        <html lang={lang}>
+        <html lang={lang} data-theme={DEFAULT_THEME} suppressHydrationWarning>
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+                <link href={THEME_FONTS} rel="stylesheet" />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function(){try{var k='pa-design-theme';var t=localStorage.getItem(k);var ok=['ledger','studio','cornerstone','clarity','harbor'];if(ok.indexOf(t)!==-1)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+                    }}
+                />
                 <JsonLd data={sitewideJsonLd} />
                 {/* Meta Pixel Code */}
                 <script
@@ -88,12 +111,15 @@ fbq('track', 'PageView');`
                 {/* End Meta Pixel Code */}
             </head>
             <body>
-                <AndroidScaler />
-                <div id="app">
-                    <Header lang={lang} dict={dict.navigation} />
-                    <main>{children}</main>
-                    <Footer lang={lang} dict={dict.footer} />
-                </div>
+                <ThemeProvider defaultTheme={DEFAULT_THEME}>
+                    <AndroidScaler />
+                    <div id="app">
+                        <Header lang={lang} dict={dict.navigation} />
+                        <main>{children}</main>
+                        <Footer lang={lang} dict={dict.footer} />
+                    </div>
+                    <ThemeSwitcher />
+                </ThemeProvider>
             </body>
         </html>
     );
